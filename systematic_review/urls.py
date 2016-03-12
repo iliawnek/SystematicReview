@@ -3,7 +3,7 @@ from django.contrib import admin
 from sysrev import views
 
 urlpatterns = patterns('',
-	url(r'^$', views.index, name='index'),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/', include('allauth.urls')),
-)
+                       url(r'^$', views.index, name='index'),
+                       url(r'^admin/', include(admin.site.urls)),
+                       url(r'^accounts/', include('allauth.urls')),
+                       )
