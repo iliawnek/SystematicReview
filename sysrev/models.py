@@ -12,23 +12,31 @@ class Review(models.Model):
     user = models.ForeignKey(Researcher)
     title = models.CharField(max_length=128)
     description = models.TextField()
-    query = models.CharField()
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
+    query = models.CharField()
+    abstract_pool_size = models.IntegerField()
+    document_pool_size = models.IntegerField()
+    final_pool_size = models.IntegerField()
+
 
 class Paper(models.Model):
+    review = models.ForeignKey(Review)
     title = models.CharField()
+    authors = models.CharField()
     abstract = models.TextField()
-    author = models.CharField()
     publish_date = models.DateField()
     url = models.URLField()
+    notes = models.TextField()
 
-    ABSTRACT_STAGE = 'A'
-    DOCUMENT_STAGE = 'D'
-    FINAL_STAGE = 'F'
-    STAGES = ((ABSTRACT_STAGE, 'Abstract stage'),
-              (DOCUMENT_STAGE, 'Document stage'),
-              (FINAL_STAGE, 'Final stage'))
+    ABSTRACT_POOL = 'A'
+    DOCUMENT_POOL = 'D'
+    FINAL_POOL = 'F'
+    REJECTED = 'R'
+    POOLS = ((ABSTRACT_POOL, 'Abstract pool'),
+             (DOCUMENT_POOL, 'Document pool'),
+             (FINAL_POOL, 'Final pool'),
+             (REJECTED, 'Rejected'))
 
-    stage = models.CharField(max_length=1, choices=STAGES, default=ABSTRACT_STAGE)
+    pool = models.CharField(max_length=1, choices=POOLS, default=ABSTRACT_POOL)
