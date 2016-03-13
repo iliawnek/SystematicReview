@@ -59,7 +59,7 @@
                 <li class="divider">
                 </li>
                 <li>
-                  <a href="{{ HTTP_HOST }}/accounts/logout">Sign out</a>
+                  <a href="{% url 'auth_logout' %}?next=/">Logout</a>
                 </li>
               </ul>
             </li>
