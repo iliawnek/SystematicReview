@@ -48,24 +48,24 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                    <li class="dropdown">
-                    {% load account %}
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% user_display user %}<strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#">Your account</a>
-                                    </li>
-                                    <li class="divider">
-                                    </li>
-                                    <li>
-                                        <a href="{{ HTTP_HOST }}/accounts/logout">Sign out</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        <li>
-                    </li>
-                {% endif %}
+{#                {% if user.is_authenticated %}#}
+{#                    <li class="dropdown">#}
+{#                    {% load account %}#}
+{#                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% user_display user %}<strong class="caret"></strong></a>#}
+{#                                <ul class="dropdown-menu">#}
+{#                                    <li>#}
+{#                                        <a href="#">Your account</a>#}
+{#                                    </li>#}
+{#                                    <li class="divider">#}
+{#                                    </li>#}
+{#                                    <li>#}
+{#                                        <a href="{{ HTTP_HOST }}/accounts/logout">Sign out</a>#}
+{#                                    </li>#}
+{#                                </ul>#}
+{#                            </li>#}
+{#                        <li>#}
+{#                    </li>#}
+{#                {% endif %}#}
             </ul>
             </div>
 
