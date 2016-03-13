@@ -15,7 +15,7 @@ class Review(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
-    query = models.CharField()
+    query = models.TextField()
     abstract_pool_size = models.IntegerField()
     document_pool_size = models.IntegerField()
     final_pool_size = models.IntegerField()
@@ -23,8 +23,8 @@ class Review(models.Model):
 
 class Paper(models.Model):
     review = models.ForeignKey(Review)
-    title = models.CharField()
-    authors = models.CharField()
+    title = models.CharField(max_length=128)
+    authors = models.CharField(max_length=128)
     abstract = models.TextField()
     publish_date = models.DateField()
     url = models.URLField()
