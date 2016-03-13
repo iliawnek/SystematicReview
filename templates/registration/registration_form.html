@@ -1,1 +1,19 @@
 {% extends 'registration/base.html' %}
+
+{% block head_title %}Register{% endblock %}
+
+{% block content %}
+  <h1>Register</h1>
+
+  <p><a href="{% url 'auth_login' %}">Already have an account?</a></p>
+
+  <form class="signup" id="signup_form" method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+    <button type="submit">Register</button>
+  </form>
+
+{% endblock %}
