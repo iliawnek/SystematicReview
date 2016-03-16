@@ -1,6 +1,5 @@
 from django.contrib import admin
-from sysrev.models import Researcher, Review, Paper
+from sysrev.models import Review, Paper
 
-admin.register(Researcher)
 admin.register(Review)
 admin.register(Paper)

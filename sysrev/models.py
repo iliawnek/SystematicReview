@@ -1,15 +1,9 @@
 from django.db import models
-
-
-class Researcher(models.Model):
-    # TODO: username
-    # TODO: password
-    # TODO: email
-    pass
+from django.contrib.auth.models import User
 
 
 class Review(models.Model):
-    user = models.ForeignKey(Researcher)
+    user = models.ForeignKey(User, default=None)
     title = models.CharField(max_length=128)
     description = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
