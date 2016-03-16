@@ -1,5 +1,5 @@
 from django.contrib import admin
 from sysrev.models import Review, Paper
 
-admin.register(Review)
-admin.register(Paper)
+admin.site.register(Review)
+admin.site.register(Paper)
