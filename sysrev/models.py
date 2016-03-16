@@ -8,6 +8,7 @@ class Review(models.Model):
     description = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    completed = models.BooleanField(default=False)
 
     query = models.TextField()
     abstract_pool_size = models.IntegerField()
