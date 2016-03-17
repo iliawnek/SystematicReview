@@ -5,8 +5,34 @@
 {% block head_title %}Dashboard{% endblock head_title %}
 
 {% block body %}
-        <a class="btn btn-primary btn-lg" href="{% url 'create' %}">Create a new review</a>
-        <h1>Your reviews</h1>
-        <h3>In progress</h3>
-        <h3>Completed</h3>
+
+  <div class="page-header">
+    <h2>
+      <span>Your reviews</span>
+      <a class="btn btn-primary pull-right" href={% url 'create' %}>
+        Create a new review
+      </a>
+    </h2>
+  </div>
+
+  {% for review in reviews %}
+    <div class="panel panel-title
+    {% if review.completed %}
+    panel-success
+    {% else %}
+    panel-primary
+    {% endif %}
+    ">
+      <div class="panel-heading"><a href="/review/">{{ review.title }}</a></div>
+      <div class="panel-body">{{ review.description }}</div>
+
+      <ul class="list-group">
+        <li class="list-group-item"><b>{{ review.abstract_pool_size }}</b> papers in the abstract pool</li>
+        <li class="list-group-item"><b>{{ review.document_pool_size }}</b> papers in the document pool</li>
+        <li class="list-group-item"><b>{{ review.final_pool_size }}</b> papers in the final pool</li>
+      </ul>
+    </div>
+    <br>
+  {% endfor %}
+
 {% endblock body %}
