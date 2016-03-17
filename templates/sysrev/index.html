@@ -18,44 +18,61 @@
 
     {% for review in reviews %}
       <div class="panel panel-title
-      {% if review.completed %}
+      {% if review.review.completed %}
       panel-success
       {% else %}
       panel-primary
       {% endif %}
       ">
         <div class="panel-heading">
-          <a href="/review/">{{ review.title }}</a>
-          {% if review.completed %}
+          <a href="/review/">{{ review.review.title }}</a>
+          {% if review.review.completed %}
             <span class="label label-success pull-right">COMPLETED</span>
           {% else %}
             <span class="label label-primary pull-right">IN PROGRESS</span>
           {% endif %}
         </div>
 
-        <div class="panel-body">{{ review.description }}</div>
+        <div class="panel-body">{{ review.review.description }}</div>
 
         <ul class="list-group">
+
+          <li class="list-group-item">
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" style="width: {{ review.final }}%">
+                {{ review.review.final_pool_size }}
+              </div>
+              <div class="progress-bar progress-bar-info" style="width: {{ review.document }}%">
+                {{ review.review.document_pool_size }}
+              </div>
+              <div class="progress-bar progress-bar-warning" style="width: {{ review.abstract }}%">
+                {{ review.review.abstract_pool_size }}
+              </div>
+              <div class="progress-bar progress-bar-danger" style="width: {{ review.rejected }}%">
+                {{ review.review.rejected_pool_size }}
+              </div>
+            </div>
+          </li>
 
           <li class="list-group-item">
 
             <div class="col-md-3 col-xs-3">
               <div class="text-center">
-                <h3>{{ review.abstract_pool_size }}</h3>
+                <h3>{{ review.review.abstract_pool_size }}</h3>
                 abstract pool
               </div>
             </div>
 
             <div class="col-md-3 col-xs-3">
               <div class="text-center">
-                <h3>{{ review.document_pool_size }}</h3>
+                <h3>{{ review.review.document_pool_size }}</h3>
                 document pool
               </div>
             </div>
 
             <div class="col-md-3 col-xs-3">
               <div class="text-center">
-                <h3>{{ review.final_pool_size }}</h3>
+                <h3>{{ review.review.final_pool_size }}</h3>
                 final pool
               </div>
             </div>
@@ -63,7 +80,7 @@
             <div class="col-md-3 col-xs-3">
               <div class="text-center">
                 <h3><span class="glyphicon glyphicon-time"></span></h3>
-                {{ review.last_modified }}
+                {{ review.review.last_modified }}
               </div>
             </div>
 

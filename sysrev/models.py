@@ -14,6 +14,7 @@ class Review(models.Model):
     abstract_pool_size = models.IntegerField(default=0)
     document_pool_size = models.IntegerField(default=0)
     final_pool_size = models.IntegerField(default=0)
+    rejected_pool_size = models.IntegerField(default=0)
 
     def __unicode__(self):
         return str(self.user) + " - " + self.title
