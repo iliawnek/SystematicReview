@@ -58,12 +58,12 @@ def profile(request):
             form.save()
             if before != request.user.email:
                 context_dict["saved"] = True
-            return render(request, 'sysrev/my_profile.html', context_dict)
+            return render(request, 'sysrev/profile.html', context_dict)
     else:
         form = ManageAccount(user=request.user)
 
     context_dict["form"] = form
-    return render(request, 'sysrev/my_profile.html', context_dict)
+    return render(request, 'sysrev/profile.html', context_dict)
 
 
 @login_required
