@@ -36,10 +36,39 @@
         <div class="panel-body">{{ review.description }}</div>
 
         <ul class="list-group">
-          <li class="list-group-item"><b>{{ review.abstract_pool_size }}</b> papers in the abstract pool</li>
-          <li class="list-group-item"><b>{{ review.document_pool_size }}</b> papers in the document pool</li>
-          <li class="list-group-item"><b>{{ review.final_pool_size }}</b> papers in the final pool</li>
-          <li class="list-group-item"><span class="glyphicon glyphicon-time"></span> {{ review.last_modified }}</li>
+
+          <li class="list-group-item">
+
+            <div class="col-md-3 col-xs-3">
+              <div class="text-center">
+                <h3>{{ review.abstract_pool_size }}</h3>
+                abstract pool
+              </div>
+            </div>
+
+            <div class="col-md-3 col-xs-3">
+              <div class="text-center">
+                <h3>{{ review.document_pool_size }}</h3>
+                document pool
+              </div>
+            </div>
+
+            <div class="col-md-3 col-xs-3">
+              <div class="text-center">
+                <h3>{{ review.final_pool_size }}</h3>
+                final pool
+              </div>
+            </div>
+
+            <div class="col-md-3 col-xs-3">
+              <div class="text-center">
+                <h3><span class="glyphicon glyphicon-time"></span></h3>
+                {{ review.last_modified }}
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+          </li>
         </ul>
 
       </div>
@@ -49,9 +78,9 @@
     <div class="text-center">
       <h1>Welcome, <b>{{ user.username }}</b>!</h1><br>
       <h4>To get started,
-      <a class="btn btn-primary btn-lg" href={% url 'create' %}>
-        create a new review
-      </a>.
+        <a class="btn btn-primary btn-lg" href={% url 'create' %}>
+          create a new review
+        </a>.
       </h4>
     </div>
   {% endif %}
