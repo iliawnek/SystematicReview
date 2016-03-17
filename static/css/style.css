@@ -46,7 +46,22 @@ body {
     }
 }
 
+/* panels */
+
 .panel-heading > a {
-    color: white;
     font-size: large;
+}
+
+.panel-primary > .panel-heading > a {
+    color: white;
+}
+
+.panel-success > .panel-heading > a {
+    color: #3c763d;
+}
+
+.panel-heading > .label-primary {
+    font-size: small;
+    background-color: white;
+    color: black;
 }

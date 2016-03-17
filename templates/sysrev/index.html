@@ -23,14 +23,24 @@
     panel-primary
     {% endif %}
     ">
-      <div class="panel-heading"><a href="/review/">{{ review.title }}</a></div>
+      <div class="panel-heading">
+        <a href="/review/">{{ review.title }}</a>
+        {% if review.completed %}
+          <span class="label label-success pull-right">COMPLETED</span>
+        {% else %}
+          <span class="label label-primary pull-right">IN PROGRESS</span>
+        {% endif %}
+      </div>
+
       <div class="panel-body">{{ review.description }}</div>
 
       <ul class="list-group">
         <li class="list-group-item"><b>{{ review.abstract_pool_size }}</b> papers in the abstract pool</li>
         <li class="list-group-item"><b>{{ review.document_pool_size }}</b> papers in the document pool</li>
         <li class="list-group-item"><b>{{ review.final_pool_size }}</b> papers in the final pool</li>
+        <li class="list-group-item"><span class="glyphicon glyphicon-time"></span> {{ review.last_modified }}</li>
       </ul>
+
     </div>
     <br>
   {% endfor %}

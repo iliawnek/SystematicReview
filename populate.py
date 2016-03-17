@@ -19,7 +19,9 @@ def populate():
 
     adhd = add_review(user=jill,
                       title="Investigating the effects of acupuncture on children with ADHD",
-                      description="Something about ADHD.",
+                      description="""This is a sentence about why this particular review was created. It involves
+                      something to do with ADHD and acupuncture. These are a few more test sentences to make the description
+                      longer. This is another sentence.""",
                       date_created=generate_random_date(),
                       last_modified=generate_random_date(recent=True),
                       query="(adhd OR adhs OR addh) AND (child OR adolescent) AND (acupuncture)")
@@ -29,7 +31,8 @@ def populate():
                         description="Something about stress.",
                         date_created=generate_random_date(),
                         last_modified=generate_random_date(recent=True),
-                        query="(stress) AND (student) AND (exam OR examination OR test)")
+                        query="(stress) AND (student) AND (exam OR examination OR test)",
+                        completed=True)
 
     lung_cancer = add_review(user=jill,
                              title="Development of lung cancer from inhalation of soldering fumes",
@@ -68,12 +71,13 @@ Acupuncture is an effective and safe therapy in treating ADHD, combined administ
                 print "{0} - {1} - {2}".format(user, review, paper)
 
 
-def add_review(user, title, description, date_created, last_modified, query):
+def add_review(user, title, description, date_created, last_modified, query, completed=False):
     review = Review.objects.get_or_create(user=user, title=title)[0]
     review.description = description
     review.date_created = date_created
     review.last_modified = last_modified
     review.query = query
+    review.completed = completed
     review.save()
     return review
 
@@ -88,6 +92,8 @@ def add_paper(review, title, authors, abstract, publish_date, url, notes):
     paper.notes = notes
     paper.pool = 'A'
     paper.save()
+    review.abstract_pool_size += 1
+    review.save()
     return paper
 
 
