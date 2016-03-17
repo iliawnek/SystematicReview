@@ -2,14 +2,14 @@
 
 {% load staticfiles %} <!-- New line -->
 
-{% block head_title %}Dashboard{% endblock head_title %}
+{% block head_title %}My reviews{% endblock head_title %}
 
 {% block body %}
 
   {% if reviews %}
     <div class="page-header">
       <h2>
-        <span>Your reviews</span>
+        <span>My reviews</span>
         <a class="btn btn-primary pull-right" href={% url 'create' %}>
           Create a new review
         </a>
