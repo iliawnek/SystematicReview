@@ -10,6 +10,7 @@ class MyRegistrationView(RegistrationView):
 
 urlpatterns = patterns('',
                        url(r'^$', views.index, name='index'),
+                       url(r'^create/', views.create, name='create'),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
                        url(r'^accounts/', include('registration.backends.simple.urls')),

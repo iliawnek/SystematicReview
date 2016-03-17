@@ -5,6 +5,8 @@
 {% block head_title %}Dashboard{% endblock head_title %}
 
 {% block body %}
-        <h1>Dashboard</h1>
-        <p>Stuff here.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'create' %}">Create a new review</a>
+        <h1>Your reviews</h1>
+        <h3>In progress</h3>
+        <h3>Completed</h3>
 {% endblock body %}

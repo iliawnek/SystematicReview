@@ -18,7 +18,7 @@ def populate():
     jen.save()
 
     adhd = add_review(user=jill,
-                      title="Investigating the effects of acupuncture on children with ADHD.",
+                      title="Investigating the effects of acupuncture on children with ADHD",
                       description="Something about ADHD.",
                       date_created=generate_random_date(),
                       last_modified=generate_random_date(recent=True),
