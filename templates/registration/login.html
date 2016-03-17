@@ -3,7 +3,9 @@
 {% block head_title %}Login{% endblock %}
 
 {% block content %}
-  <h1>Login</h1>
+  <div class="page-header">
+    <h2>Login</h2>
+  </div>
   Don't have an account? <a href="{% url 'registration_register' %}">Create one now.</a>
   <br>
   <br>
@@ -23,7 +25,7 @@
         <a href="{% url 'auth_password_reset' %}">Forgot password?</a>
         <br>
         <br>
-    {{ form.non_field_errors }}
+        {{ form.non_field_errors }}
       </div>
     </div>
 

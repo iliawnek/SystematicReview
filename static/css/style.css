@@ -19,7 +19,7 @@ body {
 }
 
 .navbar-fixed-top .nav {
-	height: 80px;
+    height: 80px;
     padding-top: 0px;
 }
 
@@ -36,7 +36,7 @@ body {
     letter-spacing: -0.04em;
 }
 
-@media(min-width:768px) {
+@media (min-width: 768px) {
     body {
         padding-top: 100px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
     }
@@ -64,4 +64,9 @@ body {
     font-size: small;
     background-color: white;
     color: black;
+}
+
+/* page headers */
+.page-header {
+    border-bottom-color: #ccc; /* darker horizontal rule */
 }
