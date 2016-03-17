@@ -5,10 +5,8 @@
 {% block content %}
   <div class="page-header">
     <h2>Register</h2>
+    Already have an account? <a href="{% url 'auth_login' %}">Login.</a>
   </div>
-  Already have an account? <a href="{% url 'auth_login' %}">Login.</a>
-  <br>
-  <br>
 
   <form class="signup" method="POST" action="">
     {% csrf_token %}
