@@ -1,7 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'registration/base.html' %}
 
-{% block head_title %}My profile{% endblock %}
+{% block head_title %}My Profile{% endblock %}
 
-{% block body %}
-  
-{% endblock body %}
+{% block content %}
+  <div class="page-header">
+  <h1>My profile</h1>
+  Update your email address, or <a href="{% url 'password_change' %}">change your password.</a>
+  </div>
+  <form class="manage" method="POST" action="">
+    {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+          <input id="email" class="form-control" name="email" placeholder="someone@example.com" value="{{ user.email }}" 
+                 type="email"> {{ form.email.errors }}
+    {{ form.non_field_errors }}
+    {% if saved %}
+    <div class="alert alert-success" role="alert">Your email address has been updated.</div>
+    {% endif %}
+    <br>
+    <br>
+    <button class="primaryAction btn btn-primary" type="submit">Save email address</button>
+    </div>
+    </div>
+  </form>
+{% endblock %}

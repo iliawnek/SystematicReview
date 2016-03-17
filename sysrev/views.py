@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from itertools import chain
 
 from sysrev.models import Review
+from sysrev.forms import ManageAccount
 
 
 @login_required
@@ -48,7 +49,21 @@ def create(request):
 
 @login_required
 def profile(request):
-    return render(request, 'sysrev/profile.html')
+    context_dict = {}
+
+    if request.method == 'POST':
+        form = ManageAccount(request.POST, user=request.user)
+        if form.is_valid():
+            before = request.user.email
+            form.save()
+            if before != request.user.email:
+                context_dict["saved"] = True
+            return render(request, 'sysrev/my_profile.html', context_dict)
+    else:
+        form = ManageAccount(user=request.user)
+
+    context_dict["form"] = form
+    return render(request, 'sysrev/my_profile.html', context_dict)
 
 
 @login_required

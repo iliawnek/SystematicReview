@@ -3,11 +3,10 @@
 {% block head_title %}Login{% endblock %}
 
 {% block content %}
+  <div class="page-header">
   <h1>Login</h1>
   Don't have an account? <a href="{% url 'registration_register' %}">Create one now.</a>
-  <br>
-  <br>
-
+  </div>
   <form class="login" method="POST" action="">
     {% csrf_token %}
 
