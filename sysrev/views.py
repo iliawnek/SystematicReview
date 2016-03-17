@@ -16,6 +16,7 @@ def index(request):
         .filter(user=request.user, completed=True)
     reviews = list(chain(in_progress_reviews, completed_reviews))
 
+    # progress bar
     for i in range(0, len(reviews)):
         abstract = reviews[i].abstract_pool_size
         document = reviews[i].document_pool_size
@@ -42,4 +43,22 @@ def index(request):
 
 @login_required
 def create(request):
-    pass
+    return render(request, 'sysrev/create.html')
+
+
+@login_required
+def profile(request):
+    return render(request, 'sysrev/profile.html')
+
+
+@login_required
+def review(request, slug):
+    context_dict = {}
+    try:
+        review = Review.objects.get(slug=slug)
+        if review.user == request.user:
+            context_dict["review"] = review
+    except Review.DoesNotExist:
+        pass
+
+    return render(request, 'sysrev/review.html', context_dict)

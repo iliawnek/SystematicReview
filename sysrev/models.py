@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 
 class Review(models.Model):
     user = models.ForeignKey(User)
     title = models.CharField(max_length=128, unique=True)
+    slug = models.SlugField(unique=False)
     description = models.TextField(default="")
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -15,6 +17,10 @@ class Review(models.Model):
     document_pool_size = models.IntegerField(default=0)
     final_pool_size = models.IntegerField(default=0)
     rejected_pool_size = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Review, self).save()
 
     def __unicode__(self):
         return str(self.user) + " - " + self.title
