@@ -1,13 +1,12 @@
 {% extends 'registration/base.html' %}
 
-{% load bootstrap %}
-
 {% block head_title %}Register{% endblock %}
 
+{% load bootstrap %}
 {% block content %}
   <div class="page-header">
     <h2>Register</h2>
-    Already have an account? <a href="{% url 'auth_login' %}">Login.</a>
+    <p>Already have an account? <a href="{% url 'auth_login' %}">Login.</a></p>
   </div>
 
   <div class="row">
