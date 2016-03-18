@@ -1,5 +1,7 @@
 {% extends 'registration/base.html' %}
 
+{% load bootstrap %}
+
 {% block head_title %}Register{% endblock %}
 
 {% block content %}
@@ -8,31 +10,20 @@
     Already have an account? <a href="{% url 'auth_login' %}">Login.</a>
   </div>
 
-  <form class="signup" method="POST" action="">
-    {% csrf_token %}
-      <div class="row">
-        <div class="col-md-6">
-          <input id="username" class="form-control" maxlength="30" name="username" placeholder="username"
-                 type="text"/>{{ form.username.errors }}
-          <input id="email" class="form-control" name="email" placeholder="someone@example.com" 
-                 type="email"> {{ form.email.errors }}
+  <div class="row">
+    <div class="col-md-6">
+      <form class="signup" method="POST" action="">
+        {% csrf_token %}
 
-          <br>
+        {{ form|bootstrap }}
 
-          <input id="password1" class="form-control" name="password1" placeholder="password"
-                 type="password"/>{{ form.password1.errors }}
-          <input id="password2" class="form-control" name="password2" placeholder="confirm password"
-                 type="password"/>{{ form.password2.errors }}
+        {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
 
-          <br>
-          <br>
-    {{ form.non_field_errors }}
-    {% if redirect_field_value %}
-      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-    {% endif %}
-    <button class="primaryAction btn btn-primary" type="submit">Register</button>
+        <button class="primaryAction btn btn-primary" type="submit">Register</button>
+      </form>
     </div>
-    </div>
-  </form>
+  </div>
 
 {% endblock %}
