@@ -1,5 +1,5 @@
 from django.shortcuts               import render
-from django.http                    import HttpResponse, HttpResponseRedirect
+from django.http                    import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.utils.decorators        import method_decorator
@@ -34,8 +34,8 @@ class ReviewListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ReviewListView, self).get_context_data(**kwargs)
 
-        in_progress_reviews = Review.objects.order_by('-last_modified').filter(user=self.request.user, completed=False)
-        completed_reviews   = Review.objects.order_by('-last_modified').filter(user=self.request.user, completed=True)
+        in_progress_reviews = Review.objects.order_by('-last_modified').filter(participants=self.request.user, completed=False)
+        completed_reviews   = Review.objects.order_by('-last_modified').filter(participants=self.request.user, completed=True)
         reviews             = list(chain(in_progress_reviews, completed_reviews))
 
         # progress bar
@@ -72,10 +72,12 @@ class ReviewDetailView(DetailView):
     def get_context_data(self, object=None):
         context = {}
         try:
-            if object.user == self.request.user:
+            if self.request.user in object.participants.all():
                 context["review"] = object
+            else:
+                raise Http404("Review not found")
         except Review.DoesNotExist:
-            pass
+            raise Http404("Review not found")
         return context
 
     @method_decorator(login_required)
@@ -94,15 +96,20 @@ class ReviewCreateWizard(SessionWizardView):
 
         review = Review()
 
-        review.user        = self.request.user
+
         review.title       = s1["title"]
         review.description = s1["description"]
-        #review.invited     = s1["invited"]
         review.query       = s2["query"]
 
         review.save()
 
-        return HttpResponseRedirect(reverse("review", args=(review.slug,)))
+        review.participants.add(self.request.user)
+        invited = filter(lambda i: i, map(lambda l: str.strip(str(l)), s1["invited"].splitlines()))
+        review.invite(invited)
+
+        review.save()
+
+        return HttpResponseRedirect(reverse("review", args=(review.pk,)))
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

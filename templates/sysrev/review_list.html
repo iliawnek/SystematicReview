@@ -23,8 +23,9 @@
       panel-primary
       {% endif %}
       ">
+
         <div class="panel-heading">
-          <a href="/review/{{ review.review.slug }}">{{ review.review.title }}</a>
+          <a href="/review/{{ review.review.pk}}-{{ review.review.slug }}">{{ review.review.title }}</a>
           {% if review.review.completed %}
             <span class="label label-success pull-right">COMPLETED</span>
           {% else %}

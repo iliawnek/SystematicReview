@@ -10,14 +10,14 @@ from sysrev.models import User, Review, Paper
 
 
 def populate():
-    jill = User.objects.create_user(username="jill", email="jill@jill.com", password="jill")
+    jill = User.objects.create_user(username="jill", email="jill@example.com", password="jill")
     jill.save()
-    bob = User.objects.create_user(username="bob", email="bob@bob.com", password="bob")
+    bob = User.objects.create_user(username="bob", email="bob@example.com", password="bob")
     bob.save()
-    jen = User.objects.create_user(username="jen", email="jen@jen.com", password="jen")
+    jen = User.objects.create_user(username="jen", email="jen@example.com", password="jen")
     jen.save()
 
-    adhd = add_review(user=jill,
+    adhd = add_review(users=[jill, bob],
                       title="Investigating the effects of acupuncture on children with ADHD",
                       description="""This is a sentence about why this particular review was created. It involves
                       something to do with ADHD and acupuncture. These are a few more test sentences to make the description
@@ -26,7 +26,7 @@ def populate():
                       last_modified=generate_random_date(recent=True),
                       query="(adhd OR adhs OR addh) AND (child OR adolescent) AND (acupuncture)")
 
-    stress = add_review(user=jill,
+    stress = add_review(users=[jill],
                         title="Stress experienced by students during examinations",
                         description="Something about stress.",
                         date_created=generate_random_date(),
@@ -34,14 +34,14 @@ def populate():
                         query="(stress) AND (student) AND (exam OR examination OR test)",
                         completed=True)
 
-    lung_cancer = add_review(user=jill,
+    lung_cancer = add_review(users=[jill,jen],
                              title="Development of lung cancer from inhalation of soldering fumes",
                              description="Something about lung cancer.",
                              date_created=generate_random_date(),
                              last_modified=generate_random_date(recent=True),
                              query="(solder OR soldering) AND (lung AND cancer)")
 
-    rsi = add_review(user=jill,
+    rsi = add_review(users=[jen,bob],
                      title="RSI in drummers and guitarists",
                      description="Something about RSI.",
                      date_created=generate_random_date(),
@@ -127,7 +127,7 @@ Acupuncture is an effective and safe therapy in treating ADHD, combined administ
               pool="F")
 
     add_paper(review=adhd,
-              title="A Meta-analysis on Acupuncture Treatment of Attention Deficit/Hyperactivity Disorder",
+              title="B Meta-analysis on Acupuncture Treatment of Attention Deficit/Hyperactivity Disorder",
               authors="Ni XQ, Zhang JY, Han XM, Yin DQ",
               abstract="""OBJECTIVE:
 To assess the efficacy and safety of acupuncture in treating attention-deficit/hyperactivity disorder (ADHD) children.
@@ -145,19 +145,21 @@ Acupuncture is an effective and safe therapy in treating ADHD, combined administ
     # TODO: get papers from PubMed using the above reviews/queries
 
     for user in User.objects.all():
-        for review in Review.objects.filter(user=user):
+        for review in Review.objects.filter(participants=user):
             for paper in Paper.objects.filter(review=review):
                 print "{0} - {1} - {2}".format(user, review, paper)
 
 
-def add_review(user, title, description, date_created, last_modified, query, completed=False):
-    review = Review.objects.get_or_create(user=user, title=title)[0]
+def add_review(users, title, description, date_created, last_modified, query, completed=False):
+    review = Review.objects.get_or_create(title=title)[0]
     review.description = description
     review.date_created = date_created
     review.last_modified = last_modified
     review.query = query
     review.completed = completed
     review.save()
+    for user in users:
+        review.participants.add(user)
     return review
 
 

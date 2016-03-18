@@ -20,9 +20,25 @@ class ProfileForm(forms.ModelForm):
 
 
 class ReviewCreateStep1(forms.Form):
-    title       = forms.CharField(max_length=128)
+    title       = forms.CharField(max_length=128, label="Review Title")
     description = forms.CharField(widget=forms.Textarea, required=False)
-    invited     = forms.CharField(widget=forms.Textarea, required=False)
+    invited     = forms.CharField(widget=forms.Textarea, required=False, label="Invite Participants", help_text="Enter the email address or username of each participant, one per line")
+
+    def clean_invited(self):
+        invited = self.cleaned_data.get('invited')
+        invlist = filter(lambda i: i, map(lambda l: str.strip(str(l)), invited.splitlines()))
+
+        for invitee in invlist:
+            try:
+                if invitee.find("@") == -1:
+                    User.objects.get(username=invitee)
+                else:
+                    User.objects.get(email=invitee)
+            except User.DoesNotExist:
+                raise forms.ValidationError('User '+invitee+' not found.')
+
+        return invited
+
 
 class ReviewCreateStep2(forms.Form):
     query       = forms.CharField(widget=forms.Textarea)

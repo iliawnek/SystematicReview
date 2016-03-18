@@ -28,7 +28,9 @@
         </table>
 
         {% if wizard.steps.prev %}
-        <button name="wizard_goto_step" type="submit" class="btn" value="{{ wizard.steps.prev }}">Back</button>
+        <button name="wizard_goto_step" type="submit" class="btn btn-default" value="{{ wizard.steps.prev }}">Back</button>
+        {% else %}
+        <a href="/" class="btn btn-default">Cancel</a>
         {% endif %}
 
         <input type="submit" value="Continue" class="primaryAction btn btn-primary"/>

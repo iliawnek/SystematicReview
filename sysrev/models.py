@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from django.core.exceptions import ValidationError
 
 
 class Review(models.Model):
-    user               = models.ForeignKey(User)
+    participants       = models.ManyToManyField(User)
+
     title              = models.CharField(max_length=128, unique=False)
-    slug               = models.SlugField(unique=True)
+    slug               = models.SlugField()
     description        = models.TextField(default="")
     date_created       = models.DateTimeField(auto_now_add=True)
     last_modified      = models.DateTimeField(auto_now=True)
@@ -18,12 +20,25 @@ class Review(models.Model):
     final_pool_size    = models.IntegerField(default=0)
     rejected_pool_size = models.IntegerField(default=0)
 
+    def invite(self, invitees):
+        for invitee in invitees:
+            user = None
+            if invitee.find("@") == -1:
+                user = User.objects.get(username=invitee)
+            else:
+                user = User.objects.get(email=invitee)
+            self.participants.add(user)
+
+    def clean(self):
+        if (not self.participants) or self.participants.count() < 1:
+            raise ValidationError('Need at least one particpant')
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Review, self).save()
 
     def __unicode__(self):
-        return str(self.user) + " - " + self.title
+        return str(self.pk) + ": " + self.title
 
 
 class Paper(models.Model):
