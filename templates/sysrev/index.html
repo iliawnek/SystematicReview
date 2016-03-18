@@ -91,7 +91,10 @@
       </div>
       <br>
     {% endfor %}
-  {% else %}
+
+
+
+  {% else %} <!-- New user: no reviews yet -->
     <div class="text-center">
       <h1>Welcome, <strong>{{ user.username }}</strong>!</h1><br>
       <h4>To get started,
