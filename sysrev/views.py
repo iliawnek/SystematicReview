@@ -1,29 +1,28 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts               import render
+from django.http                    import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators        import method_decorator
+from django.views.generic.edit      import UpdateView
+
 from itertools import chain
 
-from sysrev.models import Review
-from sysrev.forms import ManageAccount
+from sysrev.models import *
+from sysrev.forms  import *
 
 
-@login_required
-def profile(request):
-    context_dict = {}
+class ProfileView(UpdateView):
+    template_name = "sysrev/profile.html"
+    form_class    = ProfileForm
+    model         = User
+    success_url   = "#"
 
-    if request.method == 'POST':
-        form = ManageAccount(request.POST, user=request.user)
-        if form.is_valid():
-            before = request.user.email
-            form.save()
-            if before != request.user.email:
-                context_dict["saved"] = True
-            return render(request, 'sysrev/profile.html', context_dict)
-    else:
-        form = ManageAccount(user=request.user)
+    def get_object(self, queryset=None):
+        return self.request.user
 
-    context_dict["form"] = form
-    return render(request, 'sysrev/profile.html', context_dict)
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ProfileView, self).dispatch(*args, **kwargs)
+
 
 
 

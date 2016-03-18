@@ -2,6 +2,7 @@
 
 {% block head_title %}My Profile{% endblock %}
 
+{% load bootstrap %}
 {% block content %}
   <div class="page-header">
     <h2>My profile</h2>
@@ -13,17 +14,8 @@
       <form class="manage" method="POST" action="">
         {% csrf_token %}
 
-        <div class="form-group">
-          <input id="email" class="form-control" name="email" placeholder="someone@example.com" value="{{ user.email }}" type="email">
-          {{ form.email.errors }}
-        </div>
+        {{ form|bootstrap }}
 
-        {{ form.non_field_errors }}
-
-        {% if saved %}
-          <div class="alert alert-success" role="alert">Your email address has been updated.</div>
-        {% endif %}
-        
         <button class="primaryAction btn btn-primary" type="submit">Save email address</button>
       </form>
     </div>

@@ -39,9 +39,7 @@ SECRET_KEY = '_+ntbtxcjxj5u)av$wt4q!lsad58v-7x_%zb1lc9f*$_#=p^f%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -69,15 +67,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-
 ROOT_URLCONF = 'systematic_review.urls'
-
 WSGI_APPLICATION = 'systematic_review.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -87,31 +82,22 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 # USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-
 STATIC_PATH = os.path.join(BASE_DIR, 'static')
-
 STATIC_URL = '/static/'  # You may find this is already defined as such.
-
 STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
 # Registration
-
 REGISTRATION_OPEN = True
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
