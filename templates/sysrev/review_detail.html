@@ -3,7 +3,33 @@
 {% block head_title %}{{ review.title }}{% endblock %}
 
 {% block body %}
-  <div class="page-header">
-    <h2>{{ review.title }}</h2>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2 class="panel-title">
+        {{ review.title }}
+        <nav class="pull-right">
+          <!-- TODO: make this do something -->
+          <a href="#" class="btn btn-default btn-xs">Configure</a>
+        </nav>
+      </h2>
+    </div>
+    <div class="panel-body">
+      {{ review.description }}
+    </div>
   </div>
+
+
+
+
+
+  <h3>Participants</h3>
+  <ul>
+  {% for participant in review.participants.all %}
+    <li>{{ participant}}</li>
+  {% endfor %}
+  </ul>
+
+
+  <h3>Query</h3>
+  <pre>{{ review.query }}</pre>
 {% endblock body %}
