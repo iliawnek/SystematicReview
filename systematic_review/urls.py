@@ -13,7 +13,7 @@ urlpatterns = patterns(
     '',
     url(r'^$',                          ReviewListView.as_view(),     name='index'),
     url(r'^review/(?P<slug>[\w\-]+)/$', ReviewDetailView.as_view(),   name='review'),
-    url(r'^create/',                    ReviewCreateView.as_view(),   name='create'),
+    url(r'^create/',                    ReviewCreateWizard.as_view(), name='create'),
     url(r'^profile/',                   ProfileView.as_view(),        name='profile'),
     url(r'^admin/',                     include(admin.site.urls)),
     url(r'^accounts/register/$',        MyRegistrationView.as_view(), name='registration_register'),

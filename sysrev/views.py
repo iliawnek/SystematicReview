@@ -1,9 +1,12 @@
 from django.shortcuts               import render
-from django.http                    import HttpResponse
+from django.http                    import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.formtools.wizard.views import SessionWizardView
 from django.utils.decorators        import method_decorator
 from django.views.generic.edit      import CreateView, UpdateView
 from django.views.generic           import ListView, DetailView
+from django.core.urlresolvers       import reverse
+
 
 from itertools import chain
 
@@ -80,9 +83,27 @@ class ReviewDetailView(DetailView):
         return super(ReviewDetailView, self).dispatch(*args, **kwargs)
 
 
-class ReviewCreateView(CreateView):
-    model = Review
+
+class ReviewCreateWizard(SessionWizardView):
+    form_list     = [ReviewCreateStep1, ReviewCreateStep2]
+    template_name = "sysrev/review_create_wizard.html"
+
+    def done(self, form_list, **kwargs):
+        s1 = form_list[0].cleaned_data
+        s2 = form_list[1].cleaned_data
+
+        review = Review()
+
+        review.user        = self.request.user
+        review.title       = s1["title"]
+        review.description = s1["description"]
+        #review.invited     = s1["invited"]
+        review.query       = s2["query"]
+
+        review.save()
+
+        return HttpResponseRedirect(reverse("review", args=(review.slug,)))
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(ReviewCreateView, self).dispatch(*args, **kwargs)
+        return super(ReviewCreateWizard, self).dispatch(*args, **kwargs)

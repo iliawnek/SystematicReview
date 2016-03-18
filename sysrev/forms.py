@@ -6,7 +6,7 @@ from sysrev.models import *
 class ProfileForm(forms.ModelForm):
     class Meta:
         model  = User
-        fields = ('email',)
+        fields = ("email",)
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -19,6 +19,10 @@ class ProfileForm(forms.ModelForm):
 
 
 
-class ManageReview(forms.ModelForm):
-    class Meta:
-        model  = Review
+class ReviewCreateStep1(forms.Form):
+    title       = forms.CharField(max_length=128)
+    description = forms.CharField(widget=forms.Textarea, required=False)
+    invited     = forms.CharField(widget=forms.Textarea, required=False)
+
+class ReviewCreateStep2(forms.Form):
+    query       = forms.CharField(widget=forms.Textarea)

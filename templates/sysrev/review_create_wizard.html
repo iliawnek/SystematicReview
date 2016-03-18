@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Create review{% endblock %}
+
+{% load bootstrap %}
+{% block body %}
+  <div class="page-header">
+    <h2>Create a new review: Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <form class="login" method="POST" action="">
+        {% csrf_token %}
+
+        {{ form.management_form }}
+
+        <table>
+        {{ wizard.management_form }}
+        {% if wizard.form.forms %}
+            {{ wizard.form.management_form }}
+            {% for form in wizard.form.forms %}
+                {{ form|bootstrap }}
+            {% endfor %}
+        {% else %}
+            {{ wizard.form|bootstrap }}
+        {% endif %}
+        </table>
+
+        {% if wizard.steps.prev %}
+        <button name="wizard_goto_step" type="submit" class="btn" value="{{ wizard.steps.prev }}">Back</button>
+        {% endif %}
+
+        <input type="submit" value="Continue" class="primaryAction btn btn-primary"/>
+      </form>
+    </div>
+  </div>
+{% endblock body %}
