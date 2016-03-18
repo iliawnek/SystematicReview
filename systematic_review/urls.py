@@ -9,12 +9,12 @@ class MyRegistrationView(RegistrationView):
         return "/"
 
 urlpatterns = patterns('',
-                       url(r'^$', views.index, name='index'),
-                       url(r'^create/', views.create, name='create'),
-                       url(r'^profile/', views.profile, name='profile'),
-                       url(r'^admin/', include(admin.site.urls)),
-                       url(r'^review/(?P<slug>[\w\-]+)/$', views.review, name='review'),
-                       url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
-                       url(r'^accounts/', include('registration.backends.simple.urls')),
-                       url(r'^accounts/', include('django.contrib.auth.urls')),
-                       )
+                       url(r'^$',                          views.index,   name='index'),
+                       url(r'^review/(?P<slug>[\w\-]+)/$', views.review,  name='review'),
+                       url(r'^create/',                    views.create,  name='create'),
+                       url(r'^profile/',                   views.profile, name='profile'),
+                       url(r'^admin/',                     include(admin.site.urls)),
+                       url(r'^accounts/register/$',        MyRegistrationView.as_view(), name='registration_register'),
+                       url(r'^accounts/',                  include('registration.backends.simple.urls')),
+                       url(r'^accounts/',                  include('django.contrib.auth.urls')),
+)

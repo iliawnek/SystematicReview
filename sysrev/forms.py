@@ -1,12 +1,11 @@
 from django import forms
 from django.contrib.auth.models import User
 from registration.forms import RegistrationForm
+from sysrev.models import *
 
 class ManageAccount(forms.ModelForm):
-    email = forms.EmailField(required=True)
-
     class Meta:
-        model = User
+        model  = User
         fields = ('email',)
 
     def __init__(self, *args, **kwargs):
@@ -28,3 +27,10 @@ class ManageAccount(forms.ModelForm):
             self.user.save()
 
         return self.user
+
+
+
+
+class ManageReview(forms.ModelForm):
+    class Meta:
+        model  = Review

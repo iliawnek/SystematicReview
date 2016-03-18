@@ -8,6 +8,26 @@ from sysrev.forms import ManageAccount
 
 
 @login_required
+def profile(request):
+    context_dict = {}
+
+    if request.method == 'POST':
+        form = ManageAccount(request.POST, user=request.user)
+        if form.is_valid():
+            before = request.user.email
+            form.save()
+            if before != request.user.email:
+                context_dict["saved"] = True
+            return render(request, 'sysrev/profile.html', context_dict)
+    else:
+        form = ManageAccount(user=request.user)
+
+    context_dict["form"] = form
+    return render(request, 'sysrev/profile.html', context_dict)
+
+
+
+@login_required
 def index(request):
     context_dict = {}
 
@@ -46,24 +66,6 @@ def index(request):
 def create(request):
     return render(request, 'sysrev/create.html')
 
-
-@login_required
-def profile(request):
-    context_dict = {}
-
-    if request.method == 'POST':
-        form = ManageAccount(request.POST, user=request.user)
-        if form.is_valid():
-            before = request.user.email
-            form.save()
-            if before != request.user.email:
-                context_dict["saved"] = True
-            return render(request, 'sysrev/profile.html', context_dict)
-    else:
-        form = ManageAccount(user=request.user)
-
-    context_dict["form"] = form
-    return render(request, 'sysrev/profile.html', context_dict)
 
 
 @login_required
