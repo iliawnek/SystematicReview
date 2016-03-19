@@ -31,7 +31,7 @@ class Review(models.Model):
 
     def clean(self):
         if (not self.participants) or self.participants.count() < 1:
-            raise ValidationError('Need at least one particpant')
+            raise ValidationError('Need at least one participant')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
