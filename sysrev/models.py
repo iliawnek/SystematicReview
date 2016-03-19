@@ -13,6 +13,7 @@ class Review(models.Model):
     date_created       = models.DateTimeField(auto_now_add=True)
     last_modified      = models.DateTimeField(auto_now=True)
     completed          = models.BooleanField(default=False)
+    date_completed     = models.DateTimeField(default=None, null=True)
 
     query              = models.TextField(default="")
 
