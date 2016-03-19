@@ -4,6 +4,10 @@ Ensure a C++ compiler is available. On windows, you need to grab https://www.mic
 
 Install modules from requirements.txt with `pip -r requirements.txt`
 
+# Tests
+
+Tests can be ran with `./manage.py test`
+
 # Group members
 
 - [DavidJRobertson](https://github.com/DavidJRobertson): 2133246
