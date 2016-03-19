@@ -113,6 +113,10 @@ body {
     font-weight: bold;
 }
 
+.pool-counter-icon {
+    font-size: large;
+}
+
 .pool-counter {
     font-weight: bold;
 }

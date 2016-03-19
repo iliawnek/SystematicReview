@@ -38,43 +38,43 @@
         <div class="progress">
           <!-- TODO: avoid inline CSS -->
           <div class="progress-bar progress-bar-success" title="Final pool" style="width: {{ review.final }}%">
-            {{ review.review.final_pool_size }}
+            {{ review.final }}%
           </div>
           <div class="progress-bar progress-bar-info" title="Document pool" style="width: {{ review.document }}%">
-            {{ review.review.document_pool_size }}
+            {{ review.document }}%
           </div>
           <div class="progress-bar progress-bar-warning" title="Abstract pool" style="width: {{ review.abstract }}%">
-            {{ review.review.abstract_pool_size }}
+            {{ review.abstract }}%
           </div>
           <div class="progress-bar progress-bar-danger" title="Rejected pool" style="width: {{ review.rejected }}%">
-            {{ review.review.rejected_pool_size }}
+            {{ review.rejected }}%
           </div>
         </div>
 
         <div class="col-md-3 col-xs-3 pool-counter color-green">
           <div class="text-center">
-            <h2>{{ review.review.final_pool_size }}</h2>
+            <h2>{{ review.review.final_pool_size }} <span class="glyphicon glyphicon-file pool-counter-icon"></span></h2>
             final pool
           </div>
         </div>
 
         <div class="col-md-3 col-xs-3 pool-counter color-blue">
           <div class="text-center">
-            <h2>{{ review.review.document_pool_size }}</h2>
+            <h2>{{ review.review.document_pool_size }} <span class="glyphicon glyphicon-file pool-counter-icon"></span></h2>
             document pool
           </div>
         </div>
 
         <div class="col-md-3 col-xs-3 pool-counter color-yellow">
           <div class="text-center">
-            <h2>{{ review.review.abstract_pool_size }}</h2>
+            <h2>{{ review.review.abstract_pool_size }} <span class="glyphicon glyphicon-file pool-counter-icon"></span></h2>
             abstract pool
           </div>
         </div>
 
         <div class="col-md-3 col-xs-3 pool-counter color-red">
           <div class="text-center">
-            <h2>{{ review.review.rejected_pool_size }}</h2>
+            <h2>{{ review.review.rejected_pool_size }} <span class="glyphicon glyphicon-file pool-counter-icon"></span></h2>
             rejected pool
           </div>
         </div>
