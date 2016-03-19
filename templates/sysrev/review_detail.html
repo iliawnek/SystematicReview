@@ -24,9 +24,10 @@
 
   <h3>Participants</h3>
   <ul>
-  {% for participant in review.participants.all %}
-    <li>{{ participant}}</li>
-  {% endfor %}
+    {% for participant in review.participants.all %}
+      <li><strong>{{ participant }}</strong>
+        <span class="color-grey">({{ participant.email }})</span></li>
+    {% endfor %}
   </ul>
 
 

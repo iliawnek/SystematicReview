@@ -21,6 +21,10 @@ body {
     color: red;
 }
 
+.color-grey {
+    color: #999;
+}
+
 .navbar-nav > li > a {
     padding-top: 30px;
     height: 80px;
