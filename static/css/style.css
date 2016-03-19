@@ -14,15 +14,23 @@ body {
 }
 
 .color-green {
-    color: green;
+    color: #5cb85c;
 }
 
 .color-red {
-    color: red;
+    color: #d9534f;
 }
 
 .color-grey {
     color: #999;
+}
+
+.color-yellow {
+    color: #f0ad4e;
+}
+
+.color-blue {
+    color: #5bc0de;
 }
 
 .navbar-nav > li > a {
@@ -91,6 +99,10 @@ body {
     height: 32px;
 }
 
+.progress {
+    border-radius: 0px;
+}
+
 .progress-bar-paper-icon {
     font-size: 14px;
 }
@@ -98,6 +110,14 @@ body {
 .progress-bar-paper {
     line-height: 32px;
     font-size: 16px;
+    font-weight: bold;
+}
+
+.pool-counter {
+    font-weight: bold;
+}
+
+.pool-counter > .text-center > h2 {
     font-weight: bold;
 }
 

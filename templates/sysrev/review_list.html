@@ -25,7 +25,7 @@
       ">
 
         <div class="panel-heading">
-          <a href="/review/{{ review.review.pk}}-{{ review.review.slug }}">{{ review.review.title }}</a>
+          <a href="/review/{{ review.review.pk }}-{{ review.review.slug }}">{{ review.review.title }}</a>
           {% if review.review.completed %}
             <span class="label label-success pull-right">COMPLETED</span>
           {% else %}
@@ -35,57 +35,60 @@
 
         <div class="panel-body">{{ review.review.description }}</div>
 
+        <div class="progress">
+          <!-- TODO: avoid inline CSS -->
+          <div class="progress-bar progress-bar-success" title="Final pool" style="width: {{ review.final }}%">
+            {{ review.review.final_pool_size }}
+          </div>
+          <div class="progress-bar progress-bar-info" title="Document pool" style="width: {{ review.document }}%">
+            {{ review.review.document_pool_size }}
+          </div>
+          <div class="progress-bar progress-bar-warning" title="Abstract pool" style="width: {{ review.abstract }}%">
+            {{ review.review.abstract_pool_size }}
+          </div>
+          <div class="progress-bar progress-bar-danger" title="Rejected pool" style="width: {{ review.rejected }}%">
+            {{ review.review.rejected_pool_size }}
+          </div>
+        </div>
+
+        <div class="col-md-3 col-xs-3 pool-counter color-green">
+          <div class="text-center">
+            <h2>{{ review.review.final_pool_size }}</h2>
+            final pool
+          </div>
+        </div>
+
+        <div class="col-md-3 col-xs-3 pool-counter color-blue">
+          <div class="text-center">
+            <h2>{{ review.review.document_pool_size }}</h2>
+            document pool
+          </div>
+        </div>
+
+        <div class="col-md-3 col-xs-3 pool-counter color-yellow">
+          <div class="text-center">
+            <h2>{{ review.review.abstract_pool_size }}</h2>
+            abstract pool
+          </div>
+        </div>
+
+        <div class="col-md-3 col-xs-3 pool-counter color-red">
+          <div class="text-center">
+            <h2>{{ review.review.rejected_pool_size }}</h2>
+            rejected pool
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <br>
+        <br>
+
         <ul class="list-group">
-
           <li class="list-group-item">
-            <div class="progress">
-              <!-- TODO: avoid inline CSS -->
-              <div class="progress-bar progress-bar-success" title="Final pool" style="width: {{ review.final }}%">
-                {{ review.review.final_pool_size }}
-              </div>
-              <div class="progress-bar progress-bar-info" title="Document pool" style="width: {{ review.document }}%">
-                {{ review.review.document_pool_size }}
-              </div>
-              <div class="progress-bar progress-bar-warning" title="Abstract pool" style="width: {{ review.abstract }}%">
-                {{ review.review.abstract_pool_size }}
-              </div>
-              <div class="progress-bar progress-bar-danger" title="Rejected pool" style="width: {{ review.rejected }}%">
-                {{ review.review.rejected_pool_size }}
-              </div>
-            </div>
+            <strong>Last modified:</strong> {{ review.review.last_modified }}
           </li>
-
           <li class="list-group-item">
-
-            <div class="col-md-3 col-xs-3">
-              <div class="text-center">
-                <h3>{{ review.review.abstract_pool_size }}</h3>
-                abstract pool
-              </div>
-            </div>
-
-            <div class="col-md-3 col-xs-3">
-              <div class="text-center">
-                <h3>{{ review.review.document_pool_size }}</h3>
-                document pool
-              </div>
-            </div>
-
-            <div class="col-md-3 col-xs-3">
-              <div class="text-center">
-                <h3>{{ review.review.final_pool_size }}</h3>
-                final pool
-              </div>
-            </div>
-
-            <div class="col-md-3 col-xs-3">
-              <div class="text-center">
-                <h3><span class="glyphicon glyphicon-time"></span></h3>
-                {{ review.review.last_modified }}
-              </div>
-            </div>
-
-            <div class="clearfix"></div>
+            <strong>Date created:</strong> {{ review.review.date_created }}
           </li>
         </ul>
 
