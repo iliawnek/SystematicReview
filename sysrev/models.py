@@ -15,6 +15,10 @@ class Review(models.Model):
     completed          = models.BooleanField(default=False)
 
     query              = models.TextField(default="")
+
+    # TODO: These should be removed, we can use QuerySet.count() instead?
+    # as pointed out by @DavidJRobertson in chat,
+    # caching like this adds complication with probably no benefit
     abstract_pool_size = models.IntegerField(default=0)
     document_pool_size = models.IntegerField(default=0)
     final_pool_size    = models.IntegerField(default=0)
