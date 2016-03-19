@@ -82,16 +82,16 @@
         {% block content %}
         {% endblock content %}
       {% endblock body %}
-      {% block extra_body %}
-      {% endblock extra_body %}
     </div>
     <!-- /.container -->
 
     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="https://getbootstrap.com/dist/js/bootstrap.min.js" defer></script>
 
+    {% block extra_body %}
+    {% endblock extra_body %}
   </body>
 </html>

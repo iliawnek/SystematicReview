@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head_title %}{{ paper.title }}{% endblock %}
+
+{% block body %}
+  <div class="page-header">
+    <h2>
+      {{ title }}
+    </h2>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2 class="panel-title">
+        {{ paper.title }}
+        <nav class="pull-right">
+        {% if paper.pool in to_embed_full %}
+          <a href="{{ paper.url }}" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-link"></span> Open in new tab/window</a>
+        {% else %}
+          <a id="reading" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-sunglasses"></span> Reading aid</a>
+        {% endif %}
+        </nav>
+      </h2>
+      <span>({{ paper.authors }} - Published {{ paper.publish_date }})</span>
+    </div>
+
+    <div class="panel-body">
+      {% if paper.pool in to_embed_full %}
+        <div id="external" class="embed-responsive embed-responsive-4by3">
+          <iframe class="embed-responsive-item" src="{{ paper.url }}"></iframe>
+        </div>
+      {% else %}
+        {{ paper.abstract }}
+      {% endif %}
+    </div>
+
+    {% if paper.pool in to_judge %}
+    <div class="panel-footer text-center">
+      <p>Is this paper relevant to the review?</p>
+      <div class="btn-group" role="group">
+        <!-- TODO: Do something -->
+        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up color-green"></span> Yes</button>
+        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-down color-red"></span> No</button>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="progress">
+        <!-- TODO: avoid inline CSS -->
+        <div class="progress-bar progress-bar-success" title="Final pool" style="width: {{ review_progress.final }}%">
+          {{ paper.review.final_pool_size }}
+        </div>
+        <div class="progress-bar progress-bar-info" title="Document pool" style="width: {{ review_progress.document }}%">
+          {{ paper.review.document_pool_size }}
+        </div>
+        <div class="progress-bar progress-bar-warning" title="Abstract pool" style="width: {{ review_progress.abstract }}%">
+          {{ paper.review.abstract_pool_size }}
+        </div>
+        <div class="progress-bar progress-bar-danger" title="Rejected pool" style="width: {{ review_progress.rejected }}%">
+          {{ paper.review.rejected_pool_size }}
+        </div>
+      </div>
+    </li>
+  </ul>
+{% endblock body %}
+
+{% block extra_body %}
+  <script>
+    $(document).ready(function () {
+      $("#reading").click(function(){
+        $(".panel-body").toggleClass("panel-reading");
+        $("#reading").toggleClass("active");
+      });
+    });
+  </script>
+{% endblock %}
+

@@ -13,6 +13,14 @@ body {
     color: white;
 }
 
+.color-green {
+    color: green;
+}
+
+.color-red {
+    color: red;
+}
+
 .navbar-nav > li > a {
     padding-top: 30px;
     height: 80px;
@@ -64,6 +72,15 @@ body {
     font-size: small;
     background-color: white;
     color: black;
+}
+
+.panel-reading {
+    font-size: 16px;
+    color: #645032;
+    background-color: #ece1ca;
+    line-height: 2;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 /* page headers */

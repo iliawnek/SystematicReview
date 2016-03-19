@@ -85,6 +85,44 @@ class ReviewDetailView(DetailView):
         return super(ReviewDetailView, self).dispatch(*args, **kwargs)
 
 
+class PaperDetailView(DetailView):
+    model = Paper
+
+    def get_context_data(self, object=None):
+        context = {}
+        try:
+            if (object.review == Review.objects.get(pk=self.kwargs['pk'])) and (self.request.user in object.review.participants.all()):
+                context["paper"] = Paper.objects.get(pk=self.kwargs['pk2'])
+
+                titles = {'A': 'Abstract screening', 'D': 'Document screening', 'F': 'Final document', 'R': 'Rejected document'};
+                context["title"] = titles[object.pool]
+
+                context["to_judge"] = ('A', 'D')
+                context["to_embed_full"] = ('D', 'F')
+
+                abstract = object.review.abstract_pool_size
+                document = object.review.document_pool_size
+                final    = object.review.final_pool_size
+                rejected = object.review.rejected_pool_size
+                total    = abstract + document + final + rejected
+
+                if total is not 0:
+                    abstract = int((float(abstract) / float(total)) * 100.0)
+                    document = int((float(document) / float(total)) * 100.0)
+                    final    = int((float(final)    / float(total)) * 100.0)
+                    rejected = int((float(rejected) / float(total)) * 100.0)
+
+                context["review_progress"] = {"abstract": abstract, "document": document, "final": final, "rejected": rejected}
+            else:
+                raise Http404("Paper not found")
+        except Review.DoesNotExist:
+            raise Http404("Paper not found")
+        return context
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PaperDetailView, self).dispatch(*args, **kwargs)
+
 
 class ReviewCreateWizard(SessionWizardView):
     form_list     = [ReviewCreateStep1, ReviewCreateStep2]
