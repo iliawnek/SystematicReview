@@ -16,35 +16,57 @@
       </div>
     </h2>
   </div>
-
+  
+  <h3>Description</h3>
   <div class="panel panel-default">
-    <div class="panel-heading">
-      <h2 class="panel-title">
-        {{ review.title }}
-        <nav class="pull-right">
-          <!-- TODO: make this do something -->
-          <a href="#" class="btn btn-default btn-xs">Configure</a>
-        </nav>
-      </h2>
-    </div>
     <div class="panel-body">
       {{ review.description }}
     </div>
   </div>
-
-
-
-
+  
+  <h3>Status<br>
+  {% if review.review.completed %}
+    <span class="label label-success">COMPLETED</span>
+  {% else %}
+    <span class="label label-primary">IN PROGRESS</span>
+    <!-- TODO: Go to a random unjudged paper (abstract pool first, then document pool) instead of '01' -->
+    <a class="btn btn-primary" href="/review/{{ review.pk }}-{{ review.slug }}/01/">Work on this review</a>
+  {% endif %}
+  </h3>
 
   <h3>Participants</h3>
-  <ul>
+  <ul class="list-group">
     {% for participant in review.participants.all %}
-      <li><strong>{{ participant }}</strong>
+      <li class="list-group-item"><strong>{{ participant }}</strong>
         <span class="color-grey">({{ participant.email }})</span></li>
     {% endfor %}
   </ul>
 
-
   <h3>Query</h3>
   <pre>{{ review.query }}</pre>
+
+  <h3>Pools</h3>
+  <div class="progress progress-paper">
+    <!-- TODO: avoid inline CSS -->
+    <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip" title="Abstract pool" style="width: {{ review_progress.abstract }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.abstract_pool_size }}
+    </div>
+        <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool" style="width: {{ review_progress.document }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.document_pool_size }}
+    </div>
+        <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool" style="width: {{ review_progress.final }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.final_pool_size }}
+    </div>
+    <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool" style="width: {{ review_progress.rejected }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.rejected_pool_size }}
+    </div>
+  </div>
 {% endblock body %}
+
+{% block extra_body %}
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+  </script>
+{% endblock %}
