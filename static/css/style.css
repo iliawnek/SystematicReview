@@ -83,6 +83,20 @@ body {
     padding-right: 20px;
 }
 
+.progress-paper {
+    height: 32px;
+}
+
+.progress-bar-paper-icon {
+    font-size: 14px;
+}
+
+.progress-bar-paper {
+    line-height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 /* page headers */
 .page-header {
     border-bottom-color: #ccc; /* darker horizontal rule */

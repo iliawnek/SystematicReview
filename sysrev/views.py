@@ -108,10 +108,10 @@ class PaperDetailView(DetailView):
                 total    = abstract + document + final + rejected
 
                 if total is not 0:
-                    abstract = int((float(abstract) / float(total)) * 100.0)
-                    document = int((float(document) / float(total)) * 100.0)
-                    final    = int((float(final)    / float(total)) * 100.0)
-                    rejected = int((float(rejected) / float(total)) * 100.0)
+                    abstract = (float(abstract) / float(total)) * 100.0
+                    document = (float(document) / float(total)) * 100.0
+                    final    = (float(final)    / float(total)) * 100.0
+                    rejected = (float(rejected) / float(total)) * 100.0
 
                 context["review_progress"] = {"abstract": abstract, "document": document, "final": final, "rejected": rejected}
             else:
