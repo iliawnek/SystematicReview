@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
-{% block head_title %}{{ paper.title }}{% endblock %}
+{% block head_title %}{{ title }}{% endblock %}
 
 {% block body %}
   <div class="page-header">
     <h2>
-      {{ title }}
+      {{ paper.review.title }}
     </h2>
+    <h3>
+      {{ title }}
+    </h3>
   </div>
 
   <div class="panel panel-default">
@@ -46,25 +49,21 @@
     {% endif %}
   </div>
 
-  <ul class="list-group">
-    <li class="list-group-item">
-      <div class="progress">
-        <!-- TODO: avoid inline CSS -->
-        <div class="progress-bar progress-bar-success" title="Final pool" style="width: {{ review_progress.final }}%">
-          {{ paper.review.final_pool_size }}
-        </div>
-        <div class="progress-bar progress-bar-info" title="Document pool" style="width: {{ review_progress.document }}%">
-          {{ paper.review.document_pool_size }}
-        </div>
-        <div class="progress-bar progress-bar-warning" title="Abstract pool" style="width: {{ review_progress.abstract }}%">
-          {{ paper.review.abstract_pool_size }}
-        </div>
-        <div class="progress-bar progress-bar-danger" title="Rejected pool" style="width: {{ review_progress.rejected }}%">
-          {{ paper.review.rejected_pool_size }}
-        </div>
-      </div>
-    </li>
-  </ul>
+  <div class="progress progress-paper">
+    <!-- TODO: avoid inline CSS -->
+    <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip" title="Abstract pool" style="width: {{ review_progress.abstract }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ paper.review.abstract_pool_size }}
+    </div>
+        <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool" style="width: {{ review_progress.document }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ paper.review.document_pool_size }}
+    </div>
+        <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool" style="width: {{ review_progress.final }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ paper.review.final_pool_size }}
+    </div>
+    <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool" style="width: {{ review_progress.rejected }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ paper.review.rejected_pool_size }}
+    </div>
+  </div>
 {% endblock body %}
 
 {% block extra_body %}
@@ -74,6 +73,11 @@
         $(".panel-body").toggleClass("panel-reading");
         $("#reading").toggleClass("active");
       });
+    });
+  </script>
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
     });
   </script>
 {% endblock %}
