@@ -67,10 +67,6 @@
 {% endblock body %}
 
 {% block extra_body %}
-  <!--
-  TODO: Can we rework this not to involve a script added in like this?
-  This prevents use of 'defer' tag on jquery script, slightly reducing rendering performance
-  -->
   <script>
     $(function () {
       $("#reading").click(function(){
