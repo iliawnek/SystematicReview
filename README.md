@@ -10,7 +10,7 @@ Tests can be ran with `./manage.py test`
 
 # Group members
 
-- [DavidJRobertson](https://github.com/DavidJRobertson): 2133246
-- [ewanmorton](https://github.com/ewanmorton): 2135980
-- [iliawnek](https://github.com/iliawnek): 2131620
-- [nallar](https://github.com/nallar): 2133868
+- David Robertson - [DavidJRobertson](https://github.com/DavidJRobertson): 2133246
+- Ewan Morton - [ewanmorton](https://github.com/ewanmorton): 2135980
+- Ken Li - [iliawnek](https://github.com/iliawnek): 2131620
+- Ross Allan - [nallar](https://github.com/nallar): 2133868
