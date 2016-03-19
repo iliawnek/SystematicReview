@@ -68,16 +68,12 @@
 
 {% block extra_body %}
   <script>
-    $(document).ready(function () {
+    $(function () {
       $("#reading").click(function(){
         $(".panel-body").toggleClass("panel-reading");
         $("#reading").toggleClass("active");
       });
-    });
-  </script>
-  <script>
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();   
+      $('[data-toggle="tooltip"]').tooltip();
     });
   </script>
 {% endblock %}
