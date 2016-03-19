@@ -92,18 +92,19 @@ class PaperDetailView(DetailView):
         context = {}
         try:
             if (object.review == Review.objects.get(pk=self.kwargs['pk'])) and (self.request.user in object.review.participants.all()):
-                context["paper"] = Paper.objects.get(pk=self.kwargs['pk2'])
+                paper = Paper.objects.get(pk=self.kwargs['pk2'])
+                context["paper"] = paper
 
                 titles = {'A': 'Abstract screening', 'D': 'Document screening', 'F': 'Final document', 'R': 'Rejected document'};
-                context["title"] = titles[object.pool]
+                context["title"] = titles[paper.pool]
 
                 context["to_judge"] = ('A', 'D')
                 context["to_embed_full"] = ('D', 'F')
 
-                abstract = object.review.abstract_pool_size
-                document = object.review.document_pool_size
-                final    = object.review.final_pool_size
-                rejected = object.review.rejected_pool_size
+                abstract = paper.review.abstract_pool_size
+                document = paper.review.document_pool_size
+                final    = paper.review.final_pool_size
+                rejected = paper.review.rejected_pool_size
                 total    = abstract + document + final + rejected
 
                 if total is not 0:
