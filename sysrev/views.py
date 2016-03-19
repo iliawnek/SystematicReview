@@ -66,6 +66,22 @@ class ReviewListView(ListView):
         return super(ReviewListView, self).dispatch(*args, **kwargs)
 
 
+def paperPoolPercentages(review):
+    abstract = review.abstract_pool_size
+    document = review.document_pool_size
+    final    = review.final_pool_size
+    rejected = review.rejected_pool_size
+    total    = abstract + document + final + rejected
+
+    if total is not 0:
+        abstract = (float(abstract) / float(total)) * 100.0
+        document = (float(document) / float(total)) * 100.0
+        final    = (float(final)    / float(total)) * 100.0
+        rejected = (float(rejected) / float(total)) * 100.0
+
+    return {"abstract": abstract, "document": document, "final": final, "rejected": rejected}
+
+
 class ReviewDetailView(DetailView):
     model = Review
 
@@ -74,6 +90,7 @@ class ReviewDetailView(DetailView):
         try:
             if self.request.user in object.participants.all():
                 context["review"] = object
+                context["review_progress"] = paperPoolPercentages(context["review"])
             else:
                 raise Http404("Review not found")
         except Review.DoesNotExist:
@@ -101,19 +118,7 @@ class PaperDetailView(DetailView):
                 context["to_judge"] = ('A', 'D')
                 context["to_embed_full"] = ('D', 'F')
 
-                abstract = paper.review.abstract_pool_size
-                document = paper.review.document_pool_size
-                final    = paper.review.final_pool_size
-                rejected = paper.review.rejected_pool_size
-                total    = abstract + document + final + rejected
-
-                if total is not 0:
-                    abstract = (float(abstract) / float(total)) * 100.0
-                    document = (float(document) / float(total)) * 100.0
-                    final    = (float(final)    / float(total)) * 100.0
-                    rejected = (float(rejected) / float(total)) * 100.0
-
-                context["review_progress"] = {"abstract": abstract, "document": document, "final": final, "rejected": rejected}
+                context["review_progress"] = paperPoolPercentages(paper.review)
             else:
                 raise Http404("Paper not found")
         except Review.DoesNotExist:

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from registration.forms import RegistrationForm
 from sysrev.models import *
+from widgets import *
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -41,4 +42,4 @@ class ReviewCreateStep1(forms.Form):
 
 
 class ReviewCreateStep2(forms.Form):
-    query       = forms.CharField(widget=forms.Textarea)
+    query       = forms.CharField(widget=QueryWidget)
