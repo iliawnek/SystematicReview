@@ -34,7 +34,7 @@
         </div>
 
         <div class="panel-body">{{ review.review.description }}</div>
-
+        <br>
         <div class="progress">
           <!-- TODO: avoid inline CSS -->
           <div class="progress-bar progress-bar-success" title="Final pool" style="width: {{ review.final }}%">
@@ -82,15 +82,6 @@
         <div class="clearfix"></div>
         <br>
         <br>
-
-        <ul class="list-group">
-          <li class="list-group-item">
-            <strong>Last modified:</strong> {{ review.review.last_modified }}
-          </li>
-          <li class="list-group-item">
-            <strong>Date created:</strong> {{ review.review.date_created }}
-          </li>
-        </ul>
 
       </div>
       <br>
