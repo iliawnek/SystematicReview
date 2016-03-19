@@ -48,7 +48,7 @@ def populate():
                      last_modified=generate_random_date(recent=True),
                      query="(RSI OR repetitive OR strain OR injury) AND (drums OR drumming OR drummer OR guitar OR guitarist)")
 
-    for pool in ["a", "a", "a", "d", "d", "f", "f", "f", "f", "r"]:
+    for pool in ["A", "A", "A", "D", "D", "F", "F", "F", "F", "R"]:
         add_paper(review=adhd,
                   title="A Meta-analysis on Acupuncture Treatment of Attention Deficit/Hyperactivity Disorder",
                   authors="Ni XQ, Zhang JY, Han XM, Yin DQ",
