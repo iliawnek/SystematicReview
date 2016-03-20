@@ -17,6 +17,7 @@ class SRRegistrationView(RegistrationView):
     def get_success_url(self, user=None):
         return "/"
 
+
 class ProfileView(UpdateView):
     template_name = "sysrev/profile_form.html"
     form_class    = ProfileForm
@@ -86,6 +87,9 @@ class ReviewDetailView(DetailView):
 class ReviewUpdateView(UpdateView):
     model  = Review
     fields = ['title', 'description', 'participants', 'query']
+
+    def get_success_url(self):
+        return self.request.path[:-7]
 
 
 class ReviewDeleteView(DeleteView):
