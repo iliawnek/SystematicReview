@@ -25,7 +25,7 @@
   <!-- TODO: Go to a random unjudged paper (abstract pool first, then document pool) instead of '01' -->
   <a class="btn btn-primary" href="/review/{{ review.pk }}-{{ review.slug }}/01/">Work on this review</a>
   <div class="vertical-divider"></div>
-  <a class="btn btn-info" href="#">Edit</a>
+  <a class="btn btn-info"   href="{% url 'review_update' review.pk %}">Edit</a>
   <a class="btn btn-danger" href="{% url 'review_delete' review.pk %}">Delete</a>
 
   <h3>Description</h3>
