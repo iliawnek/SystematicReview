@@ -8,6 +8,7 @@ from django.views.generic           import ListView, DetailView, RedirectView
 from django.core.urlresolvers       import reverse
 from registration.backends.simple.views import RegistrationView
 from itertools import chain
+from datetime import datetime
 
 from sysrev.models import *
 from sysrev.forms  import *
@@ -102,6 +103,8 @@ class ReviewDeleteView(DeleteView):
 
 
 class WorkView(RedirectView):
+    permanent = False
+
     def get(self, request, *args, **kwargs):
         try:
             review = Review.objects.get(pk=self.kwargs['pk'])
@@ -113,9 +116,14 @@ class WorkView(RedirectView):
             elif counts["document"] > 0:
                 pk = papers.filter(pool="D").first().pk
             else:
-                # TODO: redirect to final pool page
+                review.completed = True
+                # TODO: display completion date/time correctly
+                review.last_modified = datetime.now()
+                review.save()
+                self.url = "/review/" + str(review.pk) + "-" + review.slug
+                return super(WorkView, self).get(request, args, **kwargs)
                 pass
-            self.url = request.path[:-5] + str(pk) + "/"
+            self.url = "/review/" + str(review.pk) + "-" + review.slug + "/" + str(pk)
             return super(WorkView, self).get(request, args, **kwargs)
         except Review.DoesNotExist:
             raise Http404("Paper not found")
@@ -135,7 +143,7 @@ class PaperDetailView(DetailView):
                 context["paper"] = paper
                 context["review"] = review
 
-                titles = {'A': 'Abstract screening', 'D': 'Document screening', 'F': 'Final document', 'R': 'Rejected document'};
+                titles = {'A': 'Abstract screening', 'D': 'Document screening', 'F': 'Final document', 'R': 'Rejected document'}
                 context["title"] = titles[paper.pool]
 
                 context["to_judge"] = ('A', 'D')
@@ -154,6 +162,32 @@ class PaperDetailView(DetailView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(PaperDetailView, self).dispatch(*args, **kwargs)
+
+
+class PaperChoiceView(RedirectView):
+    permanent = False
+
+    def get(self, request, *args, **kwargs):
+        try:
+            review = Review.objects.get(pk=self.kwargs['pk'])
+            paper = Paper.objects.get(pk=self.kwargs['pk2'], review=review)
+            choice = self.kwargs['choice']
+            if choice == "yes":
+                if paper.pool == "A":
+                    paper.pool = "D"
+                elif paper.pool == "D":
+                    paper.pool = "F"
+            elif choice == "no":
+                paper.pool = "R"
+            else:
+                raise Http404("Invalid choice")
+            paper.save()
+            self.url = "/review/" + str(review.pk) + "-" + review.slug + "/work/"
+            return super(PaperChoiceView, self).get(request, args, **kwargs)
+        except Review.DoesNotExist:
+            raise Http404("Review not found")
+        except Paper.DoesNotExist:
+            raise Http404("Paper not found")
 
 
 class ReviewCreateWizard(SessionWizardView):
