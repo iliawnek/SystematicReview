@@ -117,8 +117,11 @@ class Paper(models.Model):
         # TODO: label for section headings is lost
         # eg. StringElement('some text here', attributes={u'NlmCategory': u'METHODS', u'Label': u'METHODS'})
         abstractText = ""
-        for stringElement in article[u'Abstract'][u'AbstractText']:
-            abstractText += stringElement
+        try:
+            for stringElement in article[u'Abstract'][u'AbstractText']:
+                abstractText += stringElement
+        except KeyError:
+            pass
 
         paper.abstract = abstractText
         paper.publish_date = _get_date(medlineCitation)

@@ -45,11 +45,10 @@ class ReviewCreateStep1(forms.Form):
 class ReviewCreateStep2(forms.Form):
     query       = forms.CharField(widget=QueryWidget)
 
-    # TODO: Use AJAX to show count of returned papers as query is entered
     def clean_query(self):
         query = self.cleaned_data.get('query')
         data = PubMed.get_data_from_query(query)
-        count = data["Count"]
+        count = int(data["Count"])
         if count >= 1000:
             raise forms.ValidationError("""Your query returned %s papers.\n
                                         It must return fewer than 1000 papers.\n
