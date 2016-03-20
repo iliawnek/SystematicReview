@@ -80,6 +80,7 @@
 {% endblock body %}
 
 {% block extra_body %}
+{% if paper.pool in to_judge %}
   <script type="text/javascript">
     function keyUp(e) {
       if (e.altKey && e.keyCode == 89) {
@@ -90,4 +91,5 @@
     }
     document.addEventListener('keyup', keyUp, false);
   </script>
+{% endif %}
 {% endblock extra_body %}
