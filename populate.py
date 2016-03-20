@@ -8,7 +8,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'systematic_review.settings')
 django.setup()
 
 from sysrev.api import PubMed
-from sysrev.models import User, Review
+from sysrev.models import Paper, Review, User
 
 
 def populate():
@@ -42,7 +42,7 @@ def populate():
     # TODO: find out why lung_cancer and adhd queries return 0 results
     reviews = [stress, rsi]
     for review in reviews:
-        PubMed.create_papers_from_ids(PubMed.get_ids_from_query(review.query), review)
+        Paper.create_papers_from_pubmed_ids(PubMed.get_ids_from_query(review.query), review)
 
     add_paper_by_id(review=adhd, id=26502548)
     add_paper_by_id(review=adhd, id=26990084)
@@ -62,7 +62,7 @@ def add_review(users, title, description, date_created, last_modified, query, co
 
 
 def add_paper_by_id(review, id):
-    PubMed.create_papers_from_ids([id], review)
+    Paper.create_papers_from_pubmed_ids([id], review)
 
 
 def add_user(name, email=None, password=None):

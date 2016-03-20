@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 from django.db                      import models
-from django.contrib.auth.models     import User
 from django.template.defaultfilters import slugify
-from django.core.exceptions         import ValidationError
-from django.core.urlresolvers       import reverse
+
+from sysrev.api.PubMed import _get_authors, _get_date, url_from_id, read_papers_from_ids
 
 
 class Review(models.Model):
@@ -93,6 +95,35 @@ class Paper(models.Model):
     url          = models.URLField(default="")
     notes        = models.TextField(default="")
     pool         = models.CharField(max_length=1, choices=POOLS, default=ABSTRACT_POOL)
+
+    @staticmethod
+    def create_paper_from_data(data, review, pool):
+        """Creates Paper model from given data, review and pool"""
+        medlineCitation = data[u'MedlineCitation']
+        article = medlineCitation[u'Article']
+        paper = Paper.objects.get_or_create(review=review, title=article[u'ArticleTitle'])[0]
+        paper.review = review
+        paper.authors = _get_authors(article)
+
+        # TODO: label for section headings is lost
+        # eg. StringElement('some text here', attributes={u'NlmCategory': u'METHODS', u'Label': u'METHODS'})
+        abstractText = ""
+        for stringElement in article[u'Abstract'][u'AbstractText']:
+            abstractText += stringElement
+
+        paper.abstract = abstractText
+        paper.publish_date = _get_date(medlineCitation)
+        paper.url = url_from_id(medlineCitation[u'PMID'])
+        paper.notes = ""
+        paper.pool = pool
+        paper.save()
+        return paper
+
+    @staticmethod
+    def create_papers_from_pubmed_ids(ids, review, pool='A'):
+        """Creates papers from all of the given ids, in the given review and pool"""
+        papers = read_papers_from_ids(ids)
+        return map(lambda data: Paper.create_paper_from_data(data, review, pool), papers)
 
     def get_absolute_url(self):
         return self.review.get_absolute_url() + "/" + str(self.pk)

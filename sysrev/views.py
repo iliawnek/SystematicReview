@@ -1,17 +1,16 @@
-from django.shortcuts               import render
-from django.http                    import HttpResponse, HttpResponseRedirect, Http404
+from datetime import datetime
+from itertools import chain
+from random import randint
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.formtools.wizard.views import SessionWizardView
+from django.http import HttpResponseRedirect, Http404
 from django.utils.decorators        import method_decorator
 from django.views.decorators.cache  import cache_control
-from django.views.generic.edit      import CreateView, UpdateView, DeleteView
 from django.views.generic           import ListView, DetailView, RedirectView
+from django.views.generic.edit import UpdateView, DeleteView
 from registration.backends.simple.views import RegistrationView
-from itertools import chain
-from datetime  import datetime
-from random    import randint
 
-from sysrev.models import *
 from sysrev.forms  import *
 
 
@@ -225,7 +224,7 @@ class ReviewCreateWizard(SessionWizardView):
         review.save()
 
         ids = PubMed.get_data_from_query(review.query)["ids"]
-        PubMed.create_papers_from_ids(ids, review)
+        Paper.create_papers_from_pubmed_ids(ids, review)
 
         return HttpResponseRedirect(review.get_absolute_url())
 

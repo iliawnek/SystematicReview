@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from api import PubMed
-from sysrev.models import Review
+from sysrev.models import Paper, Review
 
 
 class PubmedQueryTestCase(TestCase):
@@ -18,7 +18,7 @@ class PubmedQueryTestCase(TestCase):
 
     def test_create_papers_from_ids(self):
         review = Review.objects.get_or_create(title="Investigating the effects of acupuncture on children with ADHD")[0]
-        result = PubMed.create_papers_from_ids([26502548], review)[0]
+        result = Paper.create_papers_from_pubmed_ids([26502548], review)[0]
         self.assertEquals("[A Meta-analysis on Acupuncture Treatment of Attention Deficit/Hyperactivity Disorder].",
                           result.title)
 
