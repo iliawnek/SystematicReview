@@ -37,7 +37,7 @@
           <h4>Final pool</h4>
           <div class="list-group">
             {% for paper in final_papers %}
-              <a href="{{ paper.get_absolute_url}}" class="list-group-item">
+              <a href="{{ paper.url }}" class="list-group-item">
                 <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
               </a>
             {% endfor %}
@@ -47,7 +47,7 @@
           <h4>Rejected pool</h4>
           <div class="list-group">
             {% for paper in rejected_papers %}
-              <a href="{{ paper.get_absolute_url}}" class="list-group-item">
+              <a href="{{ paper.url }}" class="list-group-item">
                 <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
               </a>
             {% endfor %}
