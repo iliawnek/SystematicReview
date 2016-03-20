@@ -6,7 +6,7 @@ urlpatterns = patterns(
     '',
     url(r'^$',                                              ReviewListView.as_view(),     name='index'),
     url(r'^review/(?P<pk>\d+)(-([\w\-]+))?/$',              ReviewDetailView.as_view(),   name='review'),
-    url(r'^review/(?P<pk>\d+)(-([\w\-]+))?/delete$',        ReviewUpdateView.as_view(),   name='review_update'),
+    url(r'^review/(?P<pk>\d+)(-([\w\-]+))?/update$',        ReviewUpdateView.as_view(),   name='review_update'),
     url(r'^review/(?P<pk>\d+)(-([\w\-]+))?/delete$',        ReviewDeleteView.as_view(),   name='review_delete'),
     url(r'^create/',                                        ReviewCreateWizard.as_view(), name='create'),
 

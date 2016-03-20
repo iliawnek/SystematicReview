@@ -9,7 +9,8 @@
 
     {{ form|bootstrap }}
 
-    <a href="{% url "review" object.pk %}" class="btn btn-default">Cancel</a>
+    <a href="{% url 'review' object.pk %}" class="btn btn-default">Cancel</a>
     <input type="submit" value="Update" class="btn btn-primary"/>
+    <a href="{% url 'review_delete' object.pk %}" class="btn btn-danger">Delete</a>
   </form>
 {% endblock %}
