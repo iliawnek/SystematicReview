@@ -3,6 +3,7 @@ from django.http                    import HttpResponse, HttpResponseRedirect, H
 from django.contrib.auth.decorators import login_required
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.utils.decorators        import method_decorator
+from django.views.decorators.cache  import cache_control
 from django.views.generic.edit      import CreateView, UpdateView, DeleteView
 from django.views.generic           import ListView, DetailView, RedirectView
 from django.core.urlresolvers       import reverse
@@ -159,6 +160,7 @@ class PaperDetailView(DetailView):
         return context
 
     @method_decorator(login_required)
+    @cache_control(no_cache=True, must_revalidate=True, no_store=True)
     def dispatch(self, *args, **kwargs):
         return super(PaperDetailView, self).dispatch(*args, **kwargs)
 

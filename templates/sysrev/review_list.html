@@ -56,12 +56,14 @@
 
         <div class="panel-body">{{ review.review.description }}</div>
 
+        {% if not review.review.completed %}
         <div class="progress review-progress progress-square">
           <div class="progress-bar progress-bar-default"
                style="width: {{ review.percent.progress }}%">
             <div class="pull-right progress-percentage">{{ review.percent.progress|floatformat:0 }}%</div>
           </div>
         </div>
+        {% endif %}
       </div>
       <br>
       <br>
