@@ -213,6 +213,7 @@ class ReviewCreateWizard(SessionWizardView):
         s2 = form_list[1].cleaned_data
 
         review = Review()
+
         review.title       = s1["title"]
         review.description = s1["description"]
         review.query       = s2["query"]
@@ -221,10 +222,10 @@ class ReviewCreateWizard(SessionWizardView):
         review.participants.add(self.request.user)
         invited = filter(lambda i: i, map(lambda l: str.strip(str(l)), s1["invited"].splitlines()))
         review.invite(invited)
-        review.save()
 
-        ids = PubMed.get_data_from_query(review.query)["ids"]
-        Paper.create_papers_from_pubmed_ids(ids, review)
+        review.perform_query()
+
+        review.save()
 
         return HttpResponseRedirect(review.get_absolute_url())
 

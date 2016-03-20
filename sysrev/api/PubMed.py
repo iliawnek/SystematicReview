@@ -5,7 +5,6 @@ Entrez.email = 'systematicreview@nallar.me'
 
 db = "pubmed"
 
-
 def get_data_from_query(query):
     """Returns raw data from pubmed query from API"""
     return Entrez.read(Entrez.esearch(db=db,
