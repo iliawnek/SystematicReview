@@ -52,4 +52,6 @@ def url_from_id(id):
 def _get_date(medlineCitation):
     """Returns date of the given medline citation"""
     date = medlineCitation[u'DateCreated']
-    return date[u'Year'] + '-' + date[u'Month'] + '-' + date[u'Day']
+    from dateutil import parser
+    dt = parser.parse(date[u'Year'] + '-' + date[u'Month'] + '-' + date[u'Day'])
+    return str(dt.year) + '-' + str(dt.month) + '-' + str(dt.day)
