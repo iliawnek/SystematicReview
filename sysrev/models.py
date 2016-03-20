@@ -16,6 +16,37 @@ class Review(models.Model):
     date_completed     = models.DateTimeField(default=None, null=True)
     query              = models.TextField(default="")
 
+    def paper_pool_percentages(self):
+        counts = self.paper_pool_counts()
+        total = sum(counts.values()) - counts["remaining"]
+
+        if total is not 0:
+            abstract = (float(counts["abstract"]) / float(total)) * 100.0
+            document = (float(counts["document"]) / float(total)) * 100.0
+            final    = (float(counts["final"])    / float(total)) * 100.0
+            rejected = (float(counts["rejected"]) / float(total)) * 100.0
+            return {"abstract": abstract,
+                    "document": document,
+                    "final": final,
+                    "rejected": rejected,
+                    "progress": final + rejected}
+        else:
+            return
+
+
+
+    def paper_pool_counts(self):
+        relevant_papers = Paper.objects.filter(review=self)
+        abstract_count = relevant_papers.filter(pool="A").count()
+        document_count = relevant_papers.filter(pool="D").count()
+        final_count = relevant_papers.filter(pool="F").count()
+        rejected_count = relevant_papers.filter(pool="R").count()
+        return {"abstract": abstract_count,
+                "document": document_count,
+                "final": final_count,
+                "rejected": rejected_count,
+                "remaining": abstract_count + document_count}
+
     def invite(self, invitees):
         for invitee in invitees:
             user = None

@@ -6,13 +6,16 @@ from django.utils.decorators        import method_decorator
 from django.views.generic.edit      import CreateView, UpdateView
 from django.views.generic           import ListView, DetailView
 from django.core.urlresolvers       import reverse
-
-
+from registration.backends.simple.views import RegistrationView
 from itertools import chain
 
 from sysrev.models import *
 from sysrev.forms  import *
 
+
+class SRRegistrationView(RegistrationView):
+    def get_success_url(self, user=None):
+        return "/"
 
 class ProfileView(UpdateView):
     template_name = "sysrev/profile_form.html"
@@ -39,9 +42,9 @@ class ReviewListView(ListView):
         reviews             = list(chain(in_progress_reviews, completed_reviews))
 
         for i in range(0, len(reviews)):
-            reviews[i] = {"review": reviews[i],
-                          "count": paper_pool_counts(reviews[i]),
-                          "percent": paper_pool_percentages(reviews[i])}
+            reviews[i] = {"review":  reviews[i],
+                          "count":   reviews[i].paper_pool_counts(),
+                          "percent": reviews[i].paper_pool_percentages()}
 
         context["reviews"] = reviews
         return context
@@ -51,37 +54,6 @@ class ReviewListView(ListView):
         return super(ReviewListView, self).dispatch(*args, **kwargs)
 
 
-def paper_pool_percentages(review):
-    counts = paper_pool_counts(review)
-    total = sum(counts.values()) - counts["remaining"]
-
-    if total is not 0:
-        abstract = (float(counts["abstract"]) / float(total)) * 100.0
-        document = (float(counts["document"]) / float(total)) * 100.0
-        final    = (float(counts["final"])    / float(total)) * 100.0
-        rejected = (float(counts["rejected"]) / float(total)) * 100.0
-        return {"abstract": abstract,
-                "document": document,
-                "final": final,
-                "rejected": rejected,
-                "progress": final + rejected}
-    else:
-        return
-
-
-
-def paper_pool_counts(review):
-    relevant_papers = Paper.objects.filter(review=review)
-    abstract_count = relevant_papers.filter(pool="A").count()
-    document_count = relevant_papers.filter(pool="D").count()
-    final_count = relevant_papers.filter(pool="F").count()
-    rejected_count = relevant_papers.filter(pool="R").count()
-    return {"abstract": abstract_count,
-            "document": document_count,
-            "final": final_count,
-            "rejected": rejected_count,
-            "remaining": abstract_count + document_count}
-
 
 class ReviewDetailView(DetailView):
     model = Review
@@ -90,9 +62,9 @@ class ReviewDetailView(DetailView):
         context = {}
         try:
             if self.request.user in object.participants.all():
-                context["review"] = object
-                context["count"] = paper_pool_counts(object)
-                context["percent"] = paper_pool_percentages(object)
+                context["review"]  = object
+                context["count"]   = object.paper_pool_counts()
+                context["percent"] = object.paper_pool_percentages()
             else:
                 raise Http404("Review not found")
         except Review.DoesNotExist:
@@ -121,8 +93,8 @@ class PaperDetailView(DetailView):
                 context["to_judge"] = ('A', 'D')
                 context["to_embed_full"] = ('D', 'F')
 
-                context["count"] = paper_pool_counts(object.review)
-                context["percent"] = paper_pool_percentages(object.review)
+                context["count"]   = object.review.paper_pool_counts()
+                context["percent"] = object.review.paper_pool_percentages()
             else:
                 raise Http404("Paper not found")
         except Review.DoesNotExist:
