@@ -22,9 +22,9 @@ class Review(models.Model):
     query              = models.TextField(default="")
 
     def perform_query(self):
-        # TODO: discard existing papers if there are any        
-        ids = PubMed.get_data_from_query(review.query)["ids"]
-        Paper.create_papers_from_pubmed_ids(ids, review)
+        # TODO: discard existing papers if there are any
+        data = PubMed.get_data_from_query(self.query)
+        Paper.create_papers_from_pubmed_ids(data[u'IdList'], self)
 
 
 
