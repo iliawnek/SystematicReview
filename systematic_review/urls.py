@@ -12,6 +12,7 @@ urlpatterns = patterns(
 
     url(r'^review/(?P<pk>\d+)(-([\w\-]+))?/work/$',         WorkView.as_view(),           name='work'),
     url(r'^review/(?P<pk>\d+)(-([\w\-]+))?/(?P<pk2>\d+)/$', PaperDetailView.as_view(),    name='paper'),
+    url(r'^review/(?P<pk>\d+)(-([\w\-]+))?/(?P<pk2>\d+)/(?P<choice>\w+)$', PaperChoiceView.as_view(), name='choice'),
 
     url(r'^profile/',                                       ProfileView.as_view(),        name='profile'),
     url(r'^accounts/register/$',                            SRRegistrationView.as_view(), name='registration_register'),
