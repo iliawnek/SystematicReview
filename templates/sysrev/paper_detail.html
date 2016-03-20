@@ -3,15 +3,17 @@
 {% block head_title %}{{ title }}{% endblock %}
 
 {% block body %}
-  <a class="btn btn-info" href="/review/{{ review.pk }}-{{ review.slug }}">
-    <span class="glyphicon glyphicon-arrow-left"></span>
-    Back to review
-  </a>
+
 
   <div class="page-header">
-    <h2>
-      {{ paper.review.title }}
-    </h2>
+    <h2>{{ paper.review.title }}</h2>
+
+    <nav>
+      <a class="btn btn-info" href="/review/{{ review.pk }}-{{ review.slug }}" style="margin: 10px 0;">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        Back to review
+      </a>
+    </nav>
   </div>
 
   <div class="progress progress-paper">
