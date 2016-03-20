@@ -91,10 +91,18 @@ class ReviewUpdateView(UpdateView):
     def get_success_url(self):
         return self.request.path[:-7]
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReviewUpdateView, self).dispatch(*args, **kwargs)
+
 
 class ReviewDeleteView(DeleteView):
     model       = Review
     success_url = "/"
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReviewDeleteView, self).dispatch(*args, **kwargs)
 
 
 
@@ -127,6 +135,10 @@ class ReviewWorkView(RedirectView):
             raise Http404("Paper not found")
         except Paper.DoesNotExist:
             raise Http404("Paper not found")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReviewWorkView, self).dispatch(*args, **kwargs)
 
 
 class PaperDetailView(DetailView):
@@ -186,6 +198,10 @@ class PaperChoiceView(RedirectView):
             raise Http404("Review not found")
         except Paper.DoesNotExist:
             raise Http404("Paper not found")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PaperChoiceView, self).dispatch(*args, **kwargs)
 
 
 class ReviewCreateWizard(SessionWizardView):
