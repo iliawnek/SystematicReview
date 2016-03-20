@@ -11,7 +11,7 @@ def get_data_from_query(query):
                                       sort='relevance',
                                       retmax=1000,
                                       term=query,
-                                      field="title",
+                                      field="All Fields",
                                       rettype='json'))
 
 
