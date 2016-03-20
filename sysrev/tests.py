@@ -6,8 +6,8 @@ from sysrev.models import Review
 
 class PubmedQueryTestCase(TestCase):
     def test_query(self):
-        result = PubMed.query("smoking")
-        self.assertGreater(result[u'Count'], 25000, "Expected >25000 results for smoking")
+        result = PubMed.get_ids_from_query("smoking")
+        self.assertGreater(len(result), 25000, "Expected >25000 results for smoking")
 
     def test_paper(self):
         result = PubMed.read_papers_from_ids([25929677])
