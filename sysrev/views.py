@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.utils.decorators        import method_decorator
 from django.views.generic.edit      import CreateView, UpdateView
-from django.views.generic           import ListView, DetailView
+from django.views.generic           import ListView, DetailView, RedirectView
 from django.core.urlresolvers       import reverse
 from registration.backends.simple.views import RegistrationView
 from itertools import chain
@@ -54,7 +54,6 @@ class ReviewListView(ListView):
         return super(ReviewListView, self).dispatch(*args, **kwargs)
 
 
-
 class ReviewDetailView(DetailView):
     model = Review
 
@@ -76,16 +75,39 @@ class ReviewDetailView(DetailView):
         return super(ReviewDetailView, self).dispatch(*args, **kwargs)
 
 
+class WorkView(RedirectView):
+    def get(self, request, *args, **kwargs):
+        try:
+            review = Review.objects.get(pk=self.kwargs['pk'])
+            papers = Paper.objects.filter(review=review)
+            counts = review.paper_pool_counts()
+            pk = ""
+            if counts["abstract"] > 0:
+                pk = papers.filter(pool="A").first().pk
+            elif counts["document"] > 0:
+                pk = papers.filter(pool="D").first().pk
+            else:
+                # TODO: redirect to final pool page
+                pass
+            self.url = request.path[:-5] + str(pk) + "/"
+            return super(WorkView, self).get(request, args, **kwargs)
+        except Review.DoesNotExist:
+            raise Http404("Paper not found")
+        except Paper.DoesNotExist:
+            raise Http404("Paper not found 2")
+
+
 class PaperDetailView(DetailView):
     model = Paper
 
     def get_context_data(self, object=None):
         context = {}
         try:
-            if (object.review == Review.objects.get(pk=self.kwargs['pk'])) and (self.request.user in object.review.participants.all()):
+            review = Review.objects.get(pk=self.kwargs['pk'])
+            if self.request.user in review.participants.all():
                 paper = Paper.objects.get(pk=self.kwargs['pk2'])
                 context["paper"] = paper
-                context["review"] = object.review
+                context["review"] = review
 
                 titles = {'A': 'Abstract screening', 'D': 'Document screening', 'F': 'Final document', 'R': 'Rejected document'};
                 context["title"] = titles[paper.pool]
@@ -93,8 +115,8 @@ class PaperDetailView(DetailView):
                 context["to_judge"] = ('A', 'D')
                 context["to_embed_full"] = ('D', 'F')
 
-                context["count"]   = object.review.paper_pool_counts()
-                context["percent"] = object.review.paper_pool_percentages()
+                context["count"]   = review.paper_pool_counts()
+                context["percent"] = review.paper_pool_percentages()
             else:
                 raise Http404("Paper not found")
         except Review.DoesNotExist:
