@@ -1,5 +1,7 @@
 from django.test import TestCase
+
 from api import PubMed
+from sysrev.models import Review
 
 
 class PubmedQueryTestCase(TestCase):
@@ -8,8 +10,15 @@ class PubmedQueryTestCase(TestCase):
         self.assertGreater(result[u'Count'], 25000, "Expected >25000 results for smoking")
 
     def test_paper(self):
-        result = PubMed.paper([25929677])
+        result = PubMed.read_papers_from_ids([25929677])
 
         self.assertEquals(len(result[0][u'MedlineCitation'][u'Article'][u'AuthorList']),
                           7,
                           "25929677 should have 7 authors")
+
+    def test_create_papers_from_ids(self):
+        review = Review.objects.get_or_create(title="Investigating the effects of acupuncture on children with ADHD")[0]
+        result = PubMed.create_papers_from_ids([26502548], review)[0]
+        print result.title
+        self.assertEquals("[A Meta-analysis on Acupuncture Treatment of Attention Deficit/Hyperactivity Disorder].",
+                          result.title)
