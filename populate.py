@@ -1,7 +1,8 @@
-import os
-import django
 import datetime
+import os
 import random
+
+import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'systematic_review.settings')
 django.setup()
@@ -10,12 +11,9 @@ from sysrev.models import User, Review, Paper
 
 
 def populate():
-    jill = User.objects.create_user(username="jill", email="jill@example.com", password="jill")
-    jill.save()
-    bob = User.objects.create_user(username="bob", email="bob@example.com", password="bob")
-    bob.save()
-    jen = User.objects.create_user(username="jen", email="jen@example.com", password="jen")
-    jen.save()
+    jill = add_user("jill")
+    bob = add_user("bob")
+    jen = add_user("jen")
 
     adhd = add_review(users=[jill, bob],
                       title="Investigating the effects of acupuncture on children with ADHD",
@@ -132,6 +130,21 @@ def add_paper(review, title, authors, abstract, publish_date, url, notes, pool="
     paper.pool = pool
     paper.save()
 
+
+def add_user(name, email=None, password=None):
+    if email is None:
+        email = name + "@example.com"
+
+    if password is None:
+        password = name
+
+    try:
+        user = User.objects.get(username=name)
+    except User.DoesNotExist:
+        user = User.objects.create_user(username=name, email=email, password=password)
+        user.save()
+
+    return user
 
 def generate_random_date(recent=False):
     if recent:
