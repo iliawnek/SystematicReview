@@ -12,6 +12,9 @@
 
   <div class="page-header">
     <h2>{{ review.title }}</h2>
+    {% if not review.completed %}
+      <a class="btn btn-primary btn-lg" href="/review/{{ review.pk }}-{{ review.slug }}/work/">Work on this review</a>
+    {% endif %}
   </div>
 
   {% if review.completed %}
@@ -43,10 +46,6 @@
         </div>
       </div>
 
-    </div>
-  {% else %}
-    <div class="text-center">
-      <a class="btn btn-primary btn-lg" href="/review/{{ review.pk }}-{{ review.slug }}/work/">Work on this review</a>
     </div>
   {% endif %}
 
