@@ -113,6 +113,7 @@ class PaperDetailView(DetailView):
             if (object.review == Review.objects.get(pk=self.kwargs['pk'])) and (self.request.user in object.review.participants.all()):
                 paper = Paper.objects.get(pk=self.kwargs['pk2'])
                 context["paper"] = paper
+                context["review"] = object.review
 
                 titles = {'A': 'Abstract screening', 'D': 'Document screening', 'F': 'Final document', 'R': 'Rejected document'};
                 context["title"] = titles[paper.pool]

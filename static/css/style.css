@@ -133,6 +133,7 @@ body {
 /* page headers */
 .page-header {
     border-bottom-color: #ccc; /* darker horizontal rule */
+    margin-top: 20px;
 }
 
 .vertical-divider {
