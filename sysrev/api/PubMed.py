@@ -5,14 +5,13 @@ Entrez.email = 'systematicreview@nallar.me'
 
 db = "pubmed"
 
-
 def get_data_from_query(query):
     """Returns raw data from pubmed query from API"""
     return Entrez.read(Entrez.esearch(db=db,
                                       sort='relevance',
                                       retmax=1000,
                                       term=query,
-                                      field="title",
+                                      field="All Fields",
                                       rettype='json'))
 
 

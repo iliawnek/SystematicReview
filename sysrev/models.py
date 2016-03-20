@@ -6,6 +6,8 @@ from django.template.defaultfilters import slugify
 
 from sysrev.api.PubMed import _get_authors, _get_date, url_from_id, read_papers_from_ids
 
+from sysrev.api import PubMed
+
 
 class Review(models.Model):
     participants       = models.ManyToManyField(User)
@@ -18,6 +20,13 @@ class Review(models.Model):
     completed          = models.BooleanField(default=False)
     date_completed     = models.DateTimeField(default=None, null=True)
     query              = models.TextField(default="")
+
+    def perform_query(self):
+        # TODO: discard existing papers if there are any        
+        ids = PubMed.get_data_from_query(review.query)["ids"]
+        Paper.create_papers_from_pubmed_ids(ids, review)
+
+
 
     def paper_pool_percentages(self):
         counts = self.paper_pool_counts()
