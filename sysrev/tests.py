@@ -5,6 +5,11 @@ from sysrev.models import Paper, Review
 
 
 class PubmedQueryTestCase(TestCase):
+    test_ids = [
+        26502548,
+        25929677,
+    ]
+
     def test_query(self):
         result = int(PubMed.get_data_from_query("smoking")[u'Count'])
         min_ = 25000
@@ -19,7 +24,7 @@ class PubmedQueryTestCase(TestCase):
 
     def test_create_papers_from_ids(self):
         review = Review.objects.get_or_create(title="Investigating the effects of acupuncture on children with ADHD")[0]
-        result = Paper.create_papers_from_pubmed_ids([26502548], review)[0]
+        result = Paper.create_papers_from_pubmed_ids(self.test_ids, review)[0]
         self.assertEquals("[A Meta-analysis on Acupuncture Treatment of Attention Deficit/Hyperactivity Disorder].",
                           result.title)
 
