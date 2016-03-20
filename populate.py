@@ -42,7 +42,7 @@ def populate():
     # TODO: find out why lung_cancer and adhd queries return 0 results
     reviews = [stress, rsi]
     for review in reviews:
-        PubMed.create_papers_from_ids(PubMed.get_ids_from_query(review.query)["ids"], review)
+        PubMed.create_papers_from_ids(PubMed.get_ids_from_query(review.query), review)
 
     add_paper_by_id(review=adhd, id=26502548)
     add_paper_by_id(review=adhd, id=26990084)
