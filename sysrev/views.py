@@ -3,7 +3,7 @@ from django.http                    import HttpResponse, HttpResponseRedirect, H
 from django.contrib.auth.decorators import login_required
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.utils.decorators        import method_decorator
-from django.views.generic.edit      import CreateView, UpdateView
+from django.views.generic.edit      import CreateView, UpdateView, DeleteView
 from django.views.generic           import ListView, DetailView, RedirectView
 from django.core.urlresolvers       import reverse
 from registration.backends.simple.views import RegistrationView
@@ -54,6 +54,7 @@ class ReviewListView(ListView):
         return super(ReviewListView, self).dispatch(*args, **kwargs)
 
 
+
 class ReviewDetailView(DetailView):
     model = Review
 
@@ -75,6 +76,11 @@ class ReviewDetailView(DetailView):
         return super(ReviewDetailView, self).dispatch(*args, **kwargs)
 
 
+class ReviewDeleteView(DeleteView):
+    model       = Review
+    success_url = "/"
+
+
 class WorkView(RedirectView):
     def get(self, request, *args, **kwargs):
         try:
@@ -94,7 +100,7 @@ class WorkView(RedirectView):
         except Review.DoesNotExist:
             raise Http404("Paper not found")
         except Paper.DoesNotExist:
-            raise Http404("Paper not found 2")
+            raise Http404("Paper not found")
 
 
 class PaperDetailView(DetailView):
