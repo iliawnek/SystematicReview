@@ -48,7 +48,7 @@ class ReviewCreateStep2(forms.Form):
     def clean_query(self):
         query = self.cleaned_data.get('query')
         data = PubMed.get_data_from_query(query)
-        count = data["count"]
+        count = data["Count"]
         if count >= 1000:
             raise forms.ValidationError("""Your query returned %s papers.\n
                                         It must return fewer than 1000 papers.\n
