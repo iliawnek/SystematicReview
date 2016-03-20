@@ -3,18 +3,23 @@
 {% block head_title %}{{ review.title }}{% endblock %}
 
 {% block body %}
-  <a class="btn btn-info" href="{% url "index" %}">
-    <span class="glyphicon glyphicon-arrow-left"></span>
-    Back to my reviews
-  </a>
-  <div class="vertical-divider"></div>
-  <a class="btn btn-info" href="{% url 'review_update' review.pk %}">Edit this review</a>
-
   <div class="page-header">
     <h2>{{ review.title }}</h2>
-    {% if not review.completed %}
-      <a class="btn btn-primary btn-lg" href="/review/{{ review.pk }}-{{ review.slug }}/work/">Work on this review</a>
-    {% endif %}
+
+    <nav>
+      <a class="btn btn-info" href="{% url "index" %}">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        Back to my reviews
+      </a>
+
+      {% if not review.completed %}
+        <div class="vertical-divider"></div>
+        <a class="btn btn-primary" href="/review/{{ review.pk }}-{{ review.slug }}/work/">Work on this review</a>
+      {% endif %}
+
+      <div class="vertical-divider"></div>
+      <a class="btn btn-info" href="{% url 'review_update' review.pk %}">Edit this review</a>
+    </nav>
   </div>
 
   {% if review.completed %}
@@ -57,26 +62,29 @@
     </div>
   </div>
 
-  <h3>Pools</h3>
+  <h3>Papers</h3>
+  {% if review.papers.count > 0 %}
   <div class="progress progress-paper">
-    <!-- TODO: avoid inline CSS -->
     <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip" title="Abstract pool"
-         style="width: {{ percent.abstract }}%">
+         style="width: {{ percent.abstract }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.abstract }}
     </div>
     <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool"
-         style="width: {{ percent.document }}%">
+         style="width: {{ percent.document }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.document }}
     </div>
     <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool"
-         style="width: {{ percent.final }}%">
+         style="width: {{ percent.final }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.final }}
     </div>
     <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool"
-         style="width: {{ percent.rejected }}%">
+         style="width: {{ percent.rejected }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.rejected }}
     </div>
   </div>
+  {% else %}
+  <p>No papers found</p>
+  {% endif %}
 
   <h3>Participants</h3>
   <ul class="list-group">
