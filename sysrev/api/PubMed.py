@@ -11,7 +11,7 @@ def get_data_from_query(query):
                                       sort='relevance',
                                       retmax=1000,
                                       term=query,
-                                      field="title",
+                                      field="All Fields",
                                       rettype='json'))
 
 
@@ -29,21 +29,19 @@ def read_papers_from_ids(ids):
 
 def _get_authors(article):
     """Gets comma delimited list of authors from article"""
-    result = ""
+    if not u'AuthorList' in article:
+        return "<No authors specified>"
 
-    if u'AuthorList' in article:
-        for author in article[u'AuthorList']:
-            if len(result) > 0:
-                result += ", "
+    authorList = article[u'AuthorList']
+    return ", ".join(filter(lambda it: len(it) > 0, map(_author_to_string, authorList)))
 
-            if (u'ForeName' in author) and (u'LastName' in author):
-                result += author[u'ForeName'] + " " + author[u'LastName']
-            elif u'CollectiveName' in author:
-                result += author[u'CollectiveName']
-            else:
-                result += "????"
-
-    return result
+def _author_to_string(author):
+    if (u'ForeName' in author) and (u'LastName' in author):
+        return author[u'ForeName'] + " " + author[u'LastName']
+    elif u'CollectiveName' in author:
+        return author[u'CollectiveName']
+    else:
+        return "??"
 
 
 def url_from_id(id):
