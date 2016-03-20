@@ -30,8 +30,11 @@ def read_papers_from_ids(ids):
 
 def _get_authors(article):
     """Gets comma delimited list of authors from article"""
-    authorList = article[u'AuthorList']
-    return ", ".join(map(lambda author: author[u'ForeName'] + " " + author[u'LastName'], authorList))
+    try:
+        authorList = article[u'AuthorList']
+        return ", ".join(map(lambda author: author[u'ForeName'] + " " + author[u'LastName'], authorList))
+    except KeyError:
+        return ""
 
 
 def url_from_id(id):
