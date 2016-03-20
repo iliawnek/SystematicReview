@@ -1,19 +1,27 @@
 from Bio import Entrez
 
-# Abuse contact for if we query too much/cause a problem
 from sysrev.models import Paper
 
+# Abuse contact for if we query too much/cause a problem
 Entrez.email = 'systematicreview@nallar.me'
 
 db = "pubmed"
 
-def query(query):
+
+def pubmed_query(query):
     return Entrez.read(Entrez.esearch(db=db,
                                       sort='relevance',
                                       retmax=1000,
                                       term=query,
                                       field="title",
                                       rettype='json'))
+
+
+def get_data_from_query(query):
+    response = pubmed_query(query)
+    data = {"count": response[u'Count'],
+            "ids": response[u'IdList']}
+    return data
 
 
 def read_papers_from_ids(ids):
@@ -54,3 +62,4 @@ def create_paper_from_data(data, review, pool):
 def create_papers_from_ids(ids, review, pool='A'):
     papers = read_papers_from_ids(ids)
     return map(lambda data: create_paper_from_data(data, review, pool), papers)
+
