@@ -1,9 +1,9 @@
 from django import forms
-from django.contrib.auth.models import User
-from registration.forms import RegistrationForm
-from sysrev.models import *
+
 from sysrev.api import PubMed
+from sysrev.models import *
 from widgets import *
+
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -48,12 +48,12 @@ class ReviewCreateStep2(forms.Form):
     # TODO: Use AJAX to show count of returned papers as query is entered
     def clean_query(self):
         query = self.cleaned_data.get('query')
-        data = PubMed.get_data_from_query(query)
-        count = int(data["Count"])
+        ids = PubMed.get_ids_from_query(query)
+        count = len(ids)
         if count >= 1000:
-            raise forms.ValidationError("""Your query returned %s papers.\n
+            raise forms.ValidationError("""Your query returned %d papers.\n
                                         It must return fewer than 1000 papers.\n
-                                        Modify your query and try again.""" % str(count))
+                                        Modify your query and try again.""" % count)
         elif count == 0:
             raise forms.ValidationError("Your query did not return any papers.")
 
