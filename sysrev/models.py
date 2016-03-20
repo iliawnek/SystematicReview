@@ -19,7 +19,7 @@ class Review(models.Model):
 
     def paper_pool_percentages(self):
         counts = self.paper_pool_counts()
-        total = sum(counts.values()) - counts["remaining"]
+        total = counts["total"]
 
         if total is not 0:
             abstract = (float(counts["abstract"]) / float(total)) * 100.0
@@ -46,7 +46,8 @@ class Review(models.Model):
                 "document": document_count,
                 "final": final_count,
                 "rejected": rejected_count,
-                "remaining": abstract_count + document_count}
+                "remaining": abstract_count + document_count,
+                "total": abstract_count + document_count + final_count + rejected_count}
 
     def invite(self, invitees):
         for invitee in invitees:
