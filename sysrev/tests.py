@@ -22,3 +22,8 @@ class PubmedQueryTestCase(TestCase):
         print result.title
         self.assertEquals("[A Meta-analysis on Acupuncture Treatment of Attention Deficit/Hyperactivity Disorder].",
                           result.title)
+
+    def test_adhd_query(self):
+        query = """(adhd OR adhs OR addh) AND (child OR adolescent) AND acupuncture"""
+        result = PubMed.get_ids_from_query(query)
+        self.assertGreater(len(result), 0, "Expected some results for ADHD query")
