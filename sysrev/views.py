@@ -117,8 +117,7 @@ class WorkView(RedirectView):
                 pk = papers.filter(pool="D").first().pk
             else:
                 review.completed = True
-                # TODO: display completion date/time correctly
-                review.last_modified = datetime.now()
+                review.date_completed = datetime.now()
                 review.save()
                 self.url = "/review/" + str(review.pk) + "-" + review.slug
                 return super(WorkView, self).get(request, args, **kwargs)
