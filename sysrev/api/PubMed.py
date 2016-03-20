@@ -29,9 +29,16 @@ def read_papers_from_ids(ids):
 
 def _get_authors(article):
     """Gets comma delimited list of authors from article"""
+    if not u'AuthorList' in article:
+        return ""
+
+    authorList = article[u'AuthorList']
+    return ", ".join(filter(lambda it: len(it) > 0, map(_author_to_string, authorList)))
+
+
+def _author_to_string(author):
     try:
-        authorList = article[u'AuthorList']
-        return ", ".join(map(lambda author: author[u'ForeName'] + " " + author[u'LastName'], authorList))
+        return author[u'ForeName'] + " " + author[u'LastName']
     except KeyError:
         return ""
 
