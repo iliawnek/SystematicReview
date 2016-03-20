@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block head_title %}{{ title }}{% endblock %}
+{% block head_title %}
+  {{ title }}
+{% endblock %}
 
 {% block body %}
 
@@ -9,7 +11,7 @@
     <h2>{{ paper.review.title }}</h2>
 
     <nav>
-      <a class="btn btn-info" href="/review/{{ review.pk }}-{{ review.slug }}" style="margin: 10px 0;">
+      <a class="btn btn-info" href="{{ review.get_absolute_url }}" style="margin: 10px 0;">
         <span class="glyphicon glyphicon-arrow-left"></span>
         Back to review
       </a>
@@ -37,18 +39,19 @@
 
 
 
-  <h3>
-    {{ title }}
-  </h3>
+  <h3>{{ title }}</h3>
+
+
   <div class="panel panel-default">
     <div class="panel-heading">
       <h2 class="panel-title">
         {{ paper.title }}
-        <nav class="pull-right">
+
         {% if paper.pool in to_embed_full %}
-          <a href="{{ paper.url }}" target="_blank" class="btn btn-default"><span class="glyphicon glyphicon-link"></span> Open in new tab/window</a>
-        {% endif %}
+        <nav class="pull-right">
+          <a href="{{ paper.url }}" target="_blank" class="btn btn-default"><span class="glyphicon glyphicon-link"></span> Open in new tab</a>
         </nav>
+        {% endif %}
       </h2>
       <span>({{ paper.authors }} - Published {{ paper.publish_date }})</span>
     </div>
@@ -68,12 +71,10 @@
       <p>Is this paper relevant to the review?</p>
       <div class="btn-group" role="group">
         <!-- TODO: Do something -->
-        <a href="yes" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-up color-green"></span> Yes</a>
-        <a href="no" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-down color-red"></span> No</a>
+        <a href="yes" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-up   color-green"></span> Yes</a>
+        <a href="no"  class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-down color-red"  ></span> No</a>
       </div>
     </div>
     {% endif %}
   </div>
-
-
 {% endblock body %}

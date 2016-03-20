@@ -6,7 +6,6 @@ from django.utils.decorators        import method_decorator
 from django.views.decorators.cache  import cache_control
 from django.views.generic.edit      import CreateView, UpdateView, DeleteView
 from django.views.generic           import ListView, DetailView, RedirectView
-from django.core.urlresolvers       import reverse
 from registration.backends.simple.views import RegistrationView
 from itertools import chain
 from datetime import datetime
@@ -93,17 +92,25 @@ class ReviewUpdateView(UpdateView):
     def get_success_url(self):
         return self.request.path[:-7]
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReviewUpdateView, self).dispatch(*args, **kwargs)
+
 
 class ReviewDeleteView(DeleteView):
     model       = Review
     success_url = "/"
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReviewDeleteView, self).dispatch(*args, **kwargs)
 
 
 
 
 
-class WorkView(RedirectView):
+
+class ReviewWorkView(RedirectView):
     permanent = False
 
     # TODO: Ensure participants working at the same time are presented 
@@ -113,24 +120,28 @@ class WorkView(RedirectView):
             review = Review.objects.get(pk=self.kwargs['pk'])
             papers = Paper.objects.filter(review=review)
             counts = review.paper_pool_counts()
-            pk = ""
+
             if counts["abstract"] > 0:
-                pk = papers.filter(pool="A").first().pk
+                paper = papers.filter(pool="A").first()
+                self.url = paper.get_absolute_url()
             elif counts["document"] > 0:
-                pk = papers.filter(pool="D").first().pk
+                paper = papers.filter(pool="D").first()
+                self.url = paper.get_absolute_url()
             else:
                 review.completed = True
                 review.date_completed = datetime.now()
                 review.save()
-                self.url = "/review/" + str(review.pk) + "-" + review.slug
-                return super(WorkView, self).get(request, args, **kwargs)
-                pass
-            self.url = "/review/" + str(review.pk) + "-" + review.slug + "/" + str(pk)
-            return super(WorkView, self).get(request, args, **kwargs)
+                self.url = review.get_absolute_url()
+                return super(ReviewWorkView, self).get(request, args, **kwargs)
+            return super(ReviewWorkView, self).get(request, args, **kwargs)
         except Review.DoesNotExist:
             raise Http404("Paper not found")
         except Paper.DoesNotExist:
             raise Http404("Paper not found")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ReviewWorkView, self).dispatch(*args, **kwargs)
 
 
 class PaperDetailView(DetailView):
@@ -192,6 +203,10 @@ class PaperChoiceView(RedirectView):
         except Paper.DoesNotExist:
             raise Http404("Paper not found")
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PaperChoiceView, self).dispatch(*args, **kwargs)
+
 
 class ReviewCreateWizard(SessionWizardView):
     form_list     = [ReviewCreateStep1, ReviewCreateStep2]
@@ -216,7 +231,7 @@ class ReviewCreateWizard(SessionWizardView):
 
         review.save()
 
-        return HttpResponseRedirect(reverse("review", args=(review.pk,)))
+        return HttpResponseRedirect(review.get_absolute_url())
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

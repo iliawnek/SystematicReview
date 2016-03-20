@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block head_title %}Edit {{ review.title }}{% endblock %}
+{% block head_title %}
+  Edit {{ review.title }}
+{% endblock %}
 
 {% load bootstrap %}
 {% block body %}
@@ -8,16 +10,14 @@
     <h2>Editing: {{ review.title }}</h2>
   </div>
 
-
-
   <form action="" method="post">
     {% csrf_token %}
 
     {{ form|bootstrap }}
 
-    <a href="{% url 'review' object.pk %}" class="btn btn-default">Cancel</a>
+    <a href="{{ object.get_absolute_url }}" class="btn btn-default">Cancel</a>
     <input type="submit" value="Save Changes" class="btn btn-primary"/>
-    <a href="{% url 'review_delete' object.pk %}" class="btn btn-danger">Delete this review</a>
+    <a href="{{ object.get_absolute_url }}/delete" class="btn btn-danger">Delete this review</a>
   </form>
 {% endblock %}
 
