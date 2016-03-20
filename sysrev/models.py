@@ -64,7 +64,10 @@ class Review(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Review, self).save()
-        
+
+    def get_absolute_url(self):
+        return reverse('review_detail', args=[str(self.pk)])[:-1] + "-" + self.slug
+
     def __unicode__(self):
         return str(self.pk) + ": " + self.title
 
@@ -89,6 +92,9 @@ class Paper(models.Model):
     url          = models.URLField(default="")
     notes        = models.TextField(default="")
     pool         = models.CharField(max_length=1, choices=POOLS, default=ABSTRACT_POOL)
+
+    def get_absolute_url(self):
+        return self.review.get_absolute_url() + "/" + str(self.pk)
 
     def __unicode__(self):
         return str(self.review) + " - " + self.title
