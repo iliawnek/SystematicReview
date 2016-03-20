@@ -25,5 +25,13 @@ class PubmedQueryTestCase(TestCase):
 
     def test_adhd_query(self):
         query = """(adhd OR adhs OR addh) AND (child OR adolescent) AND acupuncture"""
+        self._query_min_results(query)
+
+    def test_lung_cancer_query(self):
+        query = """(solder OR soldering) AND (lung AND cancer)"""
+        self._query_min_results(query)
+
+    def _query_min_results(self, query, min=0):
+        """Tests given query, ensures at least min results are found"""
         result = PubMed.get_ids_from_query(query)
-        self.assertGreater(len(result), 0, "Expected some results for ADHD query")
+        self.assertGreater(len(result), 0, "Expected at lest " + str(min) + " results for query '" + query + "'")
