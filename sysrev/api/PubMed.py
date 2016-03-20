@@ -6,7 +6,7 @@ Entrez.email = 'systematicreview@nallar.me'
 db = "pubmed"
 
 
-def _get_data_from_query(query):
+def get_data_from_query(query):
     """Returns raw data from pubmed query from API"""
     return Entrez.read(Entrez.esearch(db=db,
                                       sort='relevance',
@@ -18,7 +18,7 @@ def _get_data_from_query(query):
 
 def get_ids_from_query(query):
     """Returns list of ids matched by a query from API"""
-    return _get_data_from_query(query)[u'IdList']
+    return get_data_from_query(query)[u'IdList']
 
 
 def read_papers_from_ids(ids):
