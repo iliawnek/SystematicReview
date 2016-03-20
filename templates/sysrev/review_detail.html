@@ -9,18 +9,18 @@
     <h2>{{ review.title }}</h2>
 
     <nav>
-      <a class="btn btn-info" href="{% url "index" %}">
+      <a class="btn btn-info" href="{% url 'review_list' %}">
         <span class="glyphicon glyphicon-arrow-left"></span>
         Back to my reviews
       </a>
 
       {% if not review.completed %}
         <div class="vertical-divider"></div>
-        <a class="btn btn-primary" href="/review/{{ review.pk }}-{{ review.slug }}/work/">Work on this review</a>
+        <a class="btn btn-primary" href="{{ review.get_absolute_url }}/work">Work on this review</a>
       {% endif %}
 
       <div class="vertical-divider"></div>
-      <a class="btn btn-info" href="{% url 'review_update' review.pk %}">Edit this review</a>
+      <a class="btn btn-info" href="{{ review.get_absolute_url }}/edit">Edit this review</a>
     </nav>
   </div>
 
@@ -37,8 +37,9 @@
           <h4>Final pool</h4>
           <div class="list-group">
             {% for paper in final_papers %}
-              <a href="/review/{{ review.pk }}-{{ review.slug }}/{{ paper.pk }}/" class="list-group-item"><span
-                  class="glyphicon glyphicon-file"></span> {{ paper.title }}</a>
+              <a href="{{ paper.get_absolute_url}}" class="list-group-item">
+                <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
+              </a>
             {% endfor %}
           </div>
         </div>
@@ -46,8 +47,9 @@
           <h4>Rejected pool</h4>
           <div class="list-group">
             {% for paper in rejected_papers %}
-              <a href="/review/{{ review.pk }}-{{ review.slug }}/{{ paper.pk }}/" class="list-group-item"><span
-                  class="glyphicon glyphicon-file"></span> {{ paper.title }}</a>
+              <a href="{{ paper.get_absolute_url}}" class="list-group-item">
+                <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
+              </a>
             {% endfor %}
           </div>
         </div>

@@ -2,14 +2,16 @@
 
 {% load staticfiles %}
 
-{% block head_title %}My reviews{% endblock head_title %}
+{% block head_title %}
+  My reviews
+{% endblock head_title %}
 
 {% block body %}
   {% if reviews %}
     <div class="page-header">
       <h2>
         <span>My reviews</span>
-        <a class="btn btn-primary pull-right" href={% url 'create' %}>
+        <a class="btn btn-primary pull-right" href={% url 'review_create' %}>
           Create a new review
         </a>
       </h2>
@@ -25,7 +27,7 @@
       ">
 
         <div class="panel-heading">
-          <a href="/review/{{ review.review.pk }}-{{ review.review.slug }}">{{ review.review.title }}</a>
+          <a href="{{ review.review.get_absolute_url }}">{{ review.review.title }}</a>
           {% if review.review.completed %}
             <span class="label label-success pull-right">COMPLETED</span>
           {% else %}
@@ -74,7 +76,7 @@
     <div class="text-center">
       <h1>Welcome, <strong>{{ user.username }}</strong>!</h1><br>
       <h4>To get started,
-        <a class="btn btn-primary btn-lg" href={% url 'create' %}>
+        <a class="btn btn-primary btn-lg" href={% url 'review_create' %}>
           create a new review
         </a>.
       </h4>

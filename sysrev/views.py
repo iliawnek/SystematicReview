@@ -5,7 +5,6 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 from django.utils.decorators        import method_decorator
 from django.views.generic.edit      import CreateView, UpdateView, DeleteView
 from django.views.generic           import ListView, DetailView, RedirectView
-from django.core.urlresolvers       import reverse
 from registration.backends.simple.views import RegistrationView
 from itertools import chain
 from datetime import datetime
@@ -102,7 +101,7 @@ class ReviewDeleteView(DeleteView):
 
 
 
-class WorkView(RedirectView):
+class ReviewWorkView(RedirectView):
     permanent = False
 
     def get(self, request, *args, **kwargs):
@@ -110,20 +109,20 @@ class WorkView(RedirectView):
             review = Review.objects.get(pk=self.kwargs['pk'])
             papers = Paper.objects.filter(review=review)
             counts = review.paper_pool_counts()
-            pk = ""
+
             if counts["abstract"] > 0:
-                pk = papers.filter(pool="A").first().pk
+                paper = papers.filter(pool="A").first()
+                self.url = paper.get_absolute_url()
             elif counts["document"] > 0:
-                pk = papers.filter(pool="D").first().pk
+                paper = papers.filter(pool="D").first()
+                self.url = paper.get_absolute_url()
             else:
                 review.completed = True
                 review.date_completed = datetime.now()
                 review.save()
-                self.url = "/review/" + str(review.pk) + "-" + review.slug
-                return super(WorkView, self).get(request, args, **kwargs)
-                pass
-            self.url = "/review/" + str(review.pk) + "-" + review.slug + "/" + str(pk)
-            return super(WorkView, self).get(request, args, **kwargs)
+                self.url = review.get_absolute_url()
+                return super(ReviewWorkView, self).get(request, args, **kwargs)
+            return super(ReviewWorkView, self).get(request, args, **kwargs)
         except Review.DoesNotExist:
             raise Http404("Paper not found")
         except Paper.DoesNotExist:
@@ -212,7 +211,7 @@ class ReviewCreateWizard(SessionWizardView):
 
         review.save()
 
-        return HttpResponseRedirect(reverse("review", args=(review.pk,)))
+        return HttpResponseRedirect(review.get_absolute_url())
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
