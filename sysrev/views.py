@@ -106,6 +106,8 @@ class ReviewDeleteView(DeleteView):
 class WorkView(RedirectView):
     permanent = False
 
+    # TODO: Ensure participants working at the same time are presented 
+    #       with different papers. (while enough unjudged papers are available)
     def get(self, request, *args, **kwargs):
         try:
             review = Review.objects.get(pk=self.kwargs['pk'])
