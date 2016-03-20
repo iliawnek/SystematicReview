@@ -50,7 +50,14 @@ def create_paper_from_data(data, review, pool):
     paper = Paper.objects.get_or_create(review=review, title=article[u'ArticleTitle'])[0]
     paper.review = review
     paper.authors = get_authors(article)
-    paper.abstract = article[u'Abstract'][u'AbstractText']
+
+    # TODO: label for section headings is lost
+    # eg. StringElement('some text here', attributes={u'NlmCategory': u'METHODS', u'Label': u'METHODS'})
+    abstractText = ""
+    for stringElement in article[u'Abstract'][u'AbstractText']:
+        abstractText += stringElement
+
+    paper.abstract = abstractText
     paper.publish_date = get_date(medlineCitation)
     paper.url = url_from_id(medlineCitation[u'PMID'])
     paper.notes = ""
