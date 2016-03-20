@@ -45,7 +45,6 @@ class ReviewCreateStep1(forms.Form):
 class ReviewCreateStep2(forms.Form):
     query       = forms.CharField(widget=QueryWidget)
 
-    # TODO: Use AJAX to show count of returned papers as query is entered
     def clean_query(self):
         query = self.cleaned_data.get('query')
         ids = PubMed.get_ids_from_query(query)

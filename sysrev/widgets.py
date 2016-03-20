@@ -2,6 +2,7 @@ from django.forms import widgets
 from django.utils.safestring import *
 
 # See static/js/querywidget.js
+# TODO: Use AJAX to show count of returned papers as query is entered
 class QueryWidget(widgets.Textarea):
     def __init__(self, attrs=None):
         default_attrs = {'class': "queryWidget"}
