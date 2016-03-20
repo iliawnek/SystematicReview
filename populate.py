@@ -60,8 +60,16 @@ def populate():
         stress,
     ]
 
+    import time
+
     for review in reviews:
+        start = time.time()
+
         Paper.create_papers_from_pubmed_ids(PubMed.get_ids_from_query(review.query), review)
+
+        end = time.time()
+        duration = (end - start)
+        print "Populating %s took %f seconds" % (review.title, duration)
 
 
 def add_review(users, title, description, date_created, last_modified, query, completed=False):
