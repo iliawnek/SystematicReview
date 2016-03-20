@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from registration.forms import RegistrationForm
 from sysrev.models import *
+from sysrev.api import PubMed
 from widgets import *
 
 class ProfileForm(forms.ModelForm):
@@ -43,3 +44,16 @@ class ReviewCreateStep1(forms.Form):
 
 class ReviewCreateStep2(forms.Form):
     query       = forms.CharField(widget=QueryWidget)
+
+    def clean_query(self):
+        query = self.cleaned_data.get('query')
+        data = PubMed.get_data_from_query(query)
+        count = data["count"]
+        if count >= 1000:
+            raise forms.ValidationError("""Your query returned %s papers.\n
+                                        It must return fewer than 1000 papers.\n
+                                        Modify your query and try again.""" % str(count))
+        elif count == 0:
+            raise forms.ValidationError("Your query did not return any papers.")
+
+        return query
