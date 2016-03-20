@@ -33,7 +33,7 @@
           {% endif %}
         </div>
 
-        <div class="progress progress-paper">
+        <div class="progress progress-paper progress-square">
           <!-- TODO: avoid inline CSS -->
           <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip"
                title="Abstract pool"
@@ -56,7 +56,7 @@
 
         <div class="panel-body">{{ review.review.description }}</div>
 
-        <div class="progress review-progress">
+        <div class="progress review-progress progress-square">
           <div class="progress-bar progress-bar-default"
                style="width: {{ review.percent.progress }}%">
             <div class="pull-right progress-percentage">{{ review.percent.progress|floatformat:0 }}%</div>

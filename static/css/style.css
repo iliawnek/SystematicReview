@@ -95,11 +95,7 @@ body {
     padding-right: 20px;
 }
 
-.progress-paper {
-    height: 32px;
-}
-
-.progress {
+.progress-square {
     border-radius: 0;
     margin-bottom: 0;
 }
@@ -108,8 +104,8 @@ body {
     margin-right: 5px;
 }
 
-.progress-bar-paper-icon {
-    font-size: 14px;
+.progress-paper {
+    height: 32px;
 }
 
 .progress-bar-paper {
@@ -117,6 +113,10 @@ body {
     font-size: 16px;
     font-weight: bold;
     overflow: hidden;
+}
+
+.progress-bar-paper-icon {
+    font-size: 14px;
 }
 
 .pool-counter-icon {
