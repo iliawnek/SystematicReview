@@ -127,6 +127,8 @@ class PaperDetailView(DetailView):
                 raise Http404("Paper not found")
         except Review.DoesNotExist:
             raise Http404("Paper not found")
+        except Paper.DoesNotExist:
+            raise Http404("Paper not found")
         return context
 
     @method_decorator(login_required)
