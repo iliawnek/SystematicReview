@@ -8,7 +8,7 @@
     Back to my reviews
   </a>
   <div class="vertical-divider"></div>
-  <a class="btn btn-info"   href="{% url 'review_update' review.pk %}">Edit this review</a>
+  <a class="btn btn-info" href="{% url 'review_update' review.pk %}">Edit this review</a>
 
   <div class="page-header">
     <h2>{{ review.title }}</h2>
@@ -19,21 +19,25 @@
       <span class="glyphicon glyphicon-check"></span>
       This review was completed on {{ review.date_completed }}.
       <hr>
-      <h3>Results <button type="button" class="btn btn-xs" data-toggle="collapse" data-target="#results">Show/hide</button></h3>
+      <h3>Results
+        <button type="button" class="btn btn-xs" data-toggle="collapse" data-target="#results">Show/hide</button>
+      </h3>
       <div id="results" class="row collapse">
         <div class="col-md-6">
-        <h4>Final pool</h4>
+          <h4>Final pool</h4>
           <div class="list-group">
             {% for paper in final_papers %}
-              <a href="/review/{{ review.pk }}-{{ review.slug }}/{{ paper.pk }}/" class="list-group-item"><span class="glyphicon glyphicon-file"></span> {{ paper.title }}</a>
+              <a href="/review/{{ review.pk }}-{{ review.slug }}/{{ paper.pk }}/" class="list-group-item"><span
+                  class="glyphicon glyphicon-file"></span> {{ paper.title }}</a>
             {% endfor %}
           </div>
         </div>
         <div class="col-md-6">
-        <h4>Rejected pool</h4>
+          <h4>Rejected pool</h4>
           <div class="list-group">
             {% for paper in rejected_papers %}
-              <a href="/review/{{ review.pk }}-{{ review.slug }}/{{ paper.pk }}/" class="list-group-item"><span class="glyphicon glyphicon-file"></span> {{ paper.title }}</a>
+              <a href="/review/{{ review.pk }}-{{ review.slug }}/{{ paper.pk }}/" class="list-group-item"><span
+                  class="glyphicon glyphicon-file"></span> {{ paper.title }}</a>
             {% endfor %}
           </div>
         </div>
@@ -41,9 +45,11 @@
 
     </div>
   {% else %}
-  <a class="btn btn-primary" href="/review/{{ review.pk }}-{{ review.slug }}/work/">Work on this review</a>
+    <div class="text-center">
+      <a class="btn btn-primary btn-lg" href="/review/{{ review.pk }}-{{ review.slug }}/work/">Work on this review</a>
+    </div>
   {% endif %}
-  
+
 
   <h3>Description</h3>
   <div class="panel panel-default">
