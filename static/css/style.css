@@ -100,7 +100,12 @@ body {
 }
 
 .progress {
-    border-radius: 0px;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.progress-percentage {
+    margin-right: 5px;
 }
 
 .progress-bar-paper-icon {

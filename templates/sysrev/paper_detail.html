@@ -51,30 +51,21 @@
 
   <div class="progress progress-paper">
     <!-- TODO: avoid inline CSS -->
-    <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip" title="Abstract pool" style="width: {{ review_progress.abstract }}%">
-      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ paper.review.abstract_pool_size }}
+    <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip" title="Abstract pool"
+         style="width: {{ percent.abstract }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.abstract }}
     </div>
-        <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool" style="width: {{ review_progress.document }}%">
-      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ paper.review.document_pool_size }}
+    <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool"
+         style="width: {{ percent.document }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.document }}
     </div>
-        <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool" style="width: {{ review_progress.final }}%">
-      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ paper.review.final_pool_size }}
+    <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool"
+         style="width: {{ percent.final }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.final }}
     </div>
-    <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool" style="width: {{ review_progress.rejected }}%">
-      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ paper.review.rejected_pool_size }}
+    <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool"
+         style="width: {{ percent.rejected }}%">
+      <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.rejected }}
     </div>
   </div>
 {% endblock body %}
-
-{% block extra_body %}
-  <script>
-    $(function () {
-      $("#reading").click(function(){
-        $(".panel-body").toggleClass("panel-reading");
-        $("#reading").toggleClass("active");
-      });
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-  </script>
-{% endblock %}
-

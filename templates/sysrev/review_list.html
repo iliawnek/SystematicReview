@@ -33,57 +33,38 @@
           {% endif %}
         </div>
 
-        <div class="panel-body">{{ review.review.description }}</div>
-        <br>
-        <div class="progress">
+        <div class="progress progress-paper">
           <!-- TODO: avoid inline CSS -->
-          <div class="progress-bar progress-bar-success" title="Final pool" style="width: {{ review.final }}%">
-            {{ review.final }}%
+          <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip"
+               title="Abstract pool"
+               style="width: {{ review.percent.abstract }}%">
+            <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.abstract }}
           </div>
-          <div class="progress-bar progress-bar-info" title="Document pool" style="width: {{ review.document }}%">
-            {{ review.document }}%
+          <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool"
+               style="width: {{ review.percent.document }}%">
+            <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.document }}
           </div>
-          <div class="progress-bar progress-bar-warning" title="Abstract pool" style="width: {{ review.abstract }}%">
-            {{ review.abstract }}%
+          <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool"
+               style="width: {{ review.percent.final }}%">
+            <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.final }}
           </div>
-          <div class="progress-bar progress-bar-danger" title="Rejected pool" style="width: {{ review.rejected }}%">
-            {{ review.rejected }}%
-          </div>
-        </div>
-
-        <div class="col-md-3 col-xs-3 pool-counter color-green">
-          <div class="text-center">
-            <h2>{{ review.review.final_pool_size }} <span class="glyphicon glyphicon-file pool-counter-icon"></span></h2>
-            final pool
+          <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool"
+               style="width: {{ review.percent.rejected }}%">
+            <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.rejected }}
           </div>
         </div>
 
-        <div class="col-md-3 col-xs-3 pool-counter color-blue">
-          <div class="text-center">
-            <h2>{{ review.review.document_pool_size }} <span class="glyphicon glyphicon-file pool-counter-icon"></span></h2>
-            document pool
+        <div class="panel-body">{{ review.review.description }}</div>
+
+        <div class="progress review-progress">
+          <div class="progress-bar progress-bar-default"
+               style="width: {{ review.percent.progress }}%">
+            <div class="pull-right progress-percentage">{{ review.percent.progress|floatformat:0 }}%</div>
           </div>
         </div>
-
-        <div class="col-md-3 col-xs-3 pool-counter color-yellow">
-          <div class="text-center">
-            <h2>{{ review.review.abstract_pool_size }} <span class="glyphicon glyphicon-file pool-counter-icon"></span></h2>
-            abstract pool
-          </div>
-        </div>
-
-        <div class="col-md-3 col-xs-3 pool-counter color-red">
-          <div class="text-center">
-            <h2>{{ review.review.rejected_pool_size }} <span class="glyphicon glyphicon-file pool-counter-icon"></span></h2>
-            rejected pool
-          </div>
-        </div>
-
-        <div class="clearfix"></div>
-        <br>
-        <br>
-
       </div>
+      <br>
+      <br>
       <br>
     {% endfor %}
 

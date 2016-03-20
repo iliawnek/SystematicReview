@@ -131,16 +131,6 @@ def add_paper(review, title, authors, abstract, publish_date, url, notes, pool="
     paper.notes = notes
     paper.pool = pool
     paper.save()
-    if pool is "A":
-        review.abstract_pool_size += 1
-    elif pool is "D":
-        review.document_pool_size += 1
-    elif pool is "F":
-        review.final_pool_size += 1
-    elif pool is "R":
-        review.rejected_pool_size += 1
-
-    review.save()
 
 
 def generate_random_date(recent=False):

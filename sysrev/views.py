@@ -38,25 +38,10 @@ class ReviewListView(ListView):
         completed_reviews   = Review.objects.order_by('-last_modified').filter(participants=self.request.user, completed=True)
         reviews             = list(chain(in_progress_reviews, completed_reviews))
 
-        # progress bar
         for i in range(0, len(reviews)):
-            abstract = reviews[i].abstract_pool_size
-            document = reviews[i].document_pool_size
-            final    = reviews[i].final_pool_size
-            rejected = reviews[i].rejected_pool_size
-            total    = abstract + document + final + rejected
-
-            if total is not 0:
-                abstract = int((float(abstract) / float(total)) * 100.0)
-                document = int((float(document) / float(total)) * 100.0)
-                final    = int((float(final)    / float(total)) * 100.0)
-                rejected = int((float(rejected) / float(total)) * 100.0)
-
-                total = abstract + document + final + rejected
-                if total < 100:
-                    abstract += 100 - total
-
-            reviews[i] = {"review": reviews[i], "abstract": abstract, "document": document, "final": final, "rejected": rejected}
+            reviews[i] = {"review": reviews[i],
+                          "count": paper_pool_counts(reviews[i]),
+                          "percent": paper_pool_percentages(reviews[i])}
 
         context["reviews"] = reviews
         return context
@@ -66,20 +51,36 @@ class ReviewListView(ListView):
         return super(ReviewListView, self).dispatch(*args, **kwargs)
 
 
-def paperPoolPercentages(review):
-    abstract = review.abstract_pool_size
-    document = review.document_pool_size
-    final    = review.final_pool_size
-    rejected = review.rejected_pool_size
-    total    = abstract + document + final + rejected
+def paper_pool_percentages(review):
+    counts = paper_pool_counts(review)
+    total = sum(counts.values()) - counts["remaining"]
 
     if total is not 0:
-        abstract = (float(abstract) / float(total)) * 100.0
-        document = (float(document) / float(total)) * 100.0
-        final    = (float(final)    / float(total)) * 100.0
-        rejected = (float(rejected) / float(total)) * 100.0
+        abstract = (float(counts["abstract"]) / float(total)) * 100.0
+        document = (float(counts["document"]) / float(total)) * 100.0
+        final    = (float(counts["final"])    / float(total)) * 100.0
+        rejected = (float(counts["rejected"]) / float(total)) * 100.0
+        return {"abstract": abstract,
+                "document": document,
+                "final": final,
+                "rejected": rejected,
+                "progress": final + rejected}
+    else:
+        return
 
-    return {"abstract": abstract, "document": document, "final": final, "rejected": rejected}
+
+
+def paper_pool_counts(review):
+    relevant_papers = Paper.objects.filter(review=review)
+    abstract_count = relevant_papers.filter(pool="A").count()
+    document_count = relevant_papers.filter(pool="D").count()
+    final_count = relevant_papers.filter(pool="F").count()
+    rejected_count = relevant_papers.filter(pool="R").count()
+    return {"abstract": abstract_count,
+            "document": document_count,
+            "final": final_count,
+            "rejected": rejected_count,
+            "remaining": abstract_count + document_count}
 
 
 class ReviewDetailView(DetailView):
@@ -90,7 +91,8 @@ class ReviewDetailView(DetailView):
         try:
             if self.request.user in object.participants.all():
                 context["review"] = object
-                context["review_progress"] = paperPoolPercentages(context["review"])
+                context["count"] = paper_pool_counts(object)
+                context["percent"] = paper_pool_percentages(object)
             else:
                 raise Http404("Review not found")
         except Review.DoesNotExist:
@@ -118,7 +120,8 @@ class PaperDetailView(DetailView):
                 context["to_judge"] = ('A', 'D')
                 context["to_embed_full"] = ('D', 'F')
 
-                context["review_progress"] = paperPoolPercentages(paper.review)
+                context["count"] = paper_pool_counts(object.review)
+                context["percent"] = paper_pool_percentages(object.review)
             else:
                 raise Http404("Paper not found")
         except Review.DoesNotExist:
