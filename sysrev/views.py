@@ -196,7 +196,7 @@ class PaperChoiceView(RedirectView):
             else:
                 raise Http404("Invalid choice")
             paper.save()
-            self.url = "/review/" + str(review.pk) + "-" + review.slug + "/work/"
+            self.url = review.get_absolute_url() + "/work/"
             return super(PaperChoiceView, self).get(request, args, **kwargs)
         except Review.DoesNotExist:
             raise Http404("Review not found")
