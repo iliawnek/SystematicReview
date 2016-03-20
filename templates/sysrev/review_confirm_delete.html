@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Delete {{ review.title }}{% endblock %}
+
+{% block body %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete "{{ object.title }}"?</p>
+    <a href="{% url "review" object.pk %}" class="btn btn-default">Cancel</a>
+    <input type="submit" value="Confirm" class="btn btn-danger"/>
+  </form>
+{% endblock %}

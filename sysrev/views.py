@@ -3,7 +3,7 @@ from django.http                    import HttpResponse, HttpResponseRedirect, H
 from django.contrib.auth.decorators import login_required
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.utils.decorators        import method_decorator
-from django.views.generic.edit      import CreateView, UpdateView
+from django.views.generic.edit      import CreateView, UpdateView, DeleteView
 from django.views.generic           import ListView, DetailView
 from django.core.urlresolvers       import reverse
 from registration.backends.simple.views import RegistrationView
@@ -74,6 +74,11 @@ class ReviewDetailView(DetailView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ReviewDetailView, self).dispatch(*args, **kwargs)
+
+
+class ReviewDeleteView(DeleteView):
+    model       = Review
+    success_url = "/"
 
 
 class PaperDetailView(DetailView):
