@@ -8,7 +8,8 @@ from django.views.generic.edit      import CreateView, UpdateView, DeleteView
 from django.views.generic           import ListView, DetailView, RedirectView
 from registration.backends.simple.views import RegistrationView
 from itertools import chain
-from datetime import datetime
+from datetime  import datetime
+from random    import randint
 
 from sysrev.models import *
 from sysrev.forms  import *
@@ -106,33 +107,29 @@ class ReviewDeleteView(DeleteView):
         return super(ReviewDeleteView, self).dispatch(*args, **kwargs)
 
 
-
-
-
-
 class ReviewWorkView(RedirectView):
     permanent = False
 
-    # TODO: Ensure participants working at the same time are presented 
-    #       with different papers. (while enough unjudged papers are available)
     def get(self, request, *args, **kwargs):
         try:
             review = Review.objects.get(pk=self.kwargs['pk'])
             papers = Paper.objects.filter(review=review)
             counts = review.paper_pool_counts()
 
-            if counts["abstract"] > 0:
-                paper = papers.filter(pool="A").first()
-                self.url = paper.get_absolute_url()
-            elif counts["document"] > 0:
-                paper = papers.filter(pool="D").first()
-                self.url = paper.get_absolute_url()
-            else:
+            if counts["abstract"] == 0 and counts["document"] == 0:
                 review.completed = True
                 review.date_completed = datetime.now()
                 review.save()
                 self.url = review.get_absolute_url()
                 return super(ReviewWorkView, self).get(request, args, **kwargs)
+            elif counts["abstract"] > 0:
+                papers = papers.filter(pool="A")
+            elif counts["document"] > 0:
+                papers = papers.filter(pool="D")
+
+            paper = papers.all()[randint(0, papers.count()-1)]
+            self.url = paper.get_absolute_url()
+
             return super(ReviewWorkView, self).get(request, args, **kwargs)
         except Review.DoesNotExist:
             raise Http404("Paper not found")
@@ -196,7 +193,7 @@ class PaperChoiceView(RedirectView):
             else:
                 raise Http404("Invalid choice")
             paper.save()
-            self.url = "/review/" + str(review.pk) + "-" + review.slug + "/work/"
+            self.url = review.get_absolute_url() + "/work/"
             return super(PaperChoiceView, self).get(request, args, **kwargs)
         except Review.DoesNotExist:
             raise Http404("Review not found")
