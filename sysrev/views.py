@@ -223,7 +223,7 @@ class ReviewCreateWizard(SessionWizardView):
         review.invite(invited)
         review.save()
 
-        ids = PubMed.get_data_from_query(review.query)["ids"]
+        ids = PubMed.get_ids_from_query(review.query)
         Paper.create_papers_from_pubmed_ids(ids, review)
 
         return HttpResponseRedirect(review.get_absolute_url())
