@@ -62,6 +62,8 @@ Acupuncture is an effective and safe therapy in treating ADHD, combined administ
               notes="this is a note",
               pool="A")
 
+    add_paper_by_id(review=adhd, id=26990084)
+
     titles = ["Title of a paper",
               "The paper's title",
               "Name of paper",
@@ -130,6 +132,10 @@ def add_paper(review, title, authors, abstract, publish_date, url, notes, pool="
     paper.pool = pool
     paper.save()
 
+
+def add_paper_by_id(review, id):
+    from sysrev.api import PubMed
+    PubMed.create_papers_from_ids([id], review)
 
 def add_user(name, email=None, password=None):
     if email is None:
