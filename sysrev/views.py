@@ -31,6 +31,11 @@ class ProfileView(UpdateView):
         return super(ProfileView, self).dispatch(*args, **kwargs)
 
 
+
+
+
+
+
 class ReviewListView(ListView):
     model = Review
 
@@ -76,9 +81,18 @@ class ReviewDetailView(DetailView):
         return super(ReviewDetailView, self).dispatch(*args, **kwargs)
 
 
+class ReviewUpdateView(UpdateView):
+    model  = Review
+    fields = ['title', 'description', 'participants', 'query']
+
+
 class ReviewDeleteView(DeleteView):
     model       = Review
     success_url = "/"
+
+
+
+
 
 
 class WorkView(RedirectView):
