@@ -21,11 +21,11 @@ class Review(models.Model):
     date_completed     = models.DateTimeField(default=None, null=True)
     query              = models.TextField(default="")
 
+
     def perform_query(self):
         # TODO: discard existing papers if there are any        
-        ids = PubMed.get_data_from_query(review.query)["ids"]
-        Paper.create_papers_from_pubmed_ids(ids, review)
-
+        ids = PubMed.get_ids_from_query(self.query)
+        Paper.create_papers_from_pubmed_ids(ids, self)
 
 
     def paper_pool_percentages(self):
