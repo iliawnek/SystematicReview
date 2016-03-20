@@ -10,8 +10,7 @@
 
     <nav>
       <a class="btn btn-info" href="{% url 'review_list' %}">
-        <span class="glyphicon glyphicon-arrow-left"></span>
-        Back to my reviews
+        <span class="glyphicon glyphicon-arrow-left"></span> Back to my reviews
       </a>
 
       {% if not review.completed %}
@@ -22,7 +21,9 @@
         <a class="btn btn-info" href="{{ review.get_absolute_url }}/edit">Edit this review</a>
       {% else %}
         <div class="vertical-divider"></div>
-        <a href="{{ review.get_absolute_url }}/delete" class="btn btn-danger">Delete this review</a>
+        <a href="{{ review.get_absolute_url }}/delete" class="btn btn-danger">
+          <span class="glyphicon glyphicon-trash"></span> Delete this review
+        </a>
       {% endif %}
     </nav>
   </div>
