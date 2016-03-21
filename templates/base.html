@@ -1,112 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  {% load staticfiles %}
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% load staticfiles %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}"/>
+  <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}"/>
 
-    <title>{% block head_title %}{% endblock head_title %} - Systematic Review</title>
+  <title>{% block head_title %}{% endblock head_title %} - Systematic Review</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Core CSS -->
+  <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="{% static "css/style.css" %}" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="{% static "css/style.css" %}" rel="stylesheet">
 
-    <!-- Google font -->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:100,400' rel='stylesheet' type='text/css'>
+  <!-- Google font -->
+  <link href='https://fonts.googleapis.com/css?family=Roboto:100,400' rel='stylesheet' type='text/css'>
 
-    {% block extra_head %}
-    {% endblock extra_head %}
+  {% block extra_head %}
+  {% endblock extra_head %}
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 
-  <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          {% if user.is_authenticated %}
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="glyphicon glyphicon-user color-white"></span><span class="color-white"> {{ user.username }}</span>
-            </button>
-          {% endif %}
-          <a class="navbar-brand" href="{% url 'index' %}">
-            <div>
-              <img src="{% static "images/logo.svg" %}" onerror="this.onerror=null; this.src='{% static "images/logo.png" %}'">
-              <span class="navbar-brand-text hidden-xs">Systematic Review</span>
-            </div>
-          </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <!-- Spacer --><li><a class="hidden-xs"></a></li>
-            {% if user.is_authenticated %}
-               <!-- Links without another dropdown on small displays -->
-              <li><a class="visible-xs" href="{% url 'profile' %}">Change email address</a></li>
-              <li><a class="visible-xs" href="{% url 'auth_password_change' %}">Change password</a></li>
-              <li><a class="visible-xs" href="{% url 'auth_logout' %}?next=/">Logout</a></li>
-
-              <li class="dropdown hidden-xs">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="glyphicon glyphicon-user"></span>&nbsp;
-                  {{ user.username }} <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu ">
-                  <li>
-                    <a href="{% url 'profile' %}">Change email address</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'auth_password_change' %}">Change password</a>
-                  </li>
-                  <li class="divider">
-                  </li>
-                  <li>
-                    <a href="{% url 'auth_logout' %}?next=/">Logout</a>
-                  </li>
-                </ul>
-              </li>
-            {% endif %}
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-      </div>
-      <!-- /.container -->
-    </nav>
-
-    <!-- Page Content -->
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-      {% block body %}
-        {% block content %}
-        {% endblock content %}
-      {% endblock body %}
-      <br>
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        {% if user.is_authenticated %}
+          <button type="button" class="navbar-toggle" data-toggle="collapse"
+                  data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-user color-white"></span><span
+              class="color-white"> {{ user.username }}</span>
+          </button>
+        {% endif %}
+        <a class="navbar-brand" href="{% url 'index' %}">
+          <div>
+            <img src="{% static "images/logo.svg" %}"
+                 onerror="this.onerror=null; this.src='{% static "images/logo.png" %}'">
+            <span class="navbar-brand-text hidden-xs">Systematic Review</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <!-- Spacer -->
+          <li><a class="hidden-xs"></a></li>
+          <li>
+            <a href="{% url 'about' %}">What is systematic review?</a>
+          </li>
+          {% if user.is_authenticated %}
+            <!-- Links without another dropdown on small displays -->
+            <li><a class="visible-xs" href="{% url 'profile' %}">Change email address</a></li>
+            <li><a class="visible-xs" href="{% url 'auth_password_change' %}">Change password</a></li>
+            <li><a class="visible-xs" href="{% url 'auth_logout' %}?next=/">Logout</a></li>
+
+            <li class="dropdown hidden-xs">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-user"></span>&nbsp;
+                {{ user.username }} <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu ">
+                <li>
+                  <a href="{% url 'profile' %}">Change email address</a>
+                </li>
+                <li>
+                  <a href="{% url 'auth_password_change' %}">Change password</a>
+                </li>
+                <li class="divider">
+                </li>
+                <li>
+                  <a href="{% url 'auth_logout' %}?next=/">Logout</a>
+                </li>
+              </ul>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->
+  </nav>
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static "js/sysrev.js" %}" defer></script>
+  <!-- Page Content -->
+  <div class="container">
+    {% block body %}
+      {% block content %}
+      {% endblock content %}
+    {% endblock body %}
+    <br>
+  </div>
+  <!-- /.container -->
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="https://getbootstrap.com/dist/js/bootstrap.min.js" defer></script>
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script type="text/javascript" src="{% static "js/sysrev.js" %}" defer></script>
 
-    {% block extra_body %}
-    {% endblock extra_body %}
-  </body>
+  <!-- Bootstrap Core JavaScript -->
+  <script src="https://getbootstrap.com/dist/js/bootstrap.min.js" defer></script>
+
+  {% block extra_body %}
+  {% endblock extra_body %}
+</body>
 </html>

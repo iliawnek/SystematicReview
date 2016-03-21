@@ -9,6 +9,9 @@ urlpatterns = patterns(
     # Index redirect
     url(r'^$',                                              RedirectView.as_view(url='/reviews'), name='index'),
 
+    # About
+    url(r'^about/$',                                        AboutView.as_view(),          name='about'),
+
     # Reviews
     url(r'^reviews$',                                       ReviewListView.as_view(),     name='review_list'),
     url(r'^reviews/(?P<pk>\d+)(-([\w\-]+))?/$',             ReviewDetailView.as_view(),   name='review_detail'),
@@ -29,5 +32,5 @@ urlpatterns = patterns(
     url(r'^accounts/',                                      include('django.contrib.auth.urls')),
 
     # Administration
-    url(r'^admin/',                                         include(admin.site.urls)),
+    url(r'^admin/',                                         include(admin.site.urls))
 )

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+  What is systematic review?
+{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <h2>What is systematic review?</h2>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-default panel-title">
+      <div class="panel-heading">
+        <h4>
+          <a href="https://en.wikipedia.org/wiki/Systematic_review">
+            <img src="{% static "images/wikipedia.svg" %}"
+                 onerror="this.onerror=null; this.src='{% static "images/wikipedia.png" %}'"
+                 id="wikipedia">
+          </a>
+        </h4>
+      </div>
+      <div class="panel-body">
+        A systematic review is a type of literature review that collects and critically analyzes multiple research
+        studies or papers. A review of existing studies is often quicker and cheaper than embarking on a new study.
+        Researchers use methods that are selected before one or more research questions are formulated, and then they
+        aim to find and analyze studies that relate to and answer those questions. Systematic reviews of randomized
+        controlled trials are key in the practice of evidence-based medicine.
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-default panel-title">
+      <div class="panel-heading">
+        <h4>How do I use this webapp?</h4>
+      </div>
+      <div class="panel-body">
+        <p>
+          Start off by <a href="{% url 'review_create' %}">creating a new review</a>. Choose a name and write a
+          description for your new review. Here, you can add the usernames or email addresses of other users who you
+          would like to invite to join you in the review.
+        </p>
+        <p>
+          Next, write a boolean query to search for medical papers related to your review on
+          <a href="http://www.ncbi.nlm.nih.gov/pubmed">PubMed</a>. Keep adjusting your query until it returns under 500
+          papers.
+        </p>
+        <p>
+          The review organises papers into 4 pools:
+        <ul>
+          <li>Abstract pool</li>
+          <li>Document pool</li>
+          <li>Final pool</li>
+          <li>Rejected pool</li>
+        </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

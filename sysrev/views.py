@@ -7,7 +7,7 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.utils.decorators        import method_decorator
 from django.views.decorators.cache  import cache_control
-from django.views.generic           import ListView, DetailView, RedirectView
+from django.views.generic           import ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.edit import UpdateView, DeleteView
 from registration.backends.simple.views import RegistrationView
 from django.template.loader import get_template
@@ -33,6 +33,10 @@ class ProfileView(UpdateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ProfileView, self).dispatch(*args, **kwargs)
+
+
+class AboutView(TemplateView):
+    template_name = "sysrev/about.html"
 
 
 class ReviewListView(ListView):
