@@ -4,7 +4,7 @@ Ensure a C++ compiler is available. On Windows, you need to grab https://www.mic
 
 Set up by running `fresh-start.bat` or `fresh-start.sh`. The script performs the following actions:
 
-1. Installs modules from requirements.txt with `pip -r requirements.txt`.
+1. Installs modules from requirements.txt with `pip install -r requirements.txt`.
 2. Removes any existing database, if it exists.
 3. Creates a new set of migrations and runs them.
 4. Populates the new database by running the population script `populate.py`.
