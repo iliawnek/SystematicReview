@@ -40,6 +40,9 @@
         <div class="col-md-6">
           <h4>Final pool</h4>
           <div class="list-group">
+            {% if count.final == 0 %}
+              No papers
+            {% endif %}
             {% for paper in final_papers %}
               <a href="{{ paper.url }}" target="blank" class="list-group-item">
                 <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
@@ -50,6 +53,9 @@
         <div class="col-md-6">
           <h4>Rejected pool</h4>
           <div class="list-group">
+            {% if count.rejected == 0 %}
+              No papers
+            {% endif %}
             {% for paper in rejected_papers %}
               <a href="{{ paper.url }}" target="blank" class="list-group-item">
                 <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
