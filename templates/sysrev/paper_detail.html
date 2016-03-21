@@ -92,9 +92,9 @@
         {% endif %}" id="relevancy-buttons">
 
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
         </div>
-        <div class="col-md-4 text-center">
+        <div class="col-md-8 text-center">
           {% if paper.pool in to_judge %}
             <p>Is this paper relevant to the review?</p>
             <div class="btn-group" role="group">
@@ -107,18 +107,24 @@
             <a href="{{ paper.review.get_absolute_url }}/work" class="btn btn-default btn-lg"><span
               class="glyphicon glyphicon-question-sign"></span> Not sure</a>
           {% else %}
-            <p>Do you want to re-screen this paper?</p>
-            <div class="btn-group" role="group">
-              <a href="abstract" class="btn btn-default btn-lg"><span
-                  class="glyphicon glyphicon-file color-yellow"></span> Move to abstract pool</a>
-              <a href="document" class="btn btn-default btn-lg"><span
-                  class="glyphicon glyphicon-file color-blue"></span> Move to document pool</a>
-            </div>
+            <p>Reconsider this paper:</p>
+              {% if paper.pool == "F" %}
+                <a href="no" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-down color-red"></span> Reject</a>
+              {% else %}
+              <div class="btn-group" role="group">
+                <a href="abstract" class="btn btn-default btn-lg"><span
+                    class="glyphicon glyphicon-file color-yellow"></span> Move to abstract pool</a>
+                <a href="document" class="btn btn-default btn-lg"><span
+                    class="glyphicon glyphicon-file color-blue"></span> Move to document pool</a>
+              </div>
+              {% endif %}
           {% endif %}
         </div>
-        <div class="col-md-4">
-          <span class="label label-default pull-right hidden-xs" data-toggle="tooltip" data-html="true"
-            title="Alt + Y = Yes<br>Alt + N = No<br>Alt + ? = Not sure">Keyboard shortcuts</span>
+        <div class="col-md-2">
+          {% if paper.pool in to_judge %}
+            <span class="label label-default pull-right hidden-xs" data-toggle="tooltip" data-html="true"
+              title="Alt + Y = Yes<br>Alt + N = No<br>Alt + ? = Not sure">Keyboard shortcuts</span>
+          {% endif %}
         </div>
        </div>
     </div>
