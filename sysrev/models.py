@@ -116,9 +116,6 @@ class Paper(models.Model):
         paper.review = review
         paper.authors = _get_authors(article)
 
-        # TODO: label for section headings is lost
-        # eg. StringElement('some text here', attributes={u'NlmCategory': u'METHODS', u'Label': u'METHODS'})
-
         abstractText = ""
         try:
             for stringElement in article[u'Abstract'][u'AbstractText']:
