@@ -70,7 +70,11 @@
           <iframe class="embed-responsive-item" src="{{ paper.url }}"></iframe>
         </div>
       {% else %}
-        {{ paper.abstract|safe|linebreaks }}
+        {% if paper.abstract %}
+          {{ paper.abstract|safe|linebreaks }}
+        {% else %}
+          <i><span class="color-grey">The abstract could not be found.</span></i>
+        {% endif %}
       {% endif %}
     </div>
 
