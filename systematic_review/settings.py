@@ -28,8 +28,11 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 1
 
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'wad2.systematicreview@gmail.com'
+EMAIL_HOST_PASSWORD = 'wed46-sysrev'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -70,7 +73,6 @@ MIDDLEWARE_CLASSES = (
 )
 ROOT_URLCONF = 'systematic_review.urls'
 WSGI_APPLICATION = 'systematic_review.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
