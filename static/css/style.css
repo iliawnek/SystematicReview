@@ -95,6 +95,8 @@ body {
     padding-right: 20px;
 }
 
+/* paper counter bar */
+
 .progress-square {
     border-radius: 0;
     margin-bottom: 0;
@@ -131,7 +133,12 @@ body {
     font-weight: bold;
 }
 
+.progress-bar {
+    min-width: 2em;
+}
+
 /* page headers */
+
 .page-header {
     border-bottom-color: #ccc; /* darker horizontal rule */
     margin-top: 20px;
