@@ -155,3 +155,15 @@ body {
     /*margin-left: auto;*/
     /*margin-right: auto;*/
 }
+
+.panel-footer-warning {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+}
+
+.panel-footer-info {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}

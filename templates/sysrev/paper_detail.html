@@ -19,19 +19,23 @@
   </div>
 
   <div class="progress progress-paper">
-    <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip" title="Abstract pool ({{ count.abstract }} papers)"
+    <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip"
+         title="Abstract pool ({{ count.abstract }} papers)"
          style="width: {{ percent.abstract }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.abstract }}
     </div>
-    <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool ({{ count.document }} papers)"
+    <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip"
+         title="Document pool ({{ count.document }} papers)"
          style="width: {{ percent.document }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.document }}
     </div>
-    <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool ({{ count.final }} papers)"
+    <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip"
+         title="Final pool ({{ count.final }} papers)"
          style="width: {{ percent.final }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.final }}
     </div>
-    <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool ({{ count.rejected }} papers)"
+    <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip"
+         title="Rejected pool ({{ count.rejected }} papers)"
          style="width: {{ percent.rejected }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.rejected }}
     </div>
@@ -42,10 +46,15 @@
   <h3>{{ title }}</h3>
 
 
-  <div class="panel panel-default">
+  <div class="panel
+  {% if paper.pool == "A" %}
+    panel-warning
+  {% elif paper.pool == "D" %}
+    panel-info
+  {% endif %}">
     <div class="panel-heading">
       <h2 class="panel-title">
-        {{ paper.title }}
+        <strong>{{ paper.title }}</strong>
 
         {% if paper.pool in to_embed_full %}
           <nav class="pull-right">
@@ -68,7 +77,12 @@
     </div>
 
     {% if paper.pool in to_judge %}
-      <div class="panel-footer" id="relevancy-buttons">
+      <div class="panel-footer
+        {% if paper.pool == "A" %}
+          panel-footer-warning
+        {% elif paper.pool == "D" %}
+          panel-footer-info
+        {% endif %}" id="relevancy-buttons">
         <div class="text-center">
           <p>Is this paper relevant to the review?</p>
           <div class="btn-group" role="group">
@@ -85,16 +99,16 @@
   </div>
 
   <div class="pull-right">
-  <div class="panel panel-default color-grey" id="keyboard-shortcuts">
-    <div class="panel-heading">
-      Keyboard shortcuts
+    <div class="panel panel-default color-grey" id="keyboard-shortcuts">
+      <div class="panel-heading">
+        Keyboard shortcuts
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item">Alt + Y = Yes</li>
+        <li class="list-group-item">Alt + N = No</li>
+        <li class="list-group-item">Alt + ? = Not sure</li>
+      </ul>
     </div>
-    <ul class="list-group">
-      <li class="list-group-item">Alt + Y = Yes</li>
-      <li class="list-group-item">Alt + N = No</li>
-      <li class="list-group-item">Alt + ? = Not sure</li>
-    </ul>
-  </div>
   </div>
 {% endblock body %}
 
