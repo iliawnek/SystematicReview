@@ -33,7 +33,6 @@ EMAIL_HOST_USER = 'wad2.systematicreview@gmail.com'
 EMAIL_HOST_PASSWORD = 'wed46-sysrev'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-REGISTRATION_EMAIL_HTML = False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
