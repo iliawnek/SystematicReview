@@ -110,7 +110,8 @@ class Paper(models.Model):
         """Creates Paper model from given data, review and pool"""
         medlineCitation = data[u'MedlineCitation']
         article = medlineCitation[u'Article']
-        paper = Paper.objects.get_or_create(review=review, title=article[u'ArticleTitle'])[0]
+        title = article[u'ArticleTitle'].lstrip("[").rstrip("].")
+        paper = Paper.objects.get_or_create(review=review, title=title)[0]
         paper.review = review
         paper.authors = _get_authors(article)
 
