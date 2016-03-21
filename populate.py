@@ -19,26 +19,26 @@ def populate():
     # TODO: add a few more reviews
     adhd = add_review(users=[jill, bob],
                       title="Investigating the effects of acupuncture on children with ADHD",
-                      description="""The purpose of this review is to identify any potential positive or negative
-                      effects when applying the practice of acupuncture to young children suffering from
-                      attention deficit hyperactivity disorder, which is more commonly referred to by its abbreviation, ADHD.""",
+                      description="The purpose of this review is to identify any potential positive or negative "
+                                  "effects when applying the practice of acupuncture to young children suffering from "
+                                  "attention deficit hyperactivity disorder, which is more commonly referred to by its abbreviation, ADHD.",
                       date_created=generate_random_date(),
                       last_modified=generate_random_date(recent=True),
                       query="""(adhd OR adhs OR addh) AND (child OR adolescent) AND acupuncture""")
 
     lung_cancer = add_review(users=[jen],
                              title="Development of lung cancer from inhalation of soldering fumes",
-                             description="""This review will retrieve all papers discussing links between soldering fume
-                             inhalation and lung cancer.""",
+                             description="This review will retrieve all papers discussing links between soldering fume "
+                                         "inhalation and lung cancer.",
                              date_created=generate_random_date(),
                              last_modified=generate_random_date(recent=True),
                              query="(solder OR soldering) AND (lung AND cancer)")
 
     rsi = add_review(users=[jen, bob],
                      title="RSI in musicians such as drummers and guitarists",
-                     description="This review explores any connection between the development of repetitive strain"
-                                 "injury, which is more commonly known as RSI, in musicians, or more specifically,"
-                                 "people who play drums or play guitar. This issue is more frequently discussed in"
+                     description="This review explores any connection between the development of repetitive strain "
+                                 "injury, which is more commonly known as RSI, in musicians, or more specifically, "
+                                 "people who play drums or play guitar. This issue is more frequently discussed in "
                                  "the world of computer use and office life, but rarely in the performance of music.",
                      date_created=generate_random_date(),
                      last_modified=generate_random_date(recent=True),
@@ -46,8 +46,8 @@ def populate():
 
     stress = add_review(users=[jill],
                         title="Stress experienced by students during examinations",
-                        description="This review will retrieve all medical papers which discuss the issues regarding"
-                                    "stress, anxiety, and a general lack of wellbeing of students while their"
+                        description="This review will retrieve all medical papers which discuss the issues regarding "
+                                    "stress, anxiety, and a general lack of wellbeing of students while their "
                                     "educational establishment undergo examinations.",
                         date_created=generate_random_date(),
                         last_modified=generate_random_date(recent=True),
