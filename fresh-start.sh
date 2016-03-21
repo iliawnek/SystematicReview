@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 # Cleans up existing installation, then creates fresh DB and starts server
 
