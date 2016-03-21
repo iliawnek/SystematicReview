@@ -91,7 +91,7 @@
           <h4>Abstract pool</h4>
           <div class="list-group">
             {% for paper in abstract_papers %}
-              <a href="{{ paper.url }}" target="blank" class="list-group-item list-group-item-warning">
+              <a href="{{ paper.get_absolute_url }}" target="blank" class="list-group-item list-group-item-warning">
                 <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
               </a>
             {% endfor %}
@@ -103,7 +103,7 @@
           <h4>Document pool</h4>
           <div class="list-group">
             {% for paper in document_papers %}
-              <a href="{{ paper.url }}" target="blank" class="list-group-item list-group-item-info">
+              <a href="{{ paper.get_absolute_url }}" target="blank" class="list-group-item list-group-item-info">
                 <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
               </a>
             {% endfor %}
