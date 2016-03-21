@@ -2,8 +2,8 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-$(function () {
-    $(".collapse-button").click(function () {
-        $(".collapse-button").toggleClass("glyphicon-chevron-down glyphicon-chevron-up")
-    })
-});
+function toggleChevron(e) {
+    $(".collapse-button").toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+}
+$('.collapse').on('hidden.bs.collapse', toggleChevron);
+$('.collapse').on('shown.bs.collapse', toggleChevron);
