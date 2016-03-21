@@ -14,6 +14,7 @@ urlpatterns = patterns(
     url(r'^reviews/(?P<pk>\d+)(-([\w\-]+))?/$',             ReviewDetailView.as_view(),   name='review_detail'),
     url(r'^reviews/(?P<pk>\d+)(-([\w\-]+))?/edit$',         ReviewUpdateView.as_view(),   name='review_update'),
     url(r'^reviews/(?P<pk>\d+)(-([\w\-]+))?/delete$',       ReviewDeleteView.as_view(),   name='review_delete'),
+    url(r'^reviews/(?P<pk>\d+)(-([\w\-]+))?/dl$',           ReviewDownloadView.as_view(), name='review_download'),
     url(r'^reviews/create$',                                ReviewCreateWizard.as_view(), name='review_create'),
     url(r'^reviews/(?P<pk>\d+)(-([\w\-]+))?/work/$',        ReviewWorkView.as_view(),     name='review_work'),
 

@@ -4,12 +4,14 @@ from random import randint
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.formtools.wizard.views import SessionWizardView
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.utils.decorators        import method_decorator
 from django.views.decorators.cache  import cache_control
 from django.views.generic           import ListView, DetailView, RedirectView
 from django.views.generic.edit import UpdateView, DeleteView
 from registration.backends.simple.views import RegistrationView
+from django.template.loader import get_template
+from django.template import Context
 
 from sysrev.forms  import *
 
@@ -79,6 +81,20 @@ class ReviewDetailView(DetailView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ReviewDetailView, self).dispatch(*args, **kwargs)
+
+
+class ReviewDownloadView(ReviewDetailView):
+    model = Review
+    template_name = "sysrev/review_download.txt"
+
+    def render_to_response(self, context, **response_kwargs):
+        t = get_template(self.template_name)
+
+        resp = HttpResponse(t.render(Context(context)), content_type="text/plain")
+        resp["Content-Disposition"] = 'attachment; filename="' + context['review'].slug + '"'
+
+        return resp
+
 
 
 class ReviewUpdateView(UpdateView):

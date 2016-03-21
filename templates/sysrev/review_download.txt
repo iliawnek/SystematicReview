@@ -1,0 +1,21 @@
+# {{ review.title }}
+
+{% if abstract_papers %}
+## Abstract pool
+{% for paper in abstract_papers %}
+* {{ paper.title|safe }} ({{ paper.authors }} - Published {{ paper.publish_date }}) - {{ paper.url|safe }}{% endfor %}{% endif %}
+
+{% if document_papers %}
+## Document pool
+{% for paper in document_papers %}
+* {{ paper.title|safe }} ({{ paper.authors }} - Published {{ paper.publish_date }}) - {{ paper.url|safe }}{% endfor %}{% endif %}
+
+{% if final_papers %}
+## Final pool
+{% for paper in final_papers %}
+* {{ paper.title|safe }} ({{ paper.authors }} - Published {{ paper.publish_date }}) - {{ paper.url|safe }}{% endfor %}{% endif %}
+
+{% if rejected_papers %}
+## Rejected pool
+{% for paper in rejected_papers %}
+* {{ paper.title|safe }} ({{ paper.authors }} - Published {{ paper.publish_date }}) - {{ paper.url|safe }}{% endfor %}{% endif %}
