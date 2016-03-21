@@ -58,3 +58,26 @@ class ReviewCreateStep2(forms.Form):
             raise forms.ValidationError("Your query did not return any papers.")
 
         return query
+
+
+class ReviewUpdate(forms.ModelForm):
+    class Meta:
+        model  = Review
+        fields = ("title", "description", "query")
+        
+    invited = forms.CharField(widget=forms.Textarea, required=False, label="Participants", help_text="Enter the email address or username of each participant, one per line")
+
+    def clean_invited(self):
+        invited = self.cleaned_data.get('invited')
+        invlist = filter(lambda i: i, map(lambda l: str.strip(str(l)), invited.splitlines()))
+
+        for invitee in invlist:
+            try:
+                if invitee.find("@") == -1:
+                    User.objects.get(username=invitee)
+                else:
+                    User.objects.get(email=invitee)
+            except User.DoesNotExist:
+                raise forms.ValidationError('User '+invitee+' not found.')
+
+        return invited

@@ -33,11 +33,6 @@ class ProfileView(UpdateView):
         return super(ProfileView, self).dispatch(*args, **kwargs)
 
 
-
-
-
-
-
 class ReviewListView(ListView):
     model = Review
 
@@ -59,7 +54,6 @@ class ReviewListView(ListView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ReviewListView, self).dispatch(*args, **kwargs)
-
 
 
 class ReviewDetailView(DetailView):
@@ -87,7 +81,7 @@ class ReviewDetailView(DetailView):
 
 class ReviewUpdateView(UpdateView):
     model  = Review
-    fields = ['title', 'description', 'participants', 'query']
+    form_class = ReviewUpdate
 
     def get_success_url(self):
         return self.request.path[:-7]
