@@ -135,7 +135,13 @@ class Paper(models.Model):
     def create_papers_from_pubmed_ids(ids, review, pool='A'):
         """Creates papers from all of the given ids, in the given review and pool"""
         papers = read_papers_from_ids(ids)
-        return map(lambda data: Paper.create_paper_from_data(data, review, pool), papers)
+
+        # Commit all papers in single transaction
+        # Improves performance, as django won't automatically commit after every save call when creating lots of papers
+        from django.db import transaction
+
+        with transaction.atomic():
+            return map(lambda data: Paper.create_paper_from_data(data, review, pool), papers)
 
     def get_absolute_url(self):
         return self.review.get_absolute_url() + "/" + str(self.pk)
