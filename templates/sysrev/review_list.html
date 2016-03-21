@@ -12,7 +12,7 @@
       <h2>
         <span>My reviews</span>
         <a class="btn btn-primary pull-right" href={% url 'review_create' %}>
-          <span class="glyphicon glyphicon-plus"></span> Create a new review
+          <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Create a new review</span>
         </a>
       </h2>
     </div>
@@ -28,11 +28,13 @@
 
         <div class="panel-heading">
           <a href="{{ review.review.get_absolute_url }}">{{ review.review.title }}</a>
+          <br class="visible-xs">
           {% if review.review.completed %}
             <span class="label label-success pull-right">COMPLETED</span>
           {% else %}
             <span class="label label-primary pull-right">IN PROGRESS</span>
           {% endif %}
+          <br class="visible-xs">
         </div>
 
         <div class="progress progress-paper progress-square">

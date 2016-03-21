@@ -13,7 +13,7 @@
     <nav>
       <a class="btn btn-default" href="{{ review.get_absolute_url }}" style="margin: 10px 0;">
         <span class="glyphicon glyphicon-arrow-left"></span>
-        Back to review
+        <span>Back to review</span>
       </a>
     </nav>
   </div>
@@ -54,15 +54,16 @@
     panel-danger
   {% endif %}">
     <div class="panel-heading">
+      <a href="{{ paper.url }}" target="_blank" class="btn btn-default pull-right hidden-xs"><span
+          class="glyphicon glyphicon-link"></span> Open in new tab</a>
       <h2 class="panel-title">
         <strong>{{ paper.title }}</strong>
-
-        <nav class="pull-right">
-          <a href="{{ paper.url }}" target="_blank" class="btn btn-default"><span
-              class="glyphicon glyphicon-link"></span> Open in new tab</a>
-        </nav>
       </h2>
-      <span>({{ paper.authors }} - Published {{ paper.publish_date }})</span>
+      <span>{{ paper.authors }} - Published {{ paper.publish_date }}</span>
+
+      <br class="visible-xs"><br class="visible-xs">
+      <a href="{{ paper.url }}" target="_blank" class="btn btn-default visible-xs"><span
+          class="glyphicon glyphicon-link"></span> Open in new tab</a>
     </div>
 
     <div class="panel-body">
@@ -89,31 +90,37 @@
         {% elif paper.pool == "R" %}
           panel-footer-danger
         {% endif %}" id="relevancy-buttons">
-      <div class="text-center">
-        {% if paper.pool in to_judge %}
-          <p>Is this paper relevant to the review?</p>
-          <div class="btn-group" role="group">
-            <a href="yes" class="btn btn-default btn-lg"><span
-                class="glyphicon glyphicon-thumbs-up   color-green"></span> Yes</a>
-            <a href="no" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-down color-red"></span>
-              No</a>
+
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 text-center">
+          {% if paper.pool in to_judge %}
+            <p>Is this paper relevant to the review?</p>
+            <div class="btn-group" role="group">
+              <a href="yes" class="btn btn-default btn-lg"><span
+                  class="glyphicon glyphicon-thumbs-up   color-green"></span> Yes</a>
+              <a href="no" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-down color-red"></span>
+                No</a>
+            </div>
+            <hr class="visible-xs">
             <a href="{{ paper.review.get_absolute_url }}/work" class="btn btn-default btn-lg"><span
-                class="glyphicon glyphicon-question-sign"></span> Not sure</a>
-          </div>
-        {% else %}
-          <p>Do you want to re-screen this paper?</p>
-          <div class="btn-group" role="group">
-            <a href="abstract" class="btn btn-default btn-lg"><span
-                class="glyphicon glyphicon-file color-yellow"></span> Move to abstract pool</a>
-            <a href="document" class="btn btn-default btn-lg"><span
-                class="glyphicon glyphicon-file color-blue"></span> Move to document pool</a>
-          </div>
-        {% endif %}
-      </div>
-      {% if paper.pool in judge %}
-      <h4><span class="label label-default" data-toggle="tooltip" data-html="true"
-                title="Alt + Y = Yes<br>Alt + N = No<br>Alt + ? = Not sure">Keyboard shortcuts</span></h4>
-      {% endif %}
+              class="glyphicon glyphicon-question-sign"></span> Not sure</a>
+          {% else %}
+            <p>Do you want to re-screen this paper?</p>
+            <div class="btn-group" role="group">
+              <a href="abstract" class="btn btn-default btn-lg"><span
+                  class="glyphicon glyphicon-file color-yellow"></span> Move to abstract pool</a>
+              <a href="document" class="btn btn-default btn-lg"><span
+                  class="glyphicon glyphicon-file color-blue"></span> Move to document pool</a>
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-md-4">
+          <span class="label label-default pull-right hidden-xs" data-toggle="tooltip" data-html="true"
+            title="Alt + Y = Yes<br>Alt + N = No<br>Alt + ? = Not sure">Keyboard shortcuts</span>
+        </div>
+       </div>
     </div>
   </div>
 

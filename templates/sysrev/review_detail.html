@@ -10,7 +10,7 @@
 
     <nav>
       <a class="btn btn-default" href="{% url 'review_list' %}">
-        <span class="glyphicon glyphicon-arrow-left"></span> Back to my reviews
+        <span class="glyphicon glyphicon-arrow-left"></span><span class="hidden-xs"> Back to my reviews</span>
       </a>
 
       {% if not review.completed %}
@@ -21,8 +21,7 @@
 
         <div class="vertical-divider"></div>
         <a class="btn btn-info" href="{{ review.get_absolute_url }}/edit">
-          <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-          Edit this review
+          <span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs"> Edit this review</span>
         </a>
       {% else %}
         <div class="vertical-divider"></div>
@@ -141,7 +140,7 @@
       {% endif %}
 
       <div class="col-md-12">
-        <a href="{{ review.get_absolute_url }}/dl">Download as list</a>
+        <a role="button" class="btn btn-default" href="{{ review.get_absolute_url }}/dl" ><span class="glyphicon glyphicon-download"></span> Download as list</a>
       </div>
     </div>
   {% else %}
