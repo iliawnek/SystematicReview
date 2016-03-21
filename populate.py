@@ -51,7 +51,7 @@ def populate():
                                     "educational establishment undergo examinations.",
                         date_created=generate_random_date(),
                         last_modified=generate_random_date(recent=True),
-                        query="(stress) AND (student) AND (exam OR examination OR test)")
+                        query="stress AND anxiety AND student AND (exam OR examination OR test) AND (university OR college)")
 
     reviews = [
         adhd,
