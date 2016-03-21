@@ -4,6 +4,6 @@ $(function () {
 
 $(function () {
     $(".collapse-button").click(function () {
-        $(".collapse-button").toggleClass("glyphicon-menu-down glyphicon-menu-up")
+        $(".collapse-button").toggleClass("glyphicon-chevron-down glyphicon-chevron-up")
     })
 });
