@@ -38,19 +38,19 @@
         <div class="progress progress-paper progress-square">
           <!-- TODO: avoid inline CSS -->
           <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip"
-               title="Abstract pool ({{ count.abstract }} papers)"
+               title="Abstract pool ({{ review.count.abstract }} papers)"
                style="width: {{ review.percent.abstract }}%">
             <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.abstract }}
           </div>
-          <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool ({{ count.document }} papers)"
+          <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool ({{ review.count.document }} papers)"
                style="width: {{ review.percent.document }}%">
             <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.document }}
           </div>
-          <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool ({{ count.final }} papers)"
+          <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool ({{ review.count.final }} papers)"
                style="width: {{ review.percent.final }}%">
             <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.final }}
           </div>
-          <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool ({{ count.rejected }} papers)"
+          <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool ({{ review.count.rejected }} papers)"
                style="width: {{ review.percent.rejected }}%">
             <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.rejected }}
           </div>
