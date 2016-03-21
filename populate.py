@@ -26,14 +26,13 @@ def populate():
                       last_modified=generate_random_date(recent=True),
                       query="""(adhd OR adhs OR addh) AND (child OR adolescent) AND acupuncture""")
 
-    stress = add_review(users=[jill],
-                        title="Stress experienced by students during examinations",
-                        description="This review will retrieve all medical papers which discuss the issues regarding"
-                                    "stress, anxiety, and a general lack of wellbeing of students while their"
-                                    "educational establishment undergo examinations.",
-                        date_created=generate_random_date(),
-                        last_modified=generate_random_date(recent=True),
-                        query="(stress) AND (student) AND (exam OR examination OR test)")
+    lung_cancer = add_review(users=[jen],
+                             title="Development of lung cancer from inhalation of soldering fumes",
+                             description="""This review will retrieve all papers discussing links between soldering fume
+                             inhalation and lung cancer.""",
+                             date_created=generate_random_date(),
+                             last_modified=generate_random_date(recent=True),
+                             query="(solder OR soldering) AND (lung AND cancer)")
 
     rsi = add_review(users=[jen, bob],
                      title="RSI in musicians such as drummers and guitarists",
@@ -45,9 +44,32 @@ def populate():
                      last_modified=generate_random_date(recent=True),
                      query="(RSI OR repetitive OR strain OR injury) AND (drums OR drumming OR drummer OR guitar OR guitarist)")
 
-    reviews = [adhd, stress, rsi]
+    stress = add_review(users=[jill],
+                        title="Stress experienced by students during examinations",
+                        description="This review will retrieve all medical papers which discuss the issues regarding"
+                                    "stress, anxiety, and a general lack of wellbeing of students while their"
+                                    "educational establishment undergo examinations.",
+                        date_created=generate_random_date(),
+                        last_modified=generate_random_date(recent=True),
+                        query="(stress) AND (student) AND (exam OR examination OR test)")
+
+    reviews = [
+        adhd,
+        lung_cancer,
+        rsi,
+        stress,
+    ]
+
+    import time
+
     for review in reviews:
+        start = time.time()
+
         Paper.create_papers_from_pubmed_ids(PubMed.get_ids_from_query(review.query), review)
+
+        end = time.time()
+        duration = (end - start)
+        print "Populating %s took %f seconds" % (review.title, duration)
 
 
 def add_review(users, title, description, date_created, last_modified, query, completed=False):
