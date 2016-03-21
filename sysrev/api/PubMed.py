@@ -5,11 +5,17 @@ Entrez.email = 'systematicreview@nallar.me'
 
 db = "pubmed"
 
+
+def get_query_limit():
+    """Returns maximum number of items we will query"""
+    return 500
+
+
 def get_data_from_query(query):
     """Returns raw data from pubmed query from API"""
     return Entrez.read(Entrez.esearch(db=db,
                                       sort='relevance',
-                                      retmax=1000,
+                                      retmax=get_query_limit(),
                                       term=query,
                                       field="All Fields",
                                       rettype='json'))
@@ -34,6 +40,7 @@ def _get_authors(article):
 
     authorList = article[u'AuthorList']
     return ", ".join(filter(lambda it: len(it) > 0, map(_author_to_string, authorList)))
+
 
 def _author_to_string(author):
     if (u'ForeName' in author) and (u'LastName' in author):
