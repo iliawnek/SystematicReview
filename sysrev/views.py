@@ -200,6 +200,10 @@ class PaperChoiceView(RedirectView):
                     paper.pool = "F"
             elif choice == "no":
                 paper.pool = "R"
+            elif choice == "abstract":
+                paper.pool = "A"
+            elif choice == "document":
+                paper.pool = "D"
             else:
                 raise Http404("Invalid choice")
             paper.save()

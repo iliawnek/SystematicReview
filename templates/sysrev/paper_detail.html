@@ -41,10 +41,7 @@
     </div>
   </div>
 
-
-
   <h3>{{ title }}</h3>
-
 
   <div class="panel
   {% if paper.pool == "A" %}
@@ -82,14 +79,18 @@
       {% endif %}
     </div>
 
-    {% if paper.pool in to_judge %}
-      <div class="panel-footer
+    <div class="panel-footer
         {% if paper.pool == "A" %}
           panel-footer-warning
         {% elif paper.pool == "D" %}
           panel-footer-info
+        {% elif paper.pool == "F" %}
+          panel-footer-success
+        {% elif paper.pool == "R" %}
+          panel-footer-danger
         {% endif %}" id="relevancy-buttons">
-        <div class="text-center">
+      <div class="text-center">
+        {% if paper.pool in to_judge %}
           <p>Is this paper relevant to the review?</p>
           <div class="btn-group" role="group">
             <a href="yes" class="btn btn-default btn-lg"><span
@@ -99,11 +100,21 @@
             <a href="{{ paper.review.get_absolute_url }}/work" class="btn btn-default btn-lg"><span
                 class="glyphicon glyphicon-question-sign"></span> Not sure</a>
           </div>
-        </div>
-        <h4><span class="label label-default" data-toggle="tooltip" data-html="true"
-        title="Alt + Y = Yes<br>Alt + N = No<br>Alt + ? = Not sure">Keyboard shortcuts</span></h4>
+        {% else %}
+          <p>Do you want to re-screen this paper?</p>
+          <div class="btn-group" role="group">
+            <a href="abstract" class="btn btn-default btn-lg"><span
+                class="glyphicon glyphicon-file color-yellow"></span> Move to abstract pool</a>
+            <a href="document" class="btn btn-default btn-lg"><span
+                class="glyphicon glyphicon-file color-blue"></span> Move to document pool</a>
+          </div>
+        {% endif %}
       </div>
-    {% endif %}
+      {% if paper.pool in judge %}
+      <h4><span class="label label-default" data-toggle="tooltip" data-html="true"
+                title="Alt + Y = Yes<br>Alt + N = No<br>Alt + ? = Not sure">Keyboard shortcuts</span></h4>
+      {% endif %}
+    </div>
   </div>
 
 {% endblock body %}
