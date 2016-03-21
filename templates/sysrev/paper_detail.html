@@ -56,12 +56,10 @@
       <h2 class="panel-title">
         <strong>{{ paper.title }}</strong>
 
-        {% if paper.pool in to_embed_full %}
-          <nav class="pull-right">
-            <a href="{{ paper.url }}" target="_blank" class="btn btn-default"><span
-                class="glyphicon glyphicon-link"></span> Open in new tab</a>
-          </nav>
-        {% endif %}
+        <nav class="pull-right">
+          <a href="{{ paper.url }}" target="_blank" class="btn btn-default"><span
+              class="glyphicon glyphicon-link"></span> Open in new tab</a>
+        </nav>
       </h2>
       <span>({{ paper.authors }} - Published {{ paper.publish_date }})</span>
     </div>
