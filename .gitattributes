@@ -36,6 +36,7 @@
 *.jar           binary
 *.jpg           binary
 *.jpeg          binary
+*.pdf           binary
 *.png           binary
 *.so            binary
 *.war           binary
