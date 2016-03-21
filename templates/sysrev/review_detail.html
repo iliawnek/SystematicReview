@@ -14,21 +14,29 @@
       </a>
 
       {% if not review.completed %}
-        <div class="vertical-divider"></div>
-        <a class="btn btn-primary" href="{{ review.get_absolute_url }}/work">
+        <div class="vertical-divider hidden-xs"></div>
+        <a class="btn btn-primary hidden-xs" href="{{ review.get_absolute_url }}/work">
           Work on this review
         </a>
-
-        <div class="vertical-divider"></div>
-        <a class="btn btn-info" href="{{ review.get_absolute_url }}/edit">
-          <span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs"> Edit this review</span>
-        </a>
-      {% else %}
-        <div class="vertical-divider"></div>
-        <a href="{{ review.get_absolute_url }}/delete" class="btn btn-danger">
-          <span class="glyphicon glyphicon-trash"></span> Delete this review
-        </a>
       {% endif %}
+
+      <div class="vertical-divider"></div>
+      <a class="btn btn-info" href="{{ review.get_absolute_url }}/edit">
+        <span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs"> Edit this review</span>
+      </a>
+      
+      <div class="vertical-divider"></div>
+      <a href="{{ review.get_absolute_url }}/delete" class="btn btn-danger">
+        <span class="glyphicon glyphicon-trash"></span><span class="hidden-xs"> Delete this review</span>
+      </a>
+
+    {% if not review.completed %}
+      <br class="visible-xs">
+      <a class="btn btn-primary visible-xs" href="{{ review.get_absolute_url }}/work">
+        Work on this review
+      </a>
+    {% endif %}
+
     </nav>
   </div>
 

@@ -8,17 +8,6 @@
 {% block body %}
   <div class="page-header">
     <h2>Editing: {{ review.title }}</h2>
-    <nav>
-      <a href="{{ object.get_absolute_url }}" class="btn btn-default">
-        <span class="glyphicon glyphicon-arrow-left"></span> Discard changes
-      </a>
-
-      <div class="vertical-divider"></div>
-
-      <a href="{{ object.get_absolute_url }}/delete" class="btn btn-danger">
-        <span class="glyphicon glyphicon-trash"></span> Delete this review
-      </a>
-    </nav>
   </div>
 
   <form action="" method="post">
@@ -26,6 +15,7 @@
 
     {{ form|bootstrap }}
 
-    <input type="submit" value="Save Changes" class="btn btn-primary"/>
+    <a href="{{ object.get_absolute_url }}" class="btn btn-default">Cancel</a>
+    <input type="submit" value="Save changes" class="btn btn-primary"/>
   </form>
 {% endblock %}
