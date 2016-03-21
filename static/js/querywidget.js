@@ -1,27 +1,63 @@
 // see sysrev.widgets.QueryWidget
 
-$(function() {
+$(function () {
     if (window.queryWidgetIncluded)
         return;
 
-    var types = ['AND', 'OR'];
+    // To dump fields from PubMed site:
+    // var options = document.querySelectorAll("#ff_0 > option");
+    // var res = [];
+    // for (var i = 0; i < options.length; i++) {
+    //     res.push(options[i].getAttribute("value"));
+    // }
+    // console.log("'" + res.join("', '") + "'");
 
-    function addWidgets(it) {
-        $.each(types, function(i, type) {
-            // TODO: Add styles so these make more sense
-            // TODO: Add destination spots on side for text/other widgets?
-            it.append($("<div class='queryWidgetType'><span class='queryWidgetTarget queryWidgetTargetLeft'></span>" + type + "<span class='queryWidgetTarget queryWidgetTargetRight'></div>"))
+    var filters = [
+        'Affiliation', 'All Fields', 'Author', 'Author - Corporate', 'Author - First', 'Author - Full',
+        'Author - Identifier', 'Author - Last', 'Book', 'Date - Completion', 'Date - Create', 'Date - Entrez',
+        'Date - MeSH', 'Date - Modification', 'Date - Publication', 'EC/RN Number', 'Editor', 'Filter',
+        'Grant Number', 'ISBN', 'Investigator', 'Investigator - Full', 'Issue', 'Journal', 'Language',
+        'Location ID', 'MeSH Major Topic', 'MeSH Subheading', 'MeSH Terms', 'Other Term', 'Pagination',
+        'Pharmacological Action', 'Publication Type', 'Publisher', 'Secondary Source ID', 'Subject - Personal Name',
+        'Supplementary Concept', 'Text Word', 'Title', 'Title/Abstract', 'Transliterated Title', 'Volume'
+    ];
+
+    var convertedFilters;
+
+    function buildFilters() {
+        if (convertedFilters)
+            return convertedFilters;
+
+        convertedFilters = [];
+
+        $.each(filters, function (i, it) {
+            convertedFilters.push({
+                id: it,
+                label: it,
+                type: 'string',
+                operators: ['contains']
+            });
         });
-        it.find('.queryWidgetType').draggable({
-            revert:"valid",
-            helper:"clone"
+
+        return convertedFilters;
+    }
+
+    function displayBuilder(it) {
+        it.queryBuilder({
+            // TODO bootstrap tooltip error plugin? requires Bootstrap Tooltip
+            // plugins: ['bt-tooltip-errors'],
+
+            filters: buildFilters()
+
+            // TODO: validation rules?
+            // rules: rules_basic
         });
     }
 
     window.queryWidgetIncluded = true;
 
     var uid = 0;
-    $("textarea.queryWidget").each(function(i, it) {
+    $("textarea.queryWidget").each(function (i, it) {
         it = $(it);
         var id = uid++;
         var advanced = false;
@@ -31,12 +67,19 @@ $(function() {
         var qwId = "queryWidget_" + id;
 
         it.before($("<div id='" + qwId + "' class='queryWidget'></div>"));
-        //TODO: remove inline test style
-        it.before($("<div id='target_" + qwId + "' class='queryWidgetTarget' style='background-color: red; min-width: 100px; min-height: 10px;'></div>"));
 
         it = $('#' + qwId);
 
-        addWidgets(it);
+        function toggleAdvanced() {
+            advanced = !advanced;
+            if (advanced) {
+                displayBuilder(it);
+            } else {
+                it.clear();
+            }
+        }
+
+        toggleAdvanced();
 
         $('#target_' + qwId).droppable({
             drop: function (e, ui) {
