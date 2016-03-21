@@ -6,4 +6,4 @@ del db.sqlite3
 python manage.py makemigrations
 python manage.py migrate
 python populate.py
-python manage.py runserver --insecure
+python manage.py runserver

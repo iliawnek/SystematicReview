@@ -16,4 +16,4 @@ python manage.py migrate
 python populate.py
 
 # Start local server
-python manage.py runserver --insecure
+python manage.py runserver
