@@ -64,6 +64,9 @@ class ReviewUpdate(forms.ModelForm):
     class Meta:
         model  = Review
         fields = ("title", "description", "query")
+        widgets = {
+            'query': QueryWidget
+        }
         
     invited = forms.CharField(widget=forms.Textarea, required=False, label="Participants", help_text="Enter the email address or username of each participant, one per line")
 

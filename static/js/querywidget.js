@@ -10,7 +10,7 @@ $(function() {
         $.each(types, function(i, type) {
             // TODO: Add styles so these make more sense
             // TODO: Add destination spots on side for text/other widgets?
-            it.append($("<div class='queryWidgetType'>" + type + "</div>"))
+            it.append($("<div class='queryWidgetType'><span class='queryWidgetTarget queryWidgetTargetLeft'></span>" + type + "<span class='queryWidgetTarget queryWidgetTargetRight'></div>"))
         });
         it.find('.queryWidgetType').draggable({
             revert:"valid",

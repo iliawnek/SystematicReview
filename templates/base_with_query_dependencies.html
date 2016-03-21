@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="{% static "querybuilder/css/query-builder.default.min.css" %}">
+{% endblock %}
+
+{% block extra_body %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" defer></script>
+    <script src="{% static "querybuilder/js/query-builder.standalone.min.js" %}" defer></script>
+{% endblock %}

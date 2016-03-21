@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_with_query_dependencies.html' %}
 
 {% block head_title %}
   Edit {{ review.title }}
@@ -28,12 +28,4 @@
 
     <input type="submit" value="Save Changes" class="btn btn-primary"/>
   </form>
-{% endblock %}
-
-{% block extra_head %}
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-{% endblock %}
-
-{% block extra_body %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 {% endblock %}
