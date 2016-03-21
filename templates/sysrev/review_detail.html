@@ -32,32 +32,6 @@
     <div class="alert alert-success" role="alert">
       <span class="glyphicon glyphicon-check"></span>
       This review was completed on {{ review.date_completed }}.
-      <hr>
-      <h3>Results
-        <button type="button" class="btn btn-xs" data-toggle="collapse" data-target="#results">Show/hide</button>
-      </h3>
-      <div id="results" class="row collapse">
-        <div class="col-md-6">
-          <h4>Final pool</h4>
-          <div class="list-group">
-            {% for paper in final_papers %}
-              <a href="{{ paper.url }}" target="blank" class="list-group-item">
-                <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
-              </a>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="col-md-6">
-          <h4>Rejected pool</h4>
-          <div class="list-group">
-            {% for paper in rejected_papers %}
-              <a href="{{ paper.url }}" target="blank" class="list-group-item">
-                <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
-              </a>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
     </div>
   {% endif %}
 
@@ -78,7 +52,10 @@
     </div>
   </div>
 
-  <h3>Papers</h3>
+  <h3>
+    Papers
+    <button type="button" class="btn btn-xs" data-toggle="collapse" data-target="#paper-list">Show/hide</button>
+  </h3>
   {% if count.total > 0 %}
     <div class="progress progress-paper">
       <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip"
@@ -101,6 +78,57 @@
            style="width: {{ percent.rejected }}%;">
         <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.rejected }}
       </div>
+    </div>
+
+    <div id="paper-list" class="row collapse">
+      {% if abstract_papers %}
+        <div class="col-md-6">
+          <h4>Abstract pool</h4>
+          <div class="list-group">
+            {% for paper in abstract_papers %}
+              <a href="{{ paper.url }}" target="blank" class="list-group-item list-group-item-warning">
+                <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      {% if document_papers %}
+        <div class="col-md-6">
+          <h4>Document pool</h4>
+          <div class="list-group">
+            {% for paper in document_papers %}
+              <a href="{{ paper.url }}" target="blank" class="list-group-item list-group-item-info">
+                <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+        {% if final_papers %}
+          <div class="col-md-6">
+            <h4>Final pool</h4>
+            <div class="list-group">
+              {% for paper in final_papers %}
+                <a href="{{ paper.url }}" target="blank" class="list-group-item list-group-item-success">
+                  <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+        {% if rejected_papers %}
+          <div class="col-md-6">
+            <h4>Rejected pool</h4>
+            <div class="list-group">
+              {% for paper in rejected_papers %}
+                <a href="{{ paper.url }}" target="blank" class="list-group-item list-group-item-danger">
+                  <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
     </div>
   {% else %}
     <p>No papers found</p>

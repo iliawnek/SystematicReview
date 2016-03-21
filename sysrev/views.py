@@ -66,6 +66,8 @@ class ReviewDetailView(DetailView):
                 context["review"]  = object
                 context["count"]   = object.paper_pool_counts()
                 context["percent"] = object.paper_pool_percentages()
+                context["abstract_papers"] = Paper.objects.filter(review=object, pool="A")
+                context["document_papers"] = Paper.objects.filter(review=object, pool="D")
                 context["final_papers"] = Paper.objects.filter(review=object, pool="F")
                 context["rejected_papers"] = Paper.objects.filter(review=object, pool="R")
             else:
