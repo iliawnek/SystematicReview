@@ -122,4 +122,7 @@ def generate_random_date(recent=False):
 # Start execution here!
 if __name__ == '__main__':
     print "Starting population script..."
-    populate()
+    from django.db import transaction
+
+    with transaction.atomic():
+        populate()
