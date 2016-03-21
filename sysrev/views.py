@@ -90,7 +90,7 @@ class ReviewDownloadView(ReviewDetailView):
         t = get_template(self.template_name)
 
         resp = HttpResponse(t.render(Context(context)), content_type="text/plain")
-        resp["Content-Disposition"] = 'attachment; filename="' + context['review'].slug + '"'
+        resp["Content-Disposition"] = 'attachment; filename="' + context['review'].slug + '.txt' + '"'
 
         return resp
 
