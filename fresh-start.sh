@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Cleans up existing installation, then creates fresh DB and starts server
+
 # Installs pip requirements
 pip install -r requirements.txt
 
