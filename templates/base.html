@@ -38,10 +38,12 @@
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="glyphicon glyphicon-user color-white"></span>
-          </button>
+          {% if user.is_authenticated %}
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="glyphicon glyphicon-user color-white"></span><span class="color-white"> {{ user.username }}</span>
+            </button>
+          {% endif %}
           <a class="navbar-brand" href="{% url 'index' %}">
             <div>
               <img src="{% static "images/logo.svg" %}" onerror="this.onerror=null; this.src='{% static "images/logo.png" %}'">
@@ -53,13 +55,19 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
+            <!-- Spacer --><li><a class="hidden-xs"></a></li>
             {% if user.is_authenticated %}
-              <li class="dropdown">
+               <!-- Links without another dropdown on small displays -->
+              <li><a class="visible-xs" href="{% url 'profile' %}">Change email address</a></li>
+              <li><a class="visible-xs" href="{% url 'auth_password_change' %}">Change password</a></li>
+              <li><a class="visible-xs" href="{% url 'auth_logout' %}?next=/">Logout</a></li>
+
+              <li class="dropdown hidden-xs">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <span class="glyphicon glyphicon-user"></span>&nbsp;
                   {{ user.username }} <span class="caret"></span>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu ">
                   <li>
                     <a href="{% url 'profile' %}">Change email address</a>
                   </li>
@@ -72,8 +80,6 @@
                     <a href="{% url 'auth_logout' %}?next=/">Logout</a>
                   </li>
                 </ul>
-              </li>
-              <li>
               </li>
             {% endif %}
           </ul>
