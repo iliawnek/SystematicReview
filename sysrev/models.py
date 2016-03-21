@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db                      import models
 from django.template.defaultfilters import slugify
+from django.utils.html import escape
 
 from sysrev.api.PubMed import _get_authors, _get_date, url_from_id, read_papers_from_ids
 
@@ -117,10 +118,16 @@ class Paper(models.Model):
 
         # TODO: label for section headings is lost
         # eg. StringElement('some text here', attributes={u'NlmCategory': u'METHODS', u'Label': u'METHODS'})
+
         abstractText = ""
         try:
             for stringElement in article[u'Abstract'][u'AbstractText']:
-                abstractText += stringElement
+                try:
+                    abstractText += "<h4>" + escape(stringElement.attributes[u'Label']) + "</h4>"
+                except AttributeError:
+                    pass
+
+                abstractText += escape(stringElement) + "\n\n"
         except KeyError:
             pass
 

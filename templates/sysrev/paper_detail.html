@@ -70,7 +70,7 @@
           <iframe class="embed-responsive-item" src="{{ paper.url }}"></iframe>
         </div>
       {% else %}
-        {{ paper.abstract|linebreaks }}
+        {{ paper.abstract|safe|linebreaks }}
       {% endif %}
     </div>
 
