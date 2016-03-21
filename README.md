@@ -18,6 +18,14 @@ The population script `populate.py` adds the following users:
 | jen      | jen      | jen@example.com  |
 | bob      | bob      | bob@example.com  |
 
+# Debug Mode
+
+By default, DEBUG is enabled in this master branch.
+
+To start the server in release mode run:
+
+`python manage.py runserver --settings=no_debug`
+
 # Tests
 
 Tests can be ran with `./manage.py test` or `python manage.py test`.

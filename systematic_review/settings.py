@@ -41,7 +41,7 @@ EMAIL_USE_TLS = True
 SECRET_KEY = '_+ntbtxcjxj5u)av$wt4q!lsad58v-7x_%zb1lc9f*$_#=p^f%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 # TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['iliawnek.pythonanywhere.com', '127.0.0.1', 'localhost']
 
