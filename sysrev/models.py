@@ -50,7 +50,6 @@ class Review(models.Model):
                 if result != 0.0 and result < min_percent:
                     counts[key] = new = (min_percent * total) / 100.0
                     total += new - old
-                    print "Set to " + str(counts[key])
 
             abstract = (counts["abstract"] / total) * 100.0
             document = (counts["document"] / total) * 100.0
