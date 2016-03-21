@@ -133,7 +133,7 @@ body {
     font-weight: bold;
 }
 
-.progress-bar {
+.review-progress > .progress-bar {
     min-width: 2em;
 }
 
