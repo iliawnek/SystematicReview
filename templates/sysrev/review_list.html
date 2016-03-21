@@ -42,15 +42,18 @@
                style="width: {{ review.percent.abstract }}%">
             <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.abstract }}
           </div>
-          <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip" title="Document pool ({{ review.count.document }} papers)"
+          <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip"
+               title="Document pool ({{ review.count.document }} papers)"
                style="width: {{ review.percent.document }}%">
             <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.document }}
           </div>
-          <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip" title="Final pool ({{ review.count.final }} papers)"
+          <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip"
+               title="Final pool ({{ review.count.final }} papers)"
                style="width: {{ review.percent.final }}%">
             <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.final }}
           </div>
-          <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip" title="Rejected pool ({{ review.count.rejected }} papers)"
+          <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip"
+               title="Rejected pool ({{ review.count.rejected }} papers)"
                style="width: {{ review.percent.rejected }}%">
             <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ review.count.rejected }}
           </div>
@@ -59,12 +62,13 @@
         <div class="panel-body">{{ review.review.description }}</div>
 
         {% if not review.review.completed %}
-        <div class="progress review-progress progress-square">
-          <div class="progress-bar progress-bar-default"
-               style="width: {{ review.percent.progress }}%">
-            <div class="pull-right progress-percentage">{{ review.percent.progress|floatformat:0 }}%</div>
+          <div class="progress review-progress progress-square">
+            <div class="progress-bar progress-bar-default"
+                 style="width: {{ review.percent.progress }}%"
+                 data-toggle="tooltip" title="{{ review.count.remaining }} papers remaining">
+              <div class="pull-right progress-percentage">{{ review.percent.progress|floatformat:0 }}%</div>
+            </div>
           </div>
-        </div>
         {% endif %}
       </div>
       <br>
