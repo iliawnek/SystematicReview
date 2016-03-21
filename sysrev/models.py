@@ -28,16 +28,34 @@ class Review(models.Model):
         data = PubMed.get_data_from_query(self.query)
         Paper.create_papers_from_pubmed_ids(data[u'IdList'], self)
 
-
-    def paper_pool_percentages(self):
+    def paper_pool_percentages(self, is_display):
+        # TODO: Typically, paper_pool_counts() gets called then this gets called.
+        # Seems a bit wasteful, as it ends up running multiple times and querying counts repeatedly
         counts = self.paper_pool_counts()
-        total = counts["total"]
+        total = float(counts["total"])
 
         if total is not 0:
-            abstract = (float(counts["abstract"]) / float(total)) * 100.0
-            document = (float(counts["document"]) / float(total)) * 100.0
-            final    = (float(counts["final"])    / float(total)) * 100.0
-            rejected = (float(counts["rejected"]) / float(total)) * 100.0
+            if is_display:
+                # minimum display percentage
+                min_percent = 5.0
+
+                for key in counts:
+                    if key == "total":
+                        continue
+
+                    old = counts[key] = float(counts[key])
+                    result = (counts[key] / total) * 100.0
+
+                    if result != 0.0 and result < min_percent:
+                        counts[key] = new = (min_percent * total) / 100.0
+                        total += new - old
+                        print "Set to " + str(counts[key])
+
+            abstract = (counts["abstract"] / total) * 100.0
+            document = (counts["document"] / total) * 100.0
+            final = (counts["final"] / total) * 100.0
+            rejected = (counts["rejected"] / total) * 100.0
+            print document
             return {"abstract": abstract,
                     "document": document,
                     "final": final,

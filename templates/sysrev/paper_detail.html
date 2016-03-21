@@ -21,22 +21,22 @@
   <div class="progress progress-paper">
     <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip"
          title="Abstract pool ({{ count.abstract }} papers)"
-         style="width: {{ percent.abstract }}%;">
+         style="width: {{ display_percent.abstract }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.abstract }}
     </div>
     <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip"
          title="Document pool ({{ count.document }} papers)"
-         style="width: {{ percent.document }}%;">
+         style="width: {{ display_percent.document }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.document }}
     </div>
     <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip"
          title="Final pool ({{ count.final }} papers)"
-         style="width: {{ percent.final }}%;">
+         style="width: {{ display_percent.final }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.final }}
     </div>
     <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip"
          title="Rejected pool ({{ count.rejected }} papers)"
-         style="width: {{ percent.rejected }}%;">
+         style="width: {{ display_percent.rejected }}%;">
       <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.rejected }}
     </div>
   </div>

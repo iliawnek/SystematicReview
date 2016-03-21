@@ -48,7 +48,8 @@ class ReviewListView(ListView):
         for i in range(0, len(reviews)):
             reviews[i] = {"review":  reviews[i],
                           "count":   reviews[i].paper_pool_counts(),
-                          "percent": reviews[i].paper_pool_percentages()}
+                          "percent": reviews[i].paper_pool_percentages(False),
+                          "display_percent": reviews[i].paper_pool_percentages(True)}
 
         context["reviews"] = reviews
         return context
@@ -66,7 +67,8 @@ class ReviewDetailView(DetailView):
         try:
             if self.request.user in object.participants.all():
                 context["count"]   = object.paper_pool_counts()
-                context["percent"] = object.paper_pool_percentages()
+                context["percent"] = object.paper_pool_percentages(False)
+                context["display_percent"] = object.paper_pool_percentages(True)
                 context["abstract_papers"] = Paper.objects.filter(review=object, pool="A")
                 context["document_papers"] = Paper.objects.filter(review=object, pool="D")
                 context["final_papers"]    = Paper.objects.filter(review=object, pool="F")
@@ -170,7 +172,8 @@ class PaperDetailView(DetailView):
                 context["to_embed_full"] = ('D', 'F')
 
                 context["count"]   = review.paper_pool_counts()
-                context["percent"] = review.paper_pool_percentages()
+                context["percent"] = review.paper_pool_percentages(False)
+                context["display_percent"] = review.paper_pool_percentages(True)
             else:
                 raise Http404("Paper not found")
         except Review.DoesNotExist:
