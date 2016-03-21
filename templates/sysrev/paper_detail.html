@@ -48,9 +48,10 @@
         {{ paper.title }}
 
         {% if paper.pool in to_embed_full %}
-        <nav class="pull-right">
-          <a href="{{ paper.url }}" target="_blank" class="btn btn-default"><span class="glyphicon glyphicon-link"></span> Open in new tab</a>
-        </nav>
+          <nav class="pull-right">
+            <a href="{{ paper.url }}" target="_blank" class="btn btn-default"><span
+                class="glyphicon glyphicon-link"></span> Open in new tab</a>
+          </nav>
         {% endif %}
       </h2>
       <span>({{ paper.authors }} - Published {{ paper.publish_date }})</span>
@@ -67,29 +68,50 @@
     </div>
 
     {% if paper.pool in to_judge %}
-    <div class="panel-footer text-center">
-      <p>Is this paper relevant to the review?</p>
-      <div class="btn-group" role="group">
-        <a href="yes" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-up   color-green"></span> Yes</a>
-        <a href="no"  class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-down color-red"  ></span> No</a>
-        <a href="{{ paper.review.get_absolute_url }}/work" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-question-sign"></span> Not sure</a>
+      <div class="panel-footer" id="relevancy-buttons">
+        <div class="text-center">
+          <p>Is this paper relevant to the review?</p>
+          <div class="btn-group" role="group">
+            <a href="yes" class="btn btn-default btn-lg"><span
+                class="glyphicon glyphicon-thumbs-up   color-green"></span> Yes</a>
+            <a href="no" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-down color-red"></span>
+              No</a>
+            <a href="{{ paper.review.get_absolute_url }}/work" class="btn btn-default btn-lg"><span
+                class="glyphicon glyphicon-question-sign"></span> Not sure</a>
+          </div>
+        </div>
       </div>
-    </div>
     {% endif %}
+  </div>
+
+  <div class="pull-right">
+  <div class="panel panel-default color-grey" id="keyboard-shortcuts">
+    <div class="panel-heading">
+      Keyboard shortcuts
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">Alt + Y = Yes</li>
+      <li class="list-group-item">Alt + N = No</li>
+      <li class="list-group-item">Alt + ? = Not sure</li>
+    </ul>
+  </div>
   </div>
 {% endblock body %}
 
+{# TODO: move js to separate file #}
 {% block extra_body %}
-{% if paper.pool in to_judge %}
-  <script type="text/javascript">
-    function keyUp(e) {
-      if (e.altKey && e.keyCode == 89) {
-        window.location.href = "yes";
-      } else if (e.altKey && e.keyCode == 78) {
-        window.location.href = "no";
+  {% if paper.pool in to_judge %}
+    <script type="text/javascript">
+      function keyUp(e) {
+        if (e.altKey && e.keyCode == 89) {
+          window.location.href = "yes";
+        } else if (e.altKey && e.keyCode == 78) {
+          window.location.href = "no";
+        } else if (e.altKey && e.keyCode == 191) {
+          window.location.href = "{{ paper.review.get_absolute_url }}/work";
+        }
       }
-    }
-    document.addEventListener('keyup', keyUp, false);
-  </script>
-{% endif %}
+      document.addEventListener('keyup', keyUp, false);
+    </script>
+  {% endif %}
 {% endblock extra_body %}

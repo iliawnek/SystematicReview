@@ -145,3 +145,13 @@ body {
     display: inline-block;
     vertical-align: middle;
 }
+
+/* paper detail */
+
+#keyboard-shortcuts {
+    display: inline-block;
+    width: inherit;
+    /*float: none;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+}
