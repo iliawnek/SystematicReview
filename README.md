@@ -22,7 +22,7 @@ The population script `populate.py` adds the following users:
 
 By default, DEBUG is enabled in this master branch.
 
-To start the server in release mode run:
+To start the server in release mode, run:
 
 `python manage.py runserver --settings=no_debug`
 
