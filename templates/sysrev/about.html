@@ -22,11 +22,41 @@
         </h4>
       </div>
       <div class="panel-body">
-        A systematic review is a type of literature review that collects and critically analyzes multiple research
-        studies or papers. A review of existing studies is often quicker and cheaper than embarking on a new study.
+        A <b>systematic review</b> is a type of literature review that collects and critically analyzes multiple research
+        studies or papers. A <b>review</b> of existing studies is often quicker and cheaper than embarking on a new study.
         Researchers use methods that are selected before one or more research questions are formulated, and then they
-        aim to find and analyze studies that relate to and answer those questions. Systematic reviews of randomized
+        aim to find and analyze studies that relate to and answer those questions. <b>Systematic reviews</b> of randomized
         controlled trials are key in the practice of evidence-based medicine.
+      </div>
+      <div class="panel-heading">
+        <h4>What is the systematic review process?</h4>
+      </div>
+      <div class="panel-body">
+        <p>
+          The review organises papers into 4 pools:
+        <b><ul>
+          <li>Abstract pool</li>
+          <li>Document pool</li>
+          <li>Final pool</li>
+          <li>Rejected pool</li>
+        </ul></b>
+        </p>
+        <p>
+          All papers returned by the query are first stored in the <b>abstract pool</b>. Systematic review takes you through
+          each paper in the abstract pool, and shows you the paper's title and abstract. From this, you can decide on
+          whether the paper is appropriate for your particular needs.
+        </p>
+        <p>
+          Every paper you approve from the abstract pool gets moved into the <b>document pool</b>. The document pool is much
+          like the abstract pool, but this time you are given a link to view the paper in full via PubMed. Again, you
+          can decide on whether or not the paper is relevant.
+        </p>
+        <p>
+          After deciding a paper is relevant in the document pool, it gets moved into the <b>final pool</b>, which is a list
+          of all papers relevant to your review! Any irrelevant papers are moved into the <b>rejected pool</b>. Papers in the
+          final pool can be rejected if later found to be irrelevant. Likewise, papers in the rejected pool can be
+          reconsidered by moving them back into the abstract or document pool.
+        </p>
       </div>
     </div>
   </div>
@@ -38,25 +68,56 @@
       </div>
       <div class="panel-body">
         <p>
-          Start off by <a href="{% url 'review_create' %}">creating a new review</a>. Choose a name and write a
-          description for your new review. Here, you can add the usernames or email addresses of other users who you
-          would like to invite to join you in the review.
+          Start off by <a href="{% url 'review_create' %}"><b>creating a new review</b></a>. Choose a title and
+          write a description for your new review. Here, you can add the usernames or email
+          addresses of other users who you would like to invite to join you in the review.
         </p>
         <p>
-          Next, write a boolean query to search for medical papers related to your review on
-          <a href="http://www.ncbi.nlm.nih.gov/pubmed">PubMed</a>. Keep adjusting your query until it returns under 500
+          Next, <b>write a query</b> to search for medical papers related to your review on
+          <a href="http://www.ncbi.nlm.nih.gov/pubmed">PubMed</a>. Keep adjusting your query until it returns under
+          500
           papers.
         </p>
         <p>
-          The review organises papers into 4 pools:
-        <ul>
-          <li>Abstract pool</li>
-          <li>Document pool</li>
-          <li>Final pool</li>
-          <li>Rejected pool</li>
-        </ul>
+          Once your review is created, you can <b>work on the review</b>, which automatically presents a random paper from
+          the abstract pool or document pool. Papers in the abstract pool get priority, so you will always be
+          presented with a paper from the abstract pool if one exists.
+        </p>
+        <p>
+          After judging all papers presented, the review will be marked as completed! You will be able to <b>view a list
+          of all papers</b> in the final pool, visit links to each paper on PubMed, and download the results as a text
+          file.
+        </p>
+        <p>
+          At any point during the review, you can rename it, add or remove participants, modify the query, or delete
+          it.
+        </p>
+      </div>
+      <div class="panel-heading">
+        <h4>How do a write a query?</h4>
+      </div>
+      <div class="panel-body">
+        <p>
+          Write down each keyword separated by AND and OR. Use brackets () to group parts of the query.
+        </p>
+        <p>
+          For example:
+        </p>
+        <p>
+          (<b>adhd</b> OR <b>adhs</b> OR <b>addh</b>) AND (<b>child</b> OR <b>adolescent</b>) AND <b>acupuncture</b>
+        </p>
+        <p>
+          Every paper returned by this query must contain <b>acupuncture</b>. It must also contain either <b>child</b>,
+          or <b>adolescent</b>, or both. And finally, a returned paper must also contain some variant of <b>adhd</b>.
+        </p>
+        <p>
+          As a general guideline, adding more ANDs will return fewer papers, but adding more ORs will return more
+          papers.
         </p>
       </div>
     </div>
   </div>
+
+
+
 {% endblock content %}
