@@ -190,3 +190,8 @@ body {
 #wikipedia {
     height: 20px;
 }
+
+#unpaddedRule {
+    padding: 0;
+    margin: 0;
+}
