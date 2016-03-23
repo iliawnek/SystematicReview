@@ -54,6 +54,55 @@ $(function () {
         });
     }
 
+    function getRulesFromQuery(query) {
+        var rules = {};
+        return rules;
+    }
+
+    function getQueryFromRules(outer) {
+        if (!outer)
+            return undefined;
+
+        var condition = outer.condition;
+        if (!condition) {
+            console.error("No condition for");
+            console.error(outer);
+            return undefined;
+        }
+
+        outer = outer.rules;
+
+        var parts = [];
+        for (var i = 0; i < outer.length; i++) {
+            var rule = outer[i];
+
+            console.log("Adding " + rule);
+
+            if (rule.condition) {
+                parts.push('(' + getQueryFromRules(rule) + ')');
+                continue;
+            }
+
+            var value = rule.value;
+            var field = rule.field;
+
+            if (rule.operator != 'contains')
+                console.warn("Only supported operator is contains, got " + rule.operator);
+
+            console.log(value);
+            parts.push(value + (field == 'All Fields' ? '' : '[' + field + ']'));
+        }
+
+        console.log(parts);
+        return parts.join(' ' + condition + ' ');
+    }
+
+    function getQuery(it) {
+        var rules = it.queryBuilder('getRules');
+        console.log(rules);
+        return getQueryFromRules(rules);
+    }
+
     window.queryWidgetIncluded = true;
 
     var uid = 0;
@@ -68,6 +117,7 @@ $(function () {
 
         it.before($("<div id='" + qwId + "' class='queryWidget'></div>"));
 
+        var textArea = it;
         it = $('#' + qwId);
 
         function toggleAdvanced() {
@@ -87,5 +137,32 @@ $(function () {
                 $(ui.draggable).clone().appendTo($(this));
             }
         });
+
+        var timeout = false;
+        var update = function () {
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = false;
+            }
+
+            timeout = setTimeout(function () {
+                var focused = $(':focus');
+
+                if (focused[0] && focused[0].tagName == 'SELECT')
+                    return;
+
+                // workaround for getRules not working. not sure why
+                textArea.focus();
+
+                var query = getQuery(it);
+                console.log(query);
+                if (query)
+                    textArea.val(query);
+
+                focused.focus();
+            }, 1000);
+        };
+        it.keydown(update);
+        it.click(update);
     });
 });
