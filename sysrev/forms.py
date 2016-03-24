@@ -49,7 +49,7 @@ class ReviewCreateStep2(forms.Form):
         count = int(data["Count"])
         limit = PubMed.get_query_limit()
         if count >= limit:
-            raise forms.ValidationError("""Your query returned %d papers.\n
+            raise forms.ValidationError("""Your query returned %d paper(s).\n
                                         It must return fewer than %d papers.\n
                                         Modify your query and try again.""" % (count, limit))
         elif count == 0:
@@ -66,7 +66,8 @@ class ReviewUpdate(forms.ModelForm):
             'query': QueryWidget
         }
         help_texts = {
-            'query': "Changing the query will remove from or add to the current abstract pool. Papers in the document, final, and rejected pools will not be affected."
+            'query': """Changing the query will remove from or add to the current abstract pool.
+                     Papers in the document, final, and rejected pools will not be affected."""
         }
 
     def clean(self):
@@ -75,7 +76,7 @@ class ReviewUpdate(forms.ModelForm):
         count = int(data["Count"])
         limit = PubMed.get_query_limit()
         if count >= limit:
-            raise forms.ValidationError("""Your query returned %d papers.\n
+            raise forms.ValidationError("""Your query returned %d paper(s).\n
                                         It must return fewer than %d papers.\n
                                         Modify your query and try again.""" % (count, limit))
         elif count == 0:

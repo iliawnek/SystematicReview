@@ -51,7 +51,7 @@
     <div class="progress review-progress">
       <div class="progress-bar progress-bar-default"
            style="width: {{ percent.progress }}%"
-           data-toggle="tooltip" title="{{ count.remaining }} papers remaining">
+           data-toggle="tooltip" title="{{ count.remaining }} paper{{ count.remaining|pluralize }} remaining">
         <div class="pull-right progress-percentage">{{ percent.progress|floatformat:0 }}%</div>
       </div>
     </div>
@@ -73,22 +73,22 @@
   {% if count.total > 0 %}
     <div class="progress progress-paper">
       <div class="progress-bar progress-bar-warning progress-bar-paper" data-toggle="tooltip"
-           title="Abstract pool ({{ count.abstract }} papers)"
+           title="Abstract pool ({{ count.abstract }} paper{{ count.abstract|pluralize }})"
            style="width: {{ percent.abstract }}%;">
         <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.abstract }}
       </div>
       <div class="progress-bar progress-bar-info progress-bar-paper" data-toggle="tooltip"
-           title="Document pool ({{ count.document }} papers)"
+           title="Document pool ({{ count.document }} paper{{ count.document|pluralize }})"
            style="width: {{ percent.document }}%;">
         <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.document }}
       </div>
       <div class="progress-bar progress-bar-success progress-bar-paper" data-toggle="tooltip"
-           title="Final pool ({{ count.final }} papers)"
+           title="Final pool ({{ count.final }} paper{{ count.final|pluralize }})"
            style="width: {{ percent.final }}%;">
         <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.final }}
       </div>
       <div class="progress-bar progress-bar-danger progress-bar-paper" data-toggle="tooltip"
-           title="Rejected pool ({{ count.rejected }} papers)"
+           title="Rejected pool ({{ count.rejected }} paper{{ count.rejected|pluralize }})"
            style="width: {{ percent.rejected }}%;">
         <span class="glyphicon glyphicon-file progress-bar-paper-icon"></span> {{ count.rejected }}
       </div>
