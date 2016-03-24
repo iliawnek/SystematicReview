@@ -21,6 +21,7 @@ class Migration(migrations.Migration):
                 ('abstract', models.TextField(default=b'')),
                 ('publish_date', models.DateField(null=True)),
                 ('url', models.URLField(default=b'')),
+                ('pubmed_id', models.CharField(max_length=16)),
                 ('notes', models.TextField(default=b'')),
                 ('pool', models.CharField(default=b'A', max_length=1, choices=[(b'A', b'Abstract pool'), (b'D', b'Document pool'), (b'F', b'Final pool'), (b'R', b'Rejected')])),
             ],

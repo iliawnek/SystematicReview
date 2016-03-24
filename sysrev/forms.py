@@ -65,6 +65,9 @@ class ReviewUpdate(forms.ModelForm):
         widgets = {
             'query': QueryWidget
         }
+        help_texts = {
+            'query': "Changing the query will remove from or add to the current abstract pool. Papers in the document, final, and rejected pools will not be affected."
+        }
 
     def clean(self):
         query = self.cleaned_data.get('query')
