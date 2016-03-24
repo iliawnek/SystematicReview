@@ -37,10 +37,11 @@ class Review(models.Model):
             for paper in papers.filter(pool="A"):
                 existing_abstract_ids += [paper.pubmed_id]
 
-            ids_to_remove = list(set(existing_abstract_ids).difference(ids_from_query))
             with transaction.atomic():
-                for id in ids_to_remove:
-                    Paper.objects.get(pubmed_id=id).delete()
+                Paper.objects\
+                    .filter(pubmed_id__in=existing_abstract_ids)\
+                    .exclude(pubmed_id__in=ids_from_query)\
+                    .delete()
 
             ids_to_add = list(set(ids_from_query).difference(existing_ids))
             if ids_to_add:

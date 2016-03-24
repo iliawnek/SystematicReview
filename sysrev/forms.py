@@ -49,8 +49,8 @@ class ReviewCreateStep2(forms.Form):
         count = int(data["Count"])
         limit = PubMed.get_query_limit()
         if count >= limit:
-            raise forms.ValidationError("""Your query returned %d paper(s).\n
-                                        It must return fewer than %d papers.\n
+            raise forms.ValidationError("""Your query returned %d papers.
+                                        It must return fewer than %d papers.
                                         Modify your query and try again.""" % (count, limit))
         elif count == 0:
             raise forms.ValidationError("Your query did not return any papers.")
@@ -76,8 +76,8 @@ class ReviewUpdate(forms.ModelForm):
         count = int(data["Count"])
         limit = PubMed.get_query_limit()
         if count >= limit:
-            raise forms.ValidationError("""Your query returned %d paper(s).\n
-                                        It must return fewer than %d papers.\n
+            raise forms.ValidationError("""Your query returned %d papers.
+                                        It must return fewer than %d papers.
                                         Modify your query and try again.""" % (count, limit))
         elif count == 0:
             raise forms.ValidationError("Your query did not return any papers.")
