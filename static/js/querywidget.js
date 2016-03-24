@@ -35,7 +35,7 @@ $(function () {
                 id: it,
                 label: it,
                 type: 'string',
-                operators: ['contains']
+                operators: ['contains', 'not_contains']
             });
         });
 
@@ -86,8 +86,15 @@ $(function () {
             var value = rule.value;
             var field = rule.field;
 
-            if (rule.operator != 'contains')
-                console.warn("Only supported operator is contains, got " + rule.operator);
+            switch (rule.operator) {
+                case 'contains':
+                    break;
+                case 'not_contains':
+                    value = "NOT " + value;
+                    break;
+                default:
+                    console.warn("Unsupported operator: " + rule.operator);
+            }
 
             console.log(value);
             parts.push(value + (field == 'All Fields' ? '' : '[' + field + ']'));
