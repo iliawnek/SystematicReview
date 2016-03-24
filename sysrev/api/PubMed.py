@@ -35,7 +35,7 @@ def read_papers_from_ids(ids):
 
 def _get_authors(article):
     """Gets comma delimited list of authors from article"""
-    if not u'AuthorList' in article:
+    if u'AuthorList' not in article:
         return "<No authors specified>"
 
     authorList = article[u'AuthorList']

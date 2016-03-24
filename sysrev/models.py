@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.db                      import models
 from django.template.defaultfilters import slugify
 from django.utils.html import escape
+from django.db import transaction
 
 from sysrev.api.PubMed import _get_authors, _get_date, url_from_id, read_papers_from_ids
 
@@ -12,7 +13,6 @@ from sysrev.api import PubMed
 
 class Review(models.Model):
     participants       = models.ManyToManyField(User)
-
     title              = models.CharField(max_length=128, unique=False)
     slug               = models.SlugField()
     description        = models.TextField(default="")
@@ -25,8 +25,27 @@ class Review(models.Model):
 
     def perform_query(self):
         # TODO: discard existing papers if there are any
-        data = PubMed.get_data_from_query(self.query)
-        Paper.create_papers_from_pubmed_ids(data[u'IdList'], self)
+        ids_from_query = PubMed.get_ids_from_query(self.query)
+        if self.paper_pool_counts()["abstract"] == 0:
+            Paper.create_papers_from_pubmed_ids(ids_from_query, self)
+        else:
+            papers = Paper.objects.filter(review=self)
+            existing_ids = []
+            for paper in papers:
+                existing_ids += [paper.pubmed_id]
+            existing_abstract_ids = []
+            for paper in papers.filter(pool="A"):
+                existing_abstract_ids += [paper.pubmed_id]
+
+            ids_to_remove = list(set(existing_abstract_ids).difference(ids_from_query))
+            with transaction.atomic():
+                for id in ids_to_remove:
+                    Paper.objects.get(pubmed_id=id).delete()
+
+            ids_to_add = list(set(ids_from_query).difference(existing_ids))
+            if ids_to_add:
+                Paper.create_papers_from_pubmed_ids(ids_to_add, self)
+
 
     def paper_pool_percentages(self):
         # TODO: Typically, paper_pool_counts() gets called then this gets called.
@@ -63,8 +82,6 @@ class Review(models.Model):
                     "progress": progress}
         else:
             return
-
-
 
     def paper_pool_counts(self):
         relevant_papers = Paper.objects.filter(review=self)
@@ -121,6 +138,7 @@ class Paper(models.Model):
     abstract     = models.TextField(default="")
     publish_date = models.DateField(null=True)
     url          = models.URLField(default="")
+    pubmed_id    = models.CharField(max_length=16)
     notes        = models.TextField(default="")
     pool         = models.CharField(max_length=1, choices=POOLS, default=ABSTRACT_POOL)
 
@@ -130,7 +148,8 @@ class Paper(models.Model):
         medlineCitation = data[u'MedlineCitation']
         article = medlineCitation[u'Article']
         title = article[u'ArticleTitle'].lstrip("[").rstrip("].")
-        paper = Paper.objects.get_or_create(review=review, title=title)[0]
+        pubmed_id = medlineCitation[u'PMID']
+        paper = Paper.objects.get_or_create(review=review, title=title, pubmed_id=pubmed_id)[0]
         paper.review = review
         paper.authors = _get_authors(article)
 
@@ -148,7 +167,7 @@ class Paper(models.Model):
 
         paper.abstract = abstractText
         paper.publish_date = _get_date(medlineCitation)
-        paper.url = url_from_id(medlineCitation[u'PMID'])
+        paper.url = url_from_id(pubmed_id)
         paper.notes = ""
         paper.pool = pool
         paper.save()
@@ -161,7 +180,6 @@ class Paper(models.Model):
 
         # Commit all papers in single transaction
         # Improves performance, as django won't automatically commit after every save call when creating lots of papers
-        from django.db import transaction
 
         with transaction.atomic():
             return map(lambda data: Paper.create_paper_from_data(data, review, pool), papers)

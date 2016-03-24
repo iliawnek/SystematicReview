@@ -101,11 +101,17 @@ class ReviewDownloadView(ReviewDetailView):
 
 
 class ReviewUpdateView(UpdateView):
-    model  = Review
+    model = Review
     form_class = ReviewUpdate
 
     def get_success_url(self):
-        return self.request.path[:-7]
+        return Review.objects.get(pk=self.kwargs['pk']).get_absolute_url()
+
+    def post(self, request, *args, **kwargs):
+        result = super(ReviewUpdateView, self).post(request, *args, **kwargs)
+        if result:
+            Review.objects.get(pk=kwargs['pk']).perform_query()
+        return result
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

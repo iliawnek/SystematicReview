@@ -19,8 +19,6 @@ class ProfileForm(forms.ModelForm):
         return email
 
 
-
-
 class ReviewCreateStep1(forms.Form):
     title       = forms.CharField(max_length=128, label="Review Title")
     description = forms.CharField(widget=forms.Textarea, required=False)
@@ -67,3 +65,17 @@ class ReviewUpdate(forms.ModelForm):
         widgets = {
             'query': QueryWidget
         }
+
+    def clean(self):
+        query = self.cleaned_data.get('query')
+        data = PubMed.get_data_from_query(query)
+        count = int(data["Count"])
+        limit = PubMed.get_query_limit()
+        if count >= limit:
+            raise forms.ValidationError("""Your query returned %d papers.\n
+                                        It must return fewer than %d papers.\n
+                                        Modify your query and try again.""" % (count, limit))
+        elif count == 0:
+            raise forms.ValidationError("Your query did not return any papers.")
+        return self.cleaned_data
+
