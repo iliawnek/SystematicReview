@@ -94,32 +94,46 @@
       <div class="row">
         <div class="col-md-2">
         </div>
+
         <div class="col-md-8 text-center">
           {% if paper.pool in to_judge %}
             <p>Is this paper relevant to the review?</p>
-            <div class="btn-group" role="group">
-              <a href="yes" class="btn btn-default btn-lg"><span
-                  class="glyphicon glyphicon-thumbs-up   color-green"></span> Yes</a>
-              <a href="no" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-down color-red"></span>
-                No</a>
-            </div>
-            <hr class="visible-xs">
-            <a href="{{ paper.review.get_absolute_url }}/work" class="btn btn-default btn-lg"><span
-              class="glyphicon glyphicon-question-sign"></span> Not sure</a>
           {% else %}
             <p>Reconsider this paper:</p>
-              {% if paper.pool == "F" %}
-                <a href="no" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-thumbs-down color-red"></span> Reject</a>
-              {% else %}
+          {% endif %}
+
+            {% if paper.pool in to_judge %}
               <div class="btn-group" role="group">
-                <a href="abstract" class="btn btn-default btn-lg"><span
-                    class="glyphicon glyphicon-file color-yellow"></span> Move to abstract pool</a>
-                <a href="document" class="btn btn-default btn-lg"><span
-                    class="glyphicon glyphicon-file color-blue"></span> Move to document pool</a>
+                {% if paper.pool == 'A' %}
+                  <a href="document" class="btn btn-default btn-lg btn-disable">
+                    <span class="glyphicon glyphicon-thumbs-up color-green"></span> Yes
+                  </a>
+                {% elif paper.pool == 'D' %}
+                  <a href="final" class="btn btn-default btn-lg btn-disable">
+                    <span class="glyphicon glyphicon-thumbs-up color-green"></span> Yes
+                  </a>
+                {% endif %}
+                <a href="rejected" class="btn btn-default btn-lg btn-disable">
+                  <span class="glyphicon glyphicon-thumbs-down color-red"></span> No
+                </a>
               </div>
-              {% endif %}
+            {% elif paper.pool == 'F' %}
+              <a href="rejected" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-thumbs-down color-red"></span> Reject
+              </a>
+            {% elif paper.pool == 'R' %}
+              <a href="final" class="btn btn-default btn-lg"><span
+                  class="glyphicon glyphicon-file color-green"></span> Move to final pool
+              </a>
+            {% endif %}
+
+          {% if paper.pool in to_judge %}
+            <a href="{{ paper.review.get_absolute_url }}/work" class="btn btn-default btn-lg">
+              <span class="glyphicon glyphicon-question-sign"></span> Not sure
+            </a>
           {% endif %}
         </div>
+
         <div class="col-md-2">
           {% if paper.pool in to_judge %}
             <span class="label label-default pull-right hidden-xs" data-toggle="tooltip" data-html="true"
@@ -138,9 +152,13 @@
     <script type="text/javascript">
       function keyUp(e) {
         if (e.altKey && e.keyCode == 89) {
-          window.location.href = "yes";
+          {% if paper.pool == "A" %}
+            window.location.href = "document";
+          {% else %}
+            window.location.href = "final";
+          {% endif %}
         } else if (e.altKey && e.keyCode == 78) {
-          window.location.href = "no";
+          window.location.href = "rejected";
         } else if (e.altKey && e.keyCode == 191) {
           window.location.href = "{{ paper.review.get_absolute_url }}/work";
         }

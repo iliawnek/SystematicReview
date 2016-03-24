@@ -99,7 +99,6 @@ class ReviewDownloadView(ReviewDetailView):
         return resp
 
 
-
 class ReviewUpdateView(UpdateView):
     model = Review
     form_class = ReviewUpdate
@@ -203,21 +202,12 @@ class PaperChoiceView(RedirectView):
             review = Review.objects.get(pk=self.kwargs['pk'])
             paper = Paper.objects.get(pk=self.kwargs['pk2'], review=review)
             choice = self.kwargs['choice']
-            if choice == "yes":
-                if paper.pool == "A":
-                    paper.pool = "D"
-                elif paper.pool == "D":
-                    paper.pool = "F"
-            elif choice == "no":
-                paper.pool = "R"
-            elif choice == "abstract":
-                paper.pool = "A"
-                review.completed = False
-                review.save()
-            elif choice == "document":
+            if choice == "document":
                 paper.pool = "D"
-                review.completed = False
-                review.save()
+            elif choice == "final":
+                paper.pool = "F"
+            elif choice == "rejected":
+                paper.pool = "R"
             else:
                 raise Http404("Invalid choice")
             paper.save()
