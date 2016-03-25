@@ -94,71 +94,67 @@
       </div>
     </div>
 
-    <div id="paper-list" class="row collapse">
+    <div id="paper-list" class="collapse">
 
-    <div id="sticky-close">
-      <button type="button" class="btn btn-lg" data-toggle="collapse" data-target="#paper-list">
-        <span class="glyphicon glyphicon-chevron-up"></span> Close list
-      </button>
-      <div id="sticky-close-underlay">
-    </div>
+      <div id="sticky-close">
+        <button type="button" class="btn btn-lg" data-toggle="collapse" data-target="#paper-list">
+          <span class="glyphicon glyphicon-chevron-up"></span> Close list
+        </button>
+        <div id="sticky-close-underlay"></div>
+      </div>
 
-    </div>
       {% if abstract_papers %}
-      <div class="col-md-6">
         <h4>Abstract pool</h4>
-        <div class="list-group">
+        <div id="abstract" class="list-group">
           {% for paper in abstract_papers %}
             <a href="{{ paper.get_absolute_url }}" target="blank" class="list-group-item list-group-item-warning">
               <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
             </a>
           {% endfor %}
         </div>
-      </div>
+        <div id="abstract-pager" class="pagination pager"></div>
       {% endif %}
 
       {% if document_papers %}
-      <div class="col-md-6">
         <h4>Document pool</h4>
-        <div class="list-group">
+        <div id="document" class="list-group">
           {% for paper in document_papers %}
             <a href="{{ paper.get_absolute_url }}" target="blank" class="list-group-item list-group-item-info">
               <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
             </a>
           {% endfor %}
         </div>
-      </div>
+        <div id="document-pager" class="pagination pager"></div>
       {% endif %}
 
       {% if final_papers %}
-      <div class="col-md-6">
         <h4>Final pool</h4>
-        <div class="list-group">
+        <div id="final" class="list-group">
           {% for paper in final_papers %}
             <a href="{{ paper.get_absolute_url }}" target="blank" class="list-group-item list-group-item-success">
               <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
             </a>
           {% endfor %}
         </div>
-      </div>
+        <div id="final-pager" class="pagination pager"></div>
       {% endif %}
 
       {% if rejected_papers %}
-      <div class="col-md-6">
         <h4>Rejected pool</h4>
-        <div class="list-group">
+        <div id="rejected" class="list-group">
           {% for paper in rejected_papers %}
             <a href="{{ paper.get_absolute_url }}" target="blank" class="list-group-item list-group-item-danger">
               <span class="glyphicon glyphicon-file"></span> {{ paper.title }}
             </a>
           {% endfor %}
         </div>
-      </div>
+        <div id="rejected-pager" class="pagination pager"></div>
       {% endif %}
 
-      <div class="col-md-12">
-        <a role="button" class="btn btn-default" href="{{ review.get_absolute_url }}/dl" ><span class="glyphicon glyphicon-download"></span> Download as list</a>
-      </div>
+      <br>
+      <a role="button" class="btn btn-default" href="{{ review.get_absolute_url }}/dl" >
+        <span class="glyphicon glyphicon-download"></span> Download as list
+      </a>
     </div>
   {% else %}
     <p>No papers found</p>
