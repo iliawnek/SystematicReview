@@ -66,10 +66,12 @@
           class="glyphicon glyphicon-link"></span> Open in new tab</a>
     </div>
 
-    <div class="panel-body">
+    <div class="panel-body {% if paper.pool in to_embed_full %}panel-body-embed{% endif %}">
       {% if paper.pool in to_embed_full %}
+        {% load staticfiles %}
+        <img id="preloader" src="{% static "images/preloader.gif" %}"></img>
         <div id="external" class="embed-responsive embed-responsive-4by3">
-          <iframe class="embed-responsive-item" src="{{ paper.url }}"></iframe>
+          <iframe class="embed-responsive-item" src="{{ paper.url }}" onload="document.getElementById('preloader').style.display='none';"></iframe>
         </div>
       {% else %}
         {% if paper.abstract %}
